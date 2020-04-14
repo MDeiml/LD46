@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LD46 - Warmup</title>
+        <script src="gl-matrix-min.js"></script>
+        <script type="module" src="main.js"></script>
+        <script id="shader-vs" type="x-shader/x-vertex">
+            attribute vec3 position;
+
+            uniform mat4 P;
+
+            void main(void) {
+                gl_Position = P * vec4(position, 1.0);
+            }
+        </script>
+        <script id="shader-fs" type="x-shader/x-fragment">
+            void main(void) {
+                gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+            }
+        </script>
+    </head>
+    <body>
+        <canvas id="glCanvas" width="800" height="600">
+    </body>
+</html>
