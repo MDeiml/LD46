@@ -1,9 +1,9 @@
-import { gl, canvas } from './model.js'
+import { gl, canvas, player } from './model.js'
 
 let positionAttribute, texCoordAttribute;
-let projectionUniform, textureUniform;
+let matrixUniform, textureUniform;
 let squareBuffer, squareTexCoordBuffer;
-let projectionMatrix;
+let projectionMatrix, modelMatrix, mvpMatrix;
 
 let testTexture;
 
@@ -22,7 +22,10 @@ export function render() {
     gl.bindTexture(gl.TEXTURE_2D, testTexture);
     gl.uniform1i(textureUniform, 0);
 
-    gl.uniformMatrix4fv(projectionUniform, false, projectionMatrix);
+    mat4.fromRotationTranslationScale(modelMatrix, quat.create(), vec3.fromValues(player.position[0], player.position[1], 0), vec3.fromValues(0.1, 0.1, 1));
+
+    mat4.mul(mvpMatrix, projectionMatrix, modelMatrix);
+    gl.uniformMatrix4fv(matrixUniform, false, mvpMatrix);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
@@ -38,6 +41,9 @@ export function initGL() {
     let aspect = canvas.width / canvas.height;
     projectionMatrix = mat4.create();
     mat4.ortho(projectionMatrix, -aspect, aspect, -1, 1, -1, 1);
+
+    modelMatrix = mat4.create();
+    mvpMatrix = mat4.create();
 }
 
 function initShaders() {
@@ -61,7 +67,7 @@ function initShaders() {
     texCoordAttribute = gl.getAttribLocation(program, 'texCoord');
     gl.enableVertexAttribArray(texCoordAttribute);
 
-    projectionUniform = gl.getUniformLocation(program, 'P');
+    matrixUniform = gl.getUniformLocation(program, 'MVP');
     textureUniform = gl.getUniformLocation(program, 'texture');
 }
 
