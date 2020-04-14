@@ -1,18 +1,29 @@
 import { gl, canvas } from './model.js'
 
-let positionAttribute;
-let projectionUniform;
-let squareBuffer;
+let positionAttribute, texCoordAttribute;
+let projectionUniform, textureUniform;
+let squareBuffer, squareTexCoordBuffer;
 let projectionMatrix;
+
+let testTexture;
 
 // main render function
 export function render() {
     // clear canvas to black
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    gl.uniformMatrix4fv(projectionUniform, false, projectionMatrix);
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
     gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
+
+    gl.bindBuffer(gl.ARRAY_BUFFER, squareTexCoordBuffer);
+    gl.vertexAttribPointer(texCoordAttribute, 2, gl.FLOAT, false, 0, 0);
+
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, testTexture);
+    gl.uniform1i(textureUniform, 0);
+
+    gl.uniformMatrix4fv(projectionUniform, false, projectionMatrix);
+
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
 
@@ -21,6 +32,8 @@ export function initGL() {
     gl.clearColor(0, 0, 0, 1);
     initShaders();
     initSquare();
+
+    testTexture = loadTexture('./test.jpg');
 
     let aspect = canvas.width / canvas.height;
     projectionMatrix = mat4.create();
@@ -45,7 +58,11 @@ function initShaders() {
     positionAttribute = gl.getAttribLocation(program, 'position');
     gl.enableVertexAttribArray(positionAttribute);
 
+    texCoordAttribute = gl.getAttribLocation(program, 'texCoord');
+    gl.enableVertexAttribArray(texCoordAttribute);
+
     projectionUniform = gl.getUniformLocation(program, 'P');
+    textureUniform = gl.getUniformLocation(program, 'texture');
 }
 
 function getShader(id) {
@@ -80,13 +97,40 @@ function getShader(id) {
 function initSquare() {
     squareBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
-
     const vertices = [
         1, 1, 0,
         -1, 1, 0,
         1, -1, 0,
         -1, -1, 0
     ];
-
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+
+    squareTexCoordBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, squareTexCoordBuffer);
+    const texCoords = [
+        1, 0,
+        0, 0,
+        1, 1,
+        0, 1
+    ];
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoords), gl.STATIC_DRAW);
+}
+
+function loadTexture(url) {
+    const texture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]));
+
+    const image = new Image();
+    image.onload = function () {
+        gl.bindTexture(gl.TEXTURE_2D, texture);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    };
+    image.src = url;
+    return texture;
 }
