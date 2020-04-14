@@ -6,4 +6,5 @@ export function init() {
 
 // main update function (called every DELTA seconds)
 export function update() {
+	// hi its me
 }
