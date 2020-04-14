@@ -1,6 +1,6 @@
 import { canvas, gl, setCanvas, FRAME_TIME } from './model.js'
 import { initGL, render } from './render.js'
-import { update } from './update.js'
+import { init, update } from './update.js'
 
 // unwrap glmatrix in global context
 Object.assign(window, glMatrix);
@@ -15,6 +15,7 @@ function main() {
     initGL();
 
     window.running = true;
+    init();
     requestAnimationFrame(tick);
 }
 
