@@ -1,4 +1,5 @@
 import { gl, canvas, player } from './model.js'
+import { mat4, vec3, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
 let matrixUniform, textureUniform;

@@ -1,5 +1,6 @@
 import { DELTA, player } from './model.js'
 import { key } from './input.js'
+import { vec2 } from './gl-matrix-min.js'
 
 export function init() {
     player.position = vec2.fromValues(0, 0);
