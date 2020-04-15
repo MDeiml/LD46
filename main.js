@@ -1,6 +1,6 @@
 import { canvas, gl, setCanvas, FRAME_TIME } from './model.js'
 import { initGL, render } from './render.js'
-import { initInput, updateInput } from './render.js'
+import { initInput, updateInput } from './input.js'
 import { update } from './update.js'
 
 // unwrap glmatrix in global context
