@@ -5,10 +5,10 @@ let lastKeys = {};
 let nextKeys = {};
 
 export function initInput() {
-    canvas.addEventListener('keydown', function (event) {
+    document.addEventListener('keydown', function (event) {
         nextKeys[event.code] = true;
     });
-    canvas.addEventListener('keyup', function (event) {
+    document.addEventListener('keyup', function (event) {
         nextKeys[event.code] = false;
     });
 }
