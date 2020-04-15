@@ -1,4 +1,5 @@
 import { gl, canvas } from './model.js'
+import { * } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
 let projectionUniform, textureUniform;

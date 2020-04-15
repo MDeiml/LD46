@@ -3,9 +3,6 @@ import { initGL, render } from './render.js'
 import { initInput, updateInput } from './input.js'
 import { update } from './update.js'
 
-// unwrap glmatrix in global context
-Object.assign(window, glMatrix);
-
 window.running = false;
 let unprocessed = 0;
 let lastTick;
