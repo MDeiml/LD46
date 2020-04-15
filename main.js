@@ -1,6 +1,7 @@
 import { canvas, gl, setCanvas, FRAME_TIME } from './model.js'
 import { initGL, render } from './render.js'
 import { init, update } from './update.js'
+import { initInput, updateInput } from './input.js'
 
 // unwrap glmatrix in global context
 Object.assign(window, glMatrix);
@@ -13,6 +14,7 @@ let lastTick;
 function main() {
     setCanvas(document.getElementById('glCanvas'));
     initGL();
+    initInput();
 
     window.running = true;
     init();
@@ -39,6 +41,7 @@ function tick(now) {
     let fps = 0;
     while (unprocessed >= FRAME_TIME) {
         unprocessed -= FRAME_TIME;
+        updateInput();
         update();
         shouldRender = true;
         fps += 1;
