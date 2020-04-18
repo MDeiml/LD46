@@ -8,10 +8,25 @@ export const DELTA = 1 / FPS;
 
 export let items = [];
 
-// Just the player
 export let player = {
     position: vec2.create()
 };
+
+export const items = {
+	AXE: 0,
+	TORCH: 1,
+	BOW: 2,
+	ARROW: 3,
+	SPEAR: 4,
+	KNIFE: 5
+}
+
+export class Item {
+	constructor(pos, id) {
+		this.pos = pos;
+		this.id = id;
+	}
+}
 
 export function setCanvas(c) {
     canvas = c;
