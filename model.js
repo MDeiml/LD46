@@ -71,7 +71,7 @@ export class Pos {
 	inReachOfFire() {
 		return this.distanceToFire() <= FIRE_RADIUS;
 	}
-	
+
 	distanceToFire() {
 		// xAbs = Math.abs(this.x);
 		// yAbs = Math.abs(this.y);
