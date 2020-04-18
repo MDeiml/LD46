@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="20cm"
+   height="20cm"
+   viewBox="0 0 200 199.99999"
    version="1.1"
    id="svg8"
    sodipodi:docname="tree3.svg"
@@ -36,7 +36,8 @@
      inkscape:window-x="1979"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:snap-grids="true" />
+     inkscape:snap-grids="true"
+     units="cm" />
   <metadata
      id="metadata5">
     <rdf:RDF>
@@ -52,35 +53,36 @@
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(0,-97.000015)">
     <rect
-       style="fill:#552200;stroke-width:0.2698231"
+       style="fill:#552200;stroke-width:0.21716803"
        id="rect3717"
-       width="27.79603"
-       height="125.08215"
-       x="78.57724"
-       y="152.67445" />
+       width="23.247589"
+       height="96.879913"
+       x="76.361336"
+       y="199.05103" />
     <ellipse
-       style="fill:#445016;stroke-width:0.45621827"
+       style="fill:#445016;stroke-width:0.36718881"
        id="path3787"
-       ry="71.093689"
-       rx="48.108513"
-       cy="92.806076"
-       cx="93.544334" />
+       ry="55.064217"
+       rx="40.23621"
+       cy="152.68114"
+       cx="88.879272" />
     <ellipse
-       style="fill:#445016;stroke-width:0.12933411"
+       style="fill:#445016;stroke-width:0.10409499"
        id="path3787-3"
-       ry="19.777939"
-       rx="13.898012"
-       cy="168.17609"
-       cx="149.1364" />
+       ry="15.318613"
+       rx="11.623792"
+       cy="211.05751"
+       cx="135.37444" />
     <rect
-       style="fill:#552200;stroke-width:0.0835524"
+       style="fill:#552200;stroke-width:0.06728864"
        id="rect3717-7"
-       width="5.6150475"
-       height="59.37236"
-       x="222.97801"
-       y="-12.821666"
-       transform="matrix(0.59197112,0.80595917,-0.7938105,0.60816519,0,0)" />
+       width="4.4737601"
+       height="48.331543"
+       x="249.81653"
+       y="31.49427"
+       transform="matrix(0.62140733,0.78348767,-0.8155782,0.57864686,0,0)" />
   </g>
 </svg>
