@@ -1,4 +1,4 @@
-import { gl, canvas, items, player } from './model.js'
+import { gl, canvas, items, player, trees } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -7,7 +7,7 @@ let squareBuffer, squareTexCoordBuffer;
 export let projectionMatrix;
 export let invProjectionMatrix;
 
-let testTexture;
+let treeTextures;
 let backgroundTexture;
 let fireTexture;
 
@@ -16,9 +16,12 @@ export function render() {
     drawTexture(backgroundTexture, vec2.fromValues(-50, -50), vec2.fromValues(100, 100));
 
     drawTexture(fireTexture, vec2.fromValues(-0.5, -0.5));
-    drawTexture(testTexture, player.position);
+    drawTexture(treeTextures[0], player.position);
     for (let item of items) {
-        drawTexture(testTexture, item.position);
+        drawTexture(treeTextures[0], item.position);
+    }
+    for (let tree of trees) {
+        drawTexture(treeTextures[tree.type], tree.position, vec2.fromValues(2, 2));
     }
 }
 
@@ -53,7 +56,10 @@ export function initGL() {
     initShaders();
     initSquare();
 
-    testTexture = loadTexture('./textures/tree1.svg');
+    treeTextures = [];
+    for (let i = 0; i < 4; i++) {
+        treeTextures.push(loadTexture('./textures/tree' + i + '.svg'));
+    }
     fireTexture = loadTexture('./textures/fire0.svg');
     backgroundTexture = whiteTexture();
 
@@ -156,8 +162,6 @@ function loadTexture(url) {
 
     const image = new Image();
     image.onload = function () {
-        image.width = 60;
-        image.height = 60;
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
 

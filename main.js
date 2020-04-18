@@ -1,7 +1,7 @@
 import { canvas, gl, setCanvas, FRAME_TIME } from './model.js'
 import { initGL, render } from './render.js'
 import { initInput, updateInput } from './input.js'
-import { update } from './update.js'
+import { update, init } from './update.js'
 
 window.running = false;
 let unprocessed = 0;
@@ -12,6 +12,7 @@ function main() {
     setCanvas(document.getElementById('glCanvas'));
     initGL();
     initInput();
+    init();
 
     window.running = true;
     requestAnimationFrame(tick);

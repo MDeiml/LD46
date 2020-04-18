@@ -11,6 +11,7 @@ export const FIRE_RADIUS = 1;
 
 export let fireSize = 0;
 export let items = [];
+export let trees = [];
 
 export let player = {
     speed: 2,
@@ -29,12 +30,12 @@ export const FIRES = {
 export const TOOLS = {
 	AXE: 0,
 	TORCH: 1,
-	BOW: 2,
-	ARROW: 3,
-	SPEAR: 4,
-	KNIFE: 5,
-	FISHING_ROD: 6,
-	PICKAXE: 7
+	KNIFE: 2,
+	SPEAR: 3,
+	PICKAXE: 4,
+	FISHING_ROD: 5,
+	BOW: 6,
+	ARROW: 7
 }
 
 export const ITEMS = {
@@ -48,6 +49,13 @@ export const FOOD = {
 	FISH: 2002,
 	COOKED_FISH: 2003,
 	BERRIES: 2004
+}
+
+export function createTree(position) {
+    trees.push({
+        position: position,
+        type: Math.floor(Math.random() * 4)
+    });
 }
 
 export class Recipe {
