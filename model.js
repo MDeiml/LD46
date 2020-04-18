@@ -98,10 +98,12 @@ export function distanceToFire(vec) {
 }
 
 export function layDown() {
+    console.log("ts1");
 	if (player.carrying == null) {
 		return false;
 	}
-	items.push(new Item(player.position, player.carrying));
+    console.log("ts");
+	items.push(new Item(vec2.clone(player.position), player.carrying));
 	player.carrying = null;
 	return true;
 }
