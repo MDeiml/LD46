@@ -21,7 +21,7 @@ export function render() {
         drawTexture(treeTextures[0], item.position);
     }
     for (let tree of trees) {
-        drawTexture(treeTextures[tree.type], tree.position);
+        drawTexture(treeTextures[tree.type], tree.position, vec2.fromValues(2, 2));
     }
 }
 
@@ -162,8 +162,6 @@ function loadTexture(url) {
 
     const image = new Image();
     image.onload = function () {
-        image.width = 60;
-        image.height = 60;
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
 
