@@ -1,5 +1,5 @@
 import { gl, canvas, items, player } from './model.js'
-import { mat4, vec3, quat } from './gl-matrix-min.js'
+import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
 let matrixUniform, textureUniform, modelUniform;
@@ -8,11 +8,11 @@ export let projectionMatrix;
 export let invProjectionMatrix;
 
 let testTexture;
+let backgroundTexture;
 
 // main render function
 export function render() {
-    // clear canvas to black
-    gl.clear(gl.COLOR_BUFFER_BIT);
+    drawTexture(backgroundTexture, vec2.fromValues(-50, -50), vec2.fromValues(100, 100));
 
     drawTexture(testTexture, player.position);
     for (let item of items) {
@@ -35,7 +35,7 @@ function drawTexture(id, position, scale) {
     gl.uniform1i(textureUniform, 0);
 
     let transform = mat4.create();
-    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), scale);
+    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(scale[0], scale[1], 0));
     gl.uniformMatrix4fv(modelUniform, false, transform)
     mat4.mul(transform, projectionMatrix, transform);
     gl.uniformMatrix4fv(matrixUniform, false, transform);
@@ -52,6 +52,7 @@ export function initGL() {
     initSquare();
 
     testTexture = loadTexture('./textures/tree1.svg');
+    backgroundTexture = whiteTexture();
 
     let aspect = canvas.width / canvas.height;
     projectionMatrix = mat4.create();
@@ -136,6 +137,13 @@ function initSquare() {
         0, 1
     ];
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoords), gl.STATIC_DRAW);
+}
+
+function whiteTexture() {
+    const texture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]));
+    return texture;
 }
 
 function loadTexture(url) {
