@@ -18,6 +18,7 @@ export let player = {
     position: vec2.create(),
     goal: vec2.create(),
     walking: false,
+    walkingTimer: 0,
     carrying: null
 };
 
