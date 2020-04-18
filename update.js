@@ -1,5 +1,5 @@
 import { DELTA, player, createTree, items, Item, ITEMS } from './model.js';
-import { mousePos } from './input.js';
+import { mousePos, doubleClick } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
 export function init() {

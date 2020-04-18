@@ -25,7 +25,7 @@ export function render() {
     drawTexture(backgroundTexture, transform);
 
     // draw fire
-    mat4.fromTranslation(transform, vec3.fromValues(-0.5, -0.5, 0));
+    mat4.identity(transform);
     drawTexture(fireTexture, transform);
 
     // draw player
