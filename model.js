@@ -96,6 +96,15 @@ export function distanceToFire(vec) {
 	return vec2.length(vec);
 }
 
+export function layDown() {
+	if (player.carrying == null) {
+		return false;
+	}
+	items.push(player.carrying);
+	player.carrying = null;
+	return true;
+}
+
 // (Wood, Stone)
 export const RECIPES = {
 	AXE: new Recipe(2, 1, FIRES.OPEN_FIRE),
