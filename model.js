@@ -120,7 +120,7 @@ export function pickUp() {
 }
 
 export function removeItem(posInArray) {
-	return items.splice(posInArray, 1);
+	return items.splice(posInArray, 1)[0];
 }
 
 // returns the position in the items array of the item that is nearest to the player
