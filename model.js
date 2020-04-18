@@ -30,12 +30,12 @@ export const FIRES = {
 export const TOOLS = {
 	AXE: 0,
 	TORCH: 1,
-	BOW: 2,
-	ARROW: 3,
-	SPEAR: 4,
-	KNIFE: 5,
-	FISHING_ROD: 6,
-	PICKAXE: 7
+	KNIFE: 2,
+	SPEAR: 3,
+	PICKAXE: 4,
+	FISHING_ROD: 5,
+	BOW: 6,
+	ARROW: 7
 }
 
 export const ITEMS = {
