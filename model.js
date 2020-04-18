@@ -101,9 +101,39 @@ export function layDown() {
 	if (player.carrying == null) {
 		return false;
 	}
-	items.push(player.carrying);
+	items.push(new Item(player.position, player.carrying));
 	player.carrying = null;
 	return true;
+}
+
+export function pickUp() {
+	posNearest = nearestItem();
+	pickedUp = removeItem(posNearest);
+	if (player.carrying != null) {
+		layDown();
+	}
+	player.carrying = pickedUp.id;
+}
+
+export function removeItem(posInArray) {
+	return items.splice(posInArray, 1);
+}
+
+// returns the position in the items array of the item that is nearest to the player
+export function nearestItem() {
+	if (items.length == 0) {
+		return -1;
+	}
+	posMin = 0;
+	lenMin = vec2.length(vec2.sub(player.position, items[0].pos));
+	for (let i = 1; i < items.length; i++) {
+		len = vec2.length(vec2.sub(player.position, items[i].pos));
+		if (len < lenMin) {
+			posMin = i;
+			lenMin = len;
+		}
+	}
+	return posMin;
 }
 
 // (Wood, Stone)
