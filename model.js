@@ -81,23 +81,12 @@ export class Item {
 	}
 }
 
-export class Pos {
-	constructor(vec) {
-		this.x = vec[0];
-		this.y = vec[1];
-		this.vec = vec;
-	}
+export function inReachOfFire(vec) {
+	return distanceToFire(vec) <= FIRE_RADIUS;
+}
 
-	inReachOfFire() {
-		return this.distanceToFire() <= FIRE_RADIUS;
-	}
-
-	distanceToFire() {
-		// xAbs = Math.abs(this.x);
-		// yAbs = Math.abs(this.y);
-		// return Math.sqrt(xAbs*xAbs + yAbs*yAbs);
-		return vec2.length(this.vec);
-	}
+export function distanceToFire(vec) {
+	return vec2.length(vec);
 }
 
 // (Wood, Stone)
@@ -110,6 +99,12 @@ export const RECIPES = {
 	FISHING_ROD: new Recipe(3, 0, FIRES.COOKING_FIRE),
 	BOW: new Recipe(4, 0, FIRES.COOKING_FIRE),
 	ARROW: new Recipe(1, 1, FIRES.COOKING_FIRE)
+}
+
+export const FIRES_UPGRADES = {
+	CAMPFIRE:  new Recipe(10, 5, FIRES.OPEN_FIRE),
+	COOKING_FIRE:  new Recipe(20, 10, FIRES.CAMPFIRE),
+	BEACON:   new Recipe(40, 20, FIRES.COOKING_FIRE)
 }
 
 export function getRecipe(tool) {
@@ -126,7 +121,7 @@ export function getRecipe(tool) {
 export function itemsInReachOfFire() {
 	ret = [];
 	for (let i = 0; i < items.length; i++) {
-		if (items[i].pos.inReachOfFire) {
+		if (inReachOfFire(items[i].pos)) {
 			ret.push(items[i]);
 		}
 	}
@@ -146,12 +141,25 @@ export function craft(desired) {
 	return null;
 }
 
+export function upgradeFire() {
+	numWoodAndStone = countOccurences(itemsInReachOfFire());
+	if (numWoodAndStone.isPossible(FIRES_UPGRADES[fireSize+1])) {
+		if (removeItemsInReachOfFire(recipe)) {
+			fireSize++;
+			return true;
+		} else {
+			console.log("Something went wrong when removing the ingredients");
+		}
+	}
+	return false;
+}
+
 export function removeItemsInReachOfFire(recipe) {
 	if (!countOccurences(items).isPossible(recipe)) {
 		return false;
 	}
 	for (let i = 0; i < items.length; i++) {
-		if (!items[i].pos.inReachOfFire()) {
+		if (!inReachOfFire(items[i].pos)) {
 			continue;
 		}
 		if (recipe.wood > 0 && items[i].id == ITEMS.WOOD) {
@@ -172,7 +180,7 @@ export function removeFoodInReachOfFire(items, recipe) {
 		return false;
 	}
 	for (let i = 0; i < items.length; i++) {
-		if (!items[i].pos.inReachOfFire()) {
+		if (!inReachOfFire(items[i].pos)) {
 			continue;
 		}
 		if (recipe.wood > 0 && items[i].id == ITEMS.WOOD) {
