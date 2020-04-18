@@ -17,7 +17,8 @@ export let player = {
     speed: 2,
     position: vec2.create(),
     goal: vec2.create(),
-    walking: false
+    walking: false,
+    carrying: null
 };
 
 export const FIRES = {
