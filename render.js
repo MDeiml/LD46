@@ -7,7 +7,7 @@ let squareBuffer, squareTexCoordBuffer;
 export let projectionMatrix;
 export let invProjectionMatrix;
 
-let treeTexture;
+let treeTextures;
 let backgroundTexture;
 let fireTexture;
 
@@ -16,12 +16,12 @@ export function render() {
     drawTexture(backgroundTexture, vec2.fromValues(-50, -50), vec2.fromValues(100, 100));
 
     drawTexture(fireTexture, vec2.fromValues(-0.5, -0.5));
-    drawTexture(treeTexture, player.position);
+    drawTexture(treeTextures[0], player.position);
     for (let item of items) {
-        drawTexture(treeTexture, item.position);
+        drawTexture(treeTextures[0], item.position);
     }
     for (let tree of trees) {
-        drawTexture(treeTexture, tree.position);
+        drawTexture(treeTextures[tree.type], tree.position);
     }
 }
 
@@ -56,7 +56,10 @@ export function initGL() {
     initShaders();
     initSquare();
 
-    treeTexture = loadTexture('./textures/tree1.svg');
+    treeTextures = [];
+    for (let i = 0; i < 4; i++) {
+        treeTextures.push(loadTexture('./textures/tree' + i + '.svg'));
+    }
     fireTexture = loadTexture('./textures/fire0.svg');
     backgroundTexture = whiteTexture();
 
