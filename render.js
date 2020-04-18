@@ -1,5 +1,5 @@
 import { gl, canvas, items, player } from './model.js'
-import { mat4, vec3 } from './gl-matrix-min.js'
+import { mat4, vec3, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
 let matrixUniform, textureUniform, modelUniform;
@@ -20,7 +20,10 @@ export function render() {
     }
 }
 
-function drawTexture(id, position) {
+function drawTexture(id, position, scale) {
+    if (!scale) {
+        scale = vec3.fromValues(1, 1, 1);
+    }
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
     gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
 
@@ -32,7 +35,7 @@ function drawTexture(id, position) {
     gl.uniform1i(textureUniform, 0);
 
     let transform = mat4.create();
-    mat4.fromTranslation(transform, vec3.fromValues(position[0], position[1], 0));
+    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), scale);
     gl.uniformMatrix4fv(modelUniform, false, transform)
     mat4.mul(transform, projectionMatrix, transform);
     gl.uniformMatrix4fv(matrixUniform, false, transform);

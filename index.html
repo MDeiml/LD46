@@ -29,10 +29,10 @@
 
             void main(void) {
                 vec4 color = texture2D(texture, vTexCoord);
-                if (length(worldPos) > 1.0) {
-                    float gray = color.r * 0.3 + color.g * 0.59 + color.b * 0.11;
-                    color = vec4(gray * vec3(79.0/255.0, 79.0/255.0, 128.0/255.0), 1.0);
-                }
+                float t = clamp(1.0/dot(worldPos, worldPos), 0.0, 1.0);
+                float gray = color.r * 0.3 + color.g * 0.59 + color.b * 0.11;
+                vec3 grayColor = gray * vec3(79.0/255.0, 79.0/255.0, 128.0/255.0);
+                color.rgb = (1.0 - t) * grayColor + t * color.rgb;
                 gl_FragColor = color;
             }
         </script>
