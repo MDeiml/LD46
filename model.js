@@ -18,6 +18,13 @@ export let player = {
     walking: false
 };
 
+export const FIRES = {
+	OPEN_FIRE: 0,
+	CAMPFIRE: 1,
+	COOKING_FIRE: 2,
+	BEACON: 3
+}
+
 export const TOOLS = {
 	AXE: 0,
 	TORCH: 1,
@@ -43,9 +50,10 @@ export const FOOD = {
 }
 
 export class Recipe {
-	constructor(wood, stone) {
+	constructor(wood, stone, neededFire) {
 		this.wood = wood;
 		this.stone = stone;
+		this.neededFire = neededFire;
 	};
 
 	// Returns, if it is possible to craft the object other out of the given Item Set
@@ -114,6 +122,7 @@ export function itemsInReachOfFire() {
 }
 
 export function craft(desired) {
+	
 	recipe = getRecipe(desired);
 	numWoodAndStone = countOccurences(itemsInReachOfFire());
 	if (numWoodAndStone.isPossible(recipe)) {
