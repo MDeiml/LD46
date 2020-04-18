@@ -29,7 +29,8 @@ export function render() {
     drawTexture(fireTexture, transform);
 
     // draw player
-    mat4.fromTranslation(transform, vec2ToVec3(player.position));
+    let angle = Math.sin(player.walkingTimer * 5) * 10;
+    mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, 0, angle), vec2ToVec3(player.position), vec3.fromValues(1, 1, 1));
     drawTexture(playerTexture, transform);
     if (player.carrying) {
         drawTexture(itemTextures[player.carrying], transform);
