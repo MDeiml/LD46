@@ -265,5 +265,9 @@ export function cook(food) {
 
 export function setCanvas(c) {
     canvas = c;
+    let w = canvas.clientWidth;
+    let h = canvas.clientHeight;
+    canvas.width = w;
+    canvas.height = h;
     gl = canvas.getContext('webgl');
 }
