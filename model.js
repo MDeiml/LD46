@@ -10,6 +10,15 @@ export const DELTA = 1 / FPS;
 export const FIRE_RADIUS = 1;
 export const PICK_UP_RADIUS = 1;
 
+export const STARTING_WOOD = 3;
+export const STARTING_STONE = 5;
+export const STARTING_TREES = 40;
+export const RESOURCE_SPAWN_RADIUS = 10;
+export const NO_TREES_AROUND_FIRE_RADIUS = 2.5;
+export const DISTANCE_BETWEEN_TREES = 1;
+export const NO_INIT_ITEMS_AROUND_FIRE_RADIUS = 3;
+export const DISTANCE_BETWEEN_ITEMS_OF_SAME_TYPE = 3;
+
 // Type of the fire
 export let fireSize = 0;
 // The capacity of logs a fire can hold
@@ -60,11 +69,71 @@ export const FOOD = {
 	BERRIES: 2004
 }
 
+export function createItem(position, type) {
+	if (vec2.length(position) < NO_INIT_ITEMS_AROUND_FIRE_RADIUS) {
+		return false;
+	}
+	for (let i = 0; i < items.length; i++) {
+		if (items[i].id != type) {
+			continue;
+		}
+		if (vec2.distance(items[i].pos, position) <
+				(DISTANCE_BETWEEN_ITEMS_OF_SAME_TYPE + 1)) {
+			return false;
+		}
+	}
+	position[0] += Math.random();
+	position[1] += Math.random();
+	items.push(new Item(position, type));
+	return true;
+}
+
 export function createTree(position) {
+	if (vec2.length(position) < NO_TREES_AROUND_FIRE_RADIUS) {
+		return false;
+	}
+	for (let i = 0; i < trees.length; i++) {
+		if (vec2.distance(trees[i].position, position) < (DISTANCE_BETWEEN_TREES + 1)) {
+			return false;
+		}
+	}
+	position[0] += Math.random();
+	position[1] += Math.random();
     trees.push({
         position: position,
         type: Math.floor(Math.random() * 4)
-    });
+	});
+	return true;
+}
+
+export function initItems() {
+	for (let i = 0; i < STARTING_WOOD; i++) {
+		if (!createItem(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
+				RESOURCE_SPAWN_RADIUS, Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
+				RESOURCE_SPAWN_RADIUS), ITEMS.WOOD)) {
+			i--;
+			continue;
+		}
+	}
+	for (let i = 0; i < STARTING_STONE; i++) {
+		if (!createItem(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
+				RESOURCE_SPAWN_RADIUS, Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
+				RESOURCE_SPAWN_RADIUS), ITEMS.STONE)) {
+			i--;
+			continue;
+		}
+	}
+}
+
+export function initTrees() {
+	for (let i = 0; i < STARTING_TREES; i++) {
+		if (!createTree(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
+				RESOURCE_SPAWN_RADIUS, Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
+				RESOURCE_SPAWN_RADIUS))) {
+			i--;
+			continue;
+		}
+	}
 }
 
 export class Recipe {
@@ -110,9 +179,10 @@ export function layDown() {
 }
 
 export function pickUp() {
+	let wasCarrying = player.carrying != null;
 	let posNearest = nearestItem();
     layDown();
-	if (posNearest < 0) {
+	if (posNearest < 0 || (inReachOfFire(player.position) && wasCarrying)) {
 		return;
 	}
 	let pickedUp = removeItem(posNearest);
