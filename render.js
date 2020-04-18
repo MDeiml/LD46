@@ -46,10 +46,12 @@ function drawTexture(id, position, scale) {
 // has to be called before calling render
 export function initGL() {
     gl.clearColor(42/255, 51/255, 81/255, 1);
+    gl.enable(gl.BLEND);
+    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     initShaders();
     initSquare();
 
-    testTexture = loadTexture('./test.jpg');
+    testTexture = loadTexture('./textures/tree1.svg');
 
     let aspect = canvas.width / canvas.height;
     projectionMatrix = mat4.create();
@@ -148,7 +150,7 @@ function loadTexture(url) {
 
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     };
     image.src = url;
