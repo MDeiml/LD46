@@ -110,10 +110,8 @@ export function layDown() {
 }
 
 export function pickUp() {
-	if (player.carrying != null) {
-		layDown();
-	}
 	let posNearest = nearestItem();
+    layDown();
 	if (posNearest < 0) {
 		return;
 	}
