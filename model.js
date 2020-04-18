@@ -12,7 +12,7 @@ export let player = {
     position: vec2.create()
 };
 
-export const items = {
+export const ITEMS = {
 	AXE: 0,
 	TORCH: 1,
 	BOW: 2,
