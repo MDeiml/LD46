@@ -1,3 +1,5 @@
+import { vec2 } from './gl-matrix-min.js'
+
 export let canvas;
 export let gl;
 export const FPS = 60;
@@ -6,8 +8,8 @@ export const DELTA = 1 / FPS;
 
 export let items = [];
 export let player = {
-    position: vec2.create();
-}
+    position: vec2.create()
+};
 
 export function setCanvas(c) {
     canvas = c;

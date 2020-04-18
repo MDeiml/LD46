@@ -1,8 +1,8 @@
-import { gl, canvas } from './model.js'
-import { mat4 } from './gl-matrix-min.js'
+import { gl, canvas, items, player } from './model.js'
+import { mat4, vec3 } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
-let projectionUniform, textureUniform;
+let matrixUniform, textureUniform;
 let squareBuffer, squareTexCoordBuffer;
 let projectionMatrix;
 
@@ -13,6 +13,13 @@ export function render() {
     // clear canvas to black
     gl.clear(gl.COLOR_BUFFER_BIT);
 
+    drawTexture(testTexture, player.position);
+    for (let item of items) {
+        drawTexture(testTexture, item.position);
+    }
+}
+
+function drawTexture(id, position) {
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
     gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
 
@@ -20,10 +27,13 @@ export function render() {
     gl.vertexAttribPointer(texCoordAttribute, 2, gl.FLOAT, false, 0, 0);
 
     gl.activeTexture(gl.TEXTURE0);
-    gl.bindTexture(gl.TEXTURE_2D, testTexture);
+    gl.bindTexture(gl.TEXTURE_2D, id);
     gl.uniform1i(textureUniform, 0);
 
-    gl.uniformMatrix4fv(projectionUniform, false, projectionMatrix);
+    let transform = mat4.create();
+    mat4.fromTranslation(transform, vec3.fromValues(position[0], position[1], 0));
+    mat4.mul(transform, projectionMatrix, transform);
+    gl.uniformMatrix4fv(matrixUniform, false, transform);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
@@ -39,6 +49,7 @@ export function initGL() {
     let aspect = canvas.width / canvas.height;
     projectionMatrix = mat4.create();
     mat4.ortho(projectionMatrix, -aspect, aspect, -1, 1, -1, 1);
+    mat4.scale(projectionMatrix, projectionMatrix, vec3.fromValues(0.1, 0.1, 1));
 }
 
 function initShaders() {
@@ -62,7 +73,7 @@ function initShaders() {
     texCoordAttribute = gl.getAttribLocation(program, 'texCoord');
     gl.enableVertexAttribArray(texCoordAttribute);
 
-    projectionUniform = gl.getUniformLocation(program, 'P');
+    matrixUniform = gl.getUniformLocation(program, 'MVP');
     textureUniform = gl.getUniformLocation(program, 'texture');
 }
 

@@ -9,11 +9,11 @@
 
             varying highp vec2 vTexCoord;
 
-            uniform mat4 P;
+            uniform mat4 MVP;
 
             void main(void) {
                 vTexCoord = texCoord;
-                gl_Position = P * vec4(position, 1.0);
+                gl_Position = MVP * vec4(position, 1.0);
             }
         </script>
         <script id="shader-fs" type="x-shader/x-fragment">
