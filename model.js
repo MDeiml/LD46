@@ -62,9 +62,10 @@ export class Item {
 }
 
 export class Pos {
-	constructor(x, y) {
-		this.x = x;
-		this.y = y;
+	constructor(vec) {
+		this.x = vec[0];
+		this.y = vec[1];
+		this.vec = vec;
 	}
 
 	inReachOfFire() {
@@ -72,9 +73,10 @@ export class Pos {
 	}
 	
 	distanceToFire() {
-		xAbs = Math.abs(this.x);
-		yAbs = Math.abs(this.y);
-		return Math.sqrt(xAbs*xAbs + yAbs*yAbs);
+		// xAbs = Math.abs(this.x);
+		// yAbs = Math.abs(this.y);
+		// return Math.sqrt(xAbs*xAbs + yAbs*yAbs);
+		return vec2.length(this.vec);
 	}
 }
 
@@ -101,7 +103,7 @@ export function getRecipe(tool) {
 	return RECIPES[keys[i]];
 }
 
-export function itemsInReachOfFire(items) {
+export function itemsInReachOfFire() {
 	ret = [];
 	for (let i = 0; i < items.length; i++) {
 		if (items[i].pos.inReachOfFire) {
@@ -111,31 +113,62 @@ export function itemsInReachOfFire(items) {
 	return ret;
 }
 
-// TODO: remove the used ingredients from items
-export function craft(items, desired) {
-	numWoodAndStone = countOccurences(items);
-	if (numWoodAndStone.isPossible(getRecipe(desired))) {
-		items = removeItemsInReachOfFire(items, getRecipe(desired));
-		return desired;
+export function craft(desired) {
+	recipe = getRecipe(desired);
+	numWoodAndStone = countOccurences(itemsInReachOfFire());
+	if (numWoodAndStone.isPossible(recipe)) {
+		if (removeItemsInReachOfFire(recipe)) {
+			return desired;
+		} else {
+			console.log("Something went wrong when removing the ingredients");
+		}
 	}
 	return null;
 }
 
-export function removeItemsInReachOfFire(items, recipe) {
+export function removeItemsInReachOfFire(recipe) {
+	if (!countOccurences(items).isPossible(recipe)) {
+		return false;
+	}
 	for (let i = 0; i < items.length; i++) {
 		if (!items[i].pos.inReachOfFire()) {
 			continue;
 		}
 		if (recipe.wood > 0 && items[i].id == ITEMS.WOOD) {
 			items.splice(i, 1);
+			recipe.wood--;
 		} else if (recipe.stone > 0 && items[i].id == ITEMS.STONE) {
 			items.splice(i, 1);
+			recipe.stone--;
 		} else if (recipe.wood == 0 && recipe.stone == 0) {
 			break;
 		}
 	}
+	return true;
 }
 
+export function removeFoodInReachOfFire(items, recipe) {
+	if (!countOccurences(items).isPossible(recipe)) {
+		return false;
+	}
+	for (let i = 0; i < items.length; i++) {
+		if (!items[i].pos.inReachOfFire()) {
+			continue;
+		}
+		if (recipe.wood > 0 && items[i].id == ITEMS.WOOD) {
+			items.splice(i, 1);
+			recipe.wood--;
+		} else if (recipe.stone > 0 && items[i].id == ITEMS.STONE) {
+			items.splice(i, 1);
+			recipe.stone--;
+		} else if (recipe.wood == 0 && recipe.stone == 0) {
+			break;
+		}
+	}
+	return true;
+}
+
+// Get a Recipe from a List of items
 export function countOccurences(items) {
 	wood = 0;
 	stone = 0;
@@ -152,6 +185,8 @@ export function countOccurences(items) {
 	return new Recipe(wood, stone);
 }
 
+// TODO: Not yet finished. Don't use food system
+// Cooking food won't remove the raw item
 export function cook(food) {
 	switch(food) {
 		case FOOD.FISH:
