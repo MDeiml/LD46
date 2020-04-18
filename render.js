@@ -2,7 +2,7 @@ import { gl, canvas, items, player } from './model.js'
 import { mat4, vec3 } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
-let matrixUniform, textureUniform;
+let matrixUniform, textureUniform, modelUniform;
 let squareBuffer, squareTexCoordBuffer;
 export let projectionMatrix;
 export let invProjectionMatrix;
@@ -33,6 +33,7 @@ function drawTexture(id, position) {
 
     let transform = mat4.create();
     mat4.fromTranslation(transform, vec3.fromValues(position[0], position[1], 0));
+    gl.uniformMatrix4fv(modelUniform, false, transform)
     mat4.mul(transform, projectionMatrix, transform);
     gl.uniformMatrix4fv(matrixUniform, false, transform);
 
@@ -77,6 +78,7 @@ function initShaders() {
     gl.enableVertexAttribArray(texCoordAttribute);
 
     matrixUniform = gl.getUniformLocation(program, 'MVP');
+    modelUniform = gl.getUniformLocation(program, 'M');
     textureUniform = gl.getUniformLocation(program, 'texture');
 }
 
