@@ -21,7 +21,7 @@ function vec2ToVec3(v) {
 // main render function
 export function render() {
     let transform = mat4.create();
-    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(-50, -50, 0), vec3.fromValues(100, 100, 0));
+    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(0, -50, 0), vec3.fromValues(100, 100, 0));
     drawTexture(backgroundTexture, transform);
 
     // draw fire
@@ -29,7 +29,7 @@ export function render() {
     drawTexture(fireTexture, transform);
 
     // draw player
-    let angle = Math.sin(player.walkingTimer * 5) * 10;
+    let angle = Math.pow(Math.sin(player.walkingTimer * 5), 2) * 10;
     mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, 0, angle), vec2ToVec3(player.position), vec3.fromValues(1, 1, 1));
     drawTexture(playerTexture, transform);
     if (player.carrying) {
@@ -151,10 +151,10 @@ function initSquare() {
     squareBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
     const vertices = [
-        1, 1, 0,
-        0, 1, 0,
-        1, 0, 0,
-        0, 0, 0
+        0.5, 1, 0,
+        -0.5, 1, 0,
+        0.5, 0, 0,
+        -0.5, 0, 0
     ];
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
