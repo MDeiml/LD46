@@ -119,6 +119,17 @@ export function getRecipe(tool) {
 	return RECIPES[keys[i]];
 }
 
+export function getFireName() {
+	keys = Object.keys(FIRES);
+	let i;
+	for (i = 0; i < keys.length; i++) {
+		if (FIRES[keys[i]] == fireSize) {
+			break;
+		}
+	}
+	return keys[i];
+}
+
 export function itemsInReachOfFire() {
 	ret = [];
 	for (let i = 0; i < items.length; i++) {
@@ -143,8 +154,9 @@ export function craft(desired) {
 }
 
 export function upgradeFire() {
+	recipe = FIRES_UPGRADES[getFireName()];
 	numWoodAndStone = countOccurences(itemsInReachOfFire());
-	if (numWoodAndStone.isPossible(FIRES_UPGRADES[fireSize+1])) {
+	if (numWoodAndStone.isPossible(recipe)) {
 		if (removeItemsInReachOfFire(recipe)) {
 			fireSize++;
 			return true;
