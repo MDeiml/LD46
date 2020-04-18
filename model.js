@@ -9,7 +9,10 @@ export const DELTA = 1 / FPS;
 export let items = [];
 
 export let player = {
-    position: vec2.create()
+    speed: 2,
+    position: vec2.create(),
+    goal: vec2.create(),
+    walking: false
 };
 
 export const ITEMS = {
