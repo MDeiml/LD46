@@ -6,7 +6,7 @@ export const DELTA = 1 / FPS;
 
 export let items = [];
 export let player = {
-    position: vec2.create();
+    position: vec2.create()
 }
 
 export function setCanvas(c) {
