@@ -81,23 +81,12 @@ export class Item {
 	}
 }
 
-export class Pos {
-	constructor(vec) {
-		this.x = vec[0];
-		this.y = vec[1];
-		this.vec = vec;
-	}
+export function inReachOfFire(vec) {
+	return distanceToFire(vec) <= FIRE_RADIUS;
+}
 
-	inReachOfFire() {
-		return this.distanceToFire() <= FIRE_RADIUS;
-	}
-
-	distanceToFire() {
-		// xAbs = Math.abs(this.x);
-		// yAbs = Math.abs(this.y);
-		// return Math.sqrt(xAbs*xAbs + yAbs*yAbs);
-		return vec2.length(this.vec);
-	}
+export function distanceToFire(vec) {
+	return vec2.length(vec);
 }
 
 // (Wood, Stone)
@@ -132,7 +121,7 @@ export function getRecipe(tool) {
 export function itemsInReachOfFire() {
 	ret = [];
 	for (let i = 0; i < items.length; i++) {
-		if (items[i].pos.inReachOfFire) {
+		if (inReachOfFire(items[i].pos)) {
 			ret.push(items[i]);
 		}
 	}
@@ -170,7 +159,7 @@ export function removeItemsInReachOfFire(recipe) {
 		return false;
 	}
 	for (let i = 0; i < items.length; i++) {
-		if (!items[i].pos.inReachOfFire()) {
+		if (!inReachOfFire(items[i].pos)) {
 			continue;
 		}
 		if (recipe.wood > 0 && items[i].id == ITEMS.WOOD) {
@@ -191,7 +180,7 @@ export function removeFoodInReachOfFire(items, recipe) {
 		return false;
 	}
 	for (let i = 0; i < items.length; i++) {
-		if (!items[i].pos.inReachOfFire()) {
+		if (!inReachOfFire(items[i].pos)) {
 			continue;
 		}
 		if (recipe.wood > 0 && items[i].id == ITEMS.WOOD) {
