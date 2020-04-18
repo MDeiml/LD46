@@ -112,6 +112,12 @@ export const RECIPES = {
 	ARROW: new Recipe(1, 1, FIRES.COOKING_FIRE)
 }
 
+export const FIRES_UPGRADES = {
+	CAMPFIRE:  new Recipe(10, 5, FIRES.OPEN_FIRE),
+	COOKING_FIRE:  new Recipe(20, 10, FIRES.CAMPFIRE),
+	BEACON:   new Recipe(40, 20, FIRES.COOKING_FIRE)
+}
+
 export function getRecipe(tool) {
 	keys = Object.keys(TOOLS);
 	let i;
@@ -144,6 +150,19 @@ export function craft(desired) {
 		}
 	}
 	return null;
+}
+
+export function upgradeFire() {
+	numWoodAndStone = countOccurences(itemsInReachOfFire());
+	if (numWoodAndStone.isPossible(FIRES_UPGRADES[fireSize+1])) {
+		if (removeItemsInReachOfFire(recipe)) {
+			fireSize++;
+			return true;
+		} else {
+			console.log("Something went wrong when removing the ingredients");
+		}
+	}
+	return false;
 }
 
 export function removeItemsInReachOfFire(recipe) {
