@@ -1,3 +1,3 @@
 # LD46
-Team Name: ?
-Projekt Name: ?
+Team Name: The Knights of the Coconut
+Projekt Name: to be disclosed
