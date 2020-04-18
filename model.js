@@ -110,14 +110,14 @@ export function layDown() {
 }
 
 export function pickUp() {
-	posNearest = nearestItem();
-	if (posNearest < 0) {
-		return;
-	}
-	pickedUp = removeItem(posNearest);
 	if (player.carrying != null) {
 		layDown();
 	}
+	let posNearest = nearestItem();
+	if (posNearest < 0) {
+		return;
+	}
+	let pickedUp = removeItem(posNearest);
 	player.carrying = pickedUp.id;
 }
 
@@ -130,10 +130,10 @@ export function nearestItem() {
 	if (items.length == 0) {
 		return -1;
 	}
-	posMin = -1;
-	lenMin = PICK_UP_RADIUS;
+	let posMin = -1;
+	let lenMin = PICK_UP_RADIUS;
 	for (let i = 0; i < items.length; i++) {
-		len = vec2.length(vec2.sub(player.position, items[i].pos));
+		let len = vec2.distance(player.position, items[i].pos);
 		if (len < lenMin) {
 			posMin = i;
 			lenMin = len;
