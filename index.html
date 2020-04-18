@@ -7,22 +7,33 @@
             attribute vec3 position;
             attribute vec2 texCoord;
 
-            varying highp vec2 vTexCoord;
+            varying mediump vec2 vTexCoord;
+            varying mediump vec2 worldPos;
 
+            uniform mat4 M;
             uniform mat4 MVP;
 
             void main(void) {
                 vTexCoord = texCoord;
+                worldPos = (M * vec4(position, 1.0)).xy;
                 gl_Position = MVP * vec4(position, 1.0);
             }
         </script>
         <script id="shader-fs" type="x-shader/x-fragment">
-            varying highp vec2 vTexCoord;
+            precision mediump float;
+
+            varying mediump vec2 vTexCoord;
+            varying mediump vec2 worldPos;
 
             uniform sampler2D texture;
 
             void main(void) {
-                gl_FragColor = texture2D(texture, vTexCoord);
+                vec4 color = texture2D(texture, vTexCoord);
+                if (length(worldPos) > 1.0) {
+                    float gray = color.r * 0.3 + color.g * 0.59 + color.b * 0.11;
+                    color = vec4(gray * vec3(79.0/255.0, 79.0/255.0, 128.0/255.0), 1.0);
+                }
+                gl_FragColor = color;
             }
         </script>
     </head>
