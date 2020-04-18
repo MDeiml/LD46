@@ -4,7 +4,8 @@ import { mat4, vec3 } from './gl-matrix-min.js'
 let positionAttribute, texCoordAttribute;
 let matrixUniform, textureUniform;
 let squareBuffer, squareTexCoordBuffer;
-let projectionMatrix;
+export let projectionMatrix;
+export let invProjectionMatrix;
 
 let testTexture;
 
@@ -40,7 +41,7 @@ function drawTexture(id, position) {
 
 // has to be called before calling render
 export function initGL() {
-    gl.clearColor(0, 0, 0, 1);
+    gl.clearColor(42/255, 51/255, 81/255, 1);
     initShaders();
     initSquare();
 
@@ -50,6 +51,8 @@ export function initGL() {
     projectionMatrix = mat4.create();
     mat4.ortho(projectionMatrix, -aspect, aspect, -1, 1, -1, 1);
     mat4.scale(projectionMatrix, projectionMatrix, vec3.fromValues(0.1, 0.1, 1));
+    invProjectionMatrix = mat4.create();
+    mat4.invert(invProjectionMatrix, projectionMatrix);
 }
 
 function initShaders() {
