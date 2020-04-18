@@ -9,7 +9,13 @@ export const DELTA = 1 / FPS;
 // TODO define Radius
 export const FIRE_RADIUS = 1;
 
+// Type of the fire
 export let fireSize = 0;
+// The capacity of logs a fire can hold
+export let fireCapacity = 2;
+// The fuel that the fire currently has
+export let fireFuel = 2;
+
 export let items = [];
 export let trees = [];
 
@@ -18,6 +24,7 @@ export let player = {
     position: vec2.create(),
     goal: vec2.create(),
     walking: false,
+    walkingTimer: 0,
     carrying: null
 };
 
@@ -88,6 +95,15 @@ export function inReachOfFire(vec) {
 
 export function distanceToFire(vec) {
 	return vec2.length(vec);
+}
+
+export function layDown() {
+	if (player.carrying == null) {
+		return false;
+	}
+	items.push(player.carrying);
+	player.carrying = null;
+	return true;
 }
 
 // (Wood, Stone)
@@ -163,6 +179,15 @@ export function upgradeFire() {
 		} else {
 			console.log("Something went wrong when removing the ingredients");
 		}
+	}
+	return false;
+}
+
+export function refuelFire() {
+	if (player.carrying == ITEMS.WOOD) {
+		player.carrying = null;
+		fireFuel = (fireFuel+1 > fireCapacity) ? fireCapacity : fireFuel+1;
+		return true;
 	}
 	return false;
 }

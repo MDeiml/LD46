@@ -13,36 +13,43 @@ let backgroundTexture;
 let fireTexture;
 let playerTexture;
 
+function vec2ToVec3(v) {
+    return vec3.fromValues(v[0], v[1], 0);
+}
+
+
 // main render function
 export function render() {
-    drawTexture(backgroundTexture, vec2.fromValues(-50, -50), vec2.fromValues(100, 100));
+    let transform = mat4.create();
+    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(0, -50, 0), vec3.fromValues(100, 100, 0));
+    drawTexture(backgroundTexture, transform);
 
     // draw fire
-    drawTexture(fireTexture, vec2.fromValues(-0.5, -0.5));
+    mat4.fromTranslation(transform, vec3.fromValues(-0.5, -0.5, 0));
+    drawTexture(fireTexture, transform);
 
     // draw player
-    drawTexture(playerTexture, player.position);
+    let angle = Math.pow(Math.sin(player.walkingTimer * 5), 2) * 10;
+    mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, 0, angle), vec2ToVec3(player.position), vec3.fromValues(1, 1, 1));
+    drawTexture(playerTexture, transform);
     if (player.carrying) {
-        let offset = vec2.fromValues(0, 0);
-        vec2.add(offset, offset, player.position);
-        drawTexture(itemTextures[player.carrying], offset);
+        drawTexture(itemTextures[player.carrying], transform);
     }
 
     // draw items
     for (let item of items) {
-        drawTexture(itemTextures[item.id], item.pos);
+        mat4.fromTranslation(transform, vec2ToVec3(item.pos));
+        drawTexture(itemTextures[item.id], transform);
     }
 
     // draw trees
     for (let tree of trees) {
-        drawTexture(treeTextures[tree.type], tree.position, vec2.fromValues(2, 2));
+        mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(tree.position), vec3.fromValues(2, 2, 0));
+        drawTexture(treeTextures[tree.type], transform);
     }
 }
 
-function drawTexture(id, position, scale) {
-    if (!scale) {
-        scale = vec3.fromValues(1, 1, 1);
-    }
+function drawTexture(id, transform) {
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
     gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
 
@@ -53,11 +60,10 @@ function drawTexture(id, position, scale) {
     gl.bindTexture(gl.TEXTURE_2D, id);
     gl.uniform1i(textureUniform, 0);
 
-    let transform = mat4.create();
-    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(position[0], position[1], 0), vec3.fromValues(scale[0], scale[1], 0));
     gl.uniformMatrix4fv(modelUniform, false, transform)
-    mat4.mul(transform, projectionMatrix, transform);
-    gl.uniformMatrix4fv(matrixUniform, false, transform);
+    let mvp = mat4.create();
+    mat4.mul(mvp, projectionMatrix, transform);
+    gl.uniformMatrix4fv(matrixUniform, false, mvp);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
@@ -145,10 +151,10 @@ function initSquare() {
     squareBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
     const vertices = [
-        1, 1, 0,
-        0, 1, 0,
-        1, 0, 0,
-        0, 0, 0
+        0.5, 1, 0,
+        -0.5, 1, 0,
+        0.5, 0, 0,
+        -0.5, 0, 0
     ];
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
