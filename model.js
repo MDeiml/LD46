@@ -7,6 +7,8 @@ export const FRAME_TIME = 1000 / FPS;
 export const DELTA = 1 / FPS;
 
 export let items = [];
+
+// Just the player
 export let player = {
     position: vec2.create()
 };
