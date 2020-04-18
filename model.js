@@ -9,6 +9,7 @@ export const DELTA = 1 / FPS;
 // TODO define Radius
 export const FIRE_RADIUS = 1;
 
+export let fireSize = 0;
 export let items = [];
 
 export let player = {
@@ -58,6 +59,9 @@ export class Recipe {
 
 	// Returns, if it is possible to craft the object other out of the given Item Set
 	isPossible(other) {
+		if (other.neededFire > fireSize) {
+			return false;
+		}
 		return (other.wood <= this.wood) && (other.stone <= this.stone);
 	};
 }
@@ -90,14 +94,14 @@ export class Pos {
 
 // (Wood, Stone)
 export const RECIPES = {
-	AXE: new Recipe(2, 1),
-	TORCH: new Recipe(1, 0),
-	KNIFE: new Recipe(1, 2),
-	SPEAR: new Recipe(3, 1),
-	FISHING_ROD: new Recipe(3, 0),
-	BOW: new Recipe(4, 0),
-	ARROW: new Recipe(1, 1),
-	PICKAXE: new Recipe(2, 3)
+	AXE: new Recipe(2, 1, FIRES.OPEN_FIRE),
+	TORCH: new Recipe(1, 0, FIRES.OPEN_FIRE),
+	KNIFE: new Recipe(1, 2, FIRES.CAMPFIRE),
+	SPEAR: new Recipe(3, 1, FIRES.CAMPFIRE),
+	PICKAXE: new Recipe(2, 3, FIRES.CAMPFIRE),
+	FISHING_ROD: new Recipe(3, 0, FIRES.COOKING_FIRE),
+	BOW: new Recipe(4, 0, FIRES.COOKING_FIRE),
+	ARROW: new Recipe(1, 1, FIRES.COOKING_FIRE)
 }
 
 export function getRecipe(tool) {
@@ -122,7 +126,6 @@ export function itemsInReachOfFire() {
 }
 
 export function craft(desired) {
-	
 	recipe = getRecipe(desired);
 	numWoodAndStone = countOccurences(itemsInReachOfFire());
 	if (numWoodAndStone.isPossible(recipe)) {
@@ -191,7 +194,7 @@ export function countOccurences(items) {
 				break;
 		}
 	}
-	return new Recipe(wood, stone);
+	return new Recipe(wood, stone, 0);
 }
 
 // TODO: Not yet finished. Don't use food system
