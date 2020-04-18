@@ -8,6 +8,7 @@ export const DELTA = 1 / FPS;
 
 // TODO define Radius
 export const FIRE_RADIUS = 1;
+export const PICK_UP_RADIUS = 1;
 
 // Type of the fire
 export let fireSize = 0;
@@ -110,6 +111,9 @@ export function layDown() {
 
 export function pickUp() {
 	posNearest = nearestItem();
+	if (posNearest < 0) {
+		return;
+	}
 	pickedUp = removeItem(posNearest);
 	if (player.carrying != null) {
 		layDown();
@@ -126,9 +130,9 @@ export function nearestItem() {
 	if (items.length == 0) {
 		return -1;
 	}
-	posMin = 0;
-	lenMin = vec2.length(vec2.sub(player.position, items[0].pos));
-	for (let i = 1; i < items.length; i++) {
+	posMin = -1;
+	lenMin = PICK_UP_RADIUS;
+	for (let i = 0; i < items.length; i++) {
 		len = vec2.length(vec2.sub(player.position, items[i].pos));
 		if (len < lenMin) {
 			posMin = i;
