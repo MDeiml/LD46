@@ -11,6 +11,7 @@ let treeTextures = [];
 let itemTextures = {};
 let backgroundTexture;
 let fireTexture;
+let playerTexture;
 
 // main render function
 export function render() {
@@ -20,7 +21,7 @@ export function render() {
     drawTexture(fireTexture, vec2.fromValues(-0.5, -0.5));
 
     // draw player
-    drawTexture(treeTextures[0], player.position);
+    drawTexture(playerTexture, player.position);
     if (player.carrying) {
         let offset = vec2.fromValues(0, 0);
         vec2.add(offset, offset, player.position);
@@ -75,6 +76,7 @@ export function initGL() {
     itemTextures[ITEMS.WOOD] = loadTexture('./textures/wood_trunk.svg');
     fireTexture = loadTexture('./textures/fire0.svg');
     backgroundTexture = whiteTexture();
+    playerTexture = loadTexture('./textures/character.svg');
 
     let aspect = canvas.width / canvas.height;
     projectionMatrix = mat4.create();
