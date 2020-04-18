@@ -50,7 +50,7 @@ export function initGL() {
     let aspect = canvas.width / canvas.height;
     projectionMatrix = mat4.create();
     mat4.ortho(projectionMatrix, -aspect, aspect, -1, 1, -1, 1);
-    mat4.scale(projectionMatrix, projectionMatrix, vec3.fromValues(0.1, 0.1, 1));
+    mat4.scale(projectionMatrix, projectionMatrix, vec3.fromValues(0.2, 0.2, 1));
     invProjectionMatrix = mat4.create();
     mat4.invert(invProjectionMatrix, projectionMatrix);
 }
@@ -114,9 +114,9 @@ function initSquare() {
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
     const vertices = [
         1, 1, 0,
-        -1, 1, 0,
-        1, -1, 0,
-        -1, -1, 0
+        0, 1, 0,
+        1, 0, 0,
+        0, 0, 0
     ];
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 
