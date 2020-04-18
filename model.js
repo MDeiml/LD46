@@ -300,14 +300,4 @@ export function setCanvas(c) {
     canvas.width = w;
     canvas.height = h;
     gl = canvas.getContext('webgl');
-    window.addEventListener('resize', resize);
-    window.addEventListener('orientationchange', resize);
-}
-
-function resize(event) {
-    let w = canvas.clientWidth;
-    let h = canvas.clientHeight;
-    canvas.width = w;
-    canvas.height = h;
-    gl.viewport(w, h);
 }

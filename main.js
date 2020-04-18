@@ -1,5 +1,5 @@
 import { canvas, gl, setCanvas, FRAME_TIME } from './model.js'
-import { initGL, render } from './render.js'
+import { initGL, render, updateProjection } from './render.js'
 import { initInput, updateInput } from './input.js'
 import { update, init } from './update.js'
 
@@ -16,6 +16,17 @@ function main() {
 
     window.running = true;
     requestAnimationFrame(tick);
+    window.addEventListener('resize', resize);
+    window.addEventListener('orientationchange', resize);
+}
+
+function resize(event) {
+    let w = canvas.clientWidth;
+    let h = canvas.clientHeight;
+    canvas.width = w;
+    canvas.height = h;
+    gl.viewport(0, 0, w, h);
+    updateProjection();
 }
 
 // main game loop

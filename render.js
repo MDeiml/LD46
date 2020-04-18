@@ -4,8 +4,9 @@ import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 let positionAttribute, texCoordAttribute;
 let matrixUniform, textureUniform, modelUniform;
 let squareBuffer, squareTexCoordBuffer;
-export let projectionMatrix;
-export let invProjectionMatrix;
+let projectionMatrix;
+let pvMatrix = mat4.create();
+export let invPvMatrix = mat4.create();
 
 let treeTextures = [];
 let itemTextures = {};
@@ -20,6 +21,10 @@ function vec2ToVec3(v) {
 
 // main render function
 export function render() {
+    mat4.fromTranslation(pvMatrix, vec3.fromValues(-player.position[0], -player.position[1], 0));
+    mat4.mul(pvMatrix, projectionMatrix, pvMatrix);
+    mat4.invert(invPvMatrix, pvMatrix);
+
     let transform = mat4.create();
     mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(0, -50, 0), vec3.fromValues(100, 100, 0));
     drawTexture(backgroundTexture, transform);
@@ -62,7 +67,7 @@ function drawTexture(id, transform) {
 
     gl.uniformMatrix4fv(modelUniform, false, transform)
     let mvp = mat4.create();
-    mat4.mul(mvp, projectionMatrix, transform);
+    mat4.mul(mvp, pvMatrix, transform);
     gl.uniformMatrix4fv(matrixUniform, false, mvp);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -88,8 +93,13 @@ export function initGL() {
     projectionMatrix = mat4.create();
     mat4.ortho(projectionMatrix, -aspect, aspect, -1, 1, -1, 1);
     mat4.scale(projectionMatrix, projectionMatrix, vec3.fromValues(0.2, 0.2, 1));
-    invProjectionMatrix = mat4.create();
-    mat4.invert(invProjectionMatrix, projectionMatrix);
+}
+
+export function updateProjection() {
+    let aspect = canvas.width / canvas.height;
+    projectionMatrix = mat4.create();
+    mat4.ortho(projectionMatrix, -aspect, aspect, -1, 1, -1, 1);
+    mat4.scale(projectionMatrix, projectionMatrix, vec3.fromValues(0.2, 0.2, 1));
 }
 
 function initShaders() {

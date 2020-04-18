@@ -1,6 +1,6 @@
 import { canvas, DELTA } from './model.js';
 import { vec2, vec3 } from './gl-matrix-min.js'
-import { invProjectionMatrix } from './render.js'
+import { invPvMatrix } from './render.js'
 
 let keys = {};
 let lastKeys = {};
@@ -20,7 +20,7 @@ export function initInput() {
     });
     canvas.addEventListener('mousedown', function (event) {
         let v = vec3.fromValues(event.offsetX / canvas.width * 2 - 1, 1 - event.offsetY / canvas.height * 2, 0);
-        vec3.transformMat4(v, v, invProjectionMatrix);
+        vec3.transformMat4(v, v, invPvMatrix);
         nextMousePos = vec2.fromValues(v[0], v[1]);
         if (lastClick < 0.5) {
             doubleClick = true;
