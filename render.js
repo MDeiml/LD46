@@ -1,4 +1,4 @@
-import { gl, canvas, items, player } from './model.js'
+import { gl, canvas, items, player, trees } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -7,7 +7,7 @@ let squareBuffer, squareTexCoordBuffer;
 export let projectionMatrix;
 export let invProjectionMatrix;
 
-let testTexture;
+let treeTexture;
 let backgroundTexture;
 let fireTexture;
 
@@ -16,9 +16,12 @@ export function render() {
     drawTexture(backgroundTexture, vec2.fromValues(-50, -50), vec2.fromValues(100, 100));
 
     drawTexture(fireTexture, vec2.fromValues(-0.5, -0.5));
-    drawTexture(testTexture, player.position);
+    drawTexture(treeTexture, player.position);
     for (let item of items) {
-        drawTexture(testTexture, item.position);
+        drawTexture(treeTexture, item.position);
+    }
+    for (let tree of trees) {
+        drawTexture(treeTexture, tree.position);
     }
 }
 
@@ -53,7 +56,7 @@ export function initGL() {
     initShaders();
     initSquare();
 
-    testTexture = loadTexture('./textures/tree1.svg');
+    treeTexture = loadTexture('./textures/tree1.svg');
     fireTexture = loadTexture('./textures/fire0.svg');
     backgroundTexture = whiteTexture();
 
