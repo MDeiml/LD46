@@ -1,4 +1,4 @@
-import { gl, canvas, items, player, trees } from './model.js'
+import { gl, canvas, items, ITEMS, player, trees } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -7,19 +7,33 @@ let squareBuffer, squareTexCoordBuffer;
 export let projectionMatrix;
 export let invProjectionMatrix;
 
-let treeTextures;
+let treeTextures = [];
+let itemTextures = {};
 let backgroundTexture;
 let fireTexture;
+let playerTexture;
 
 // main render function
 export function render() {
     drawTexture(backgroundTexture, vec2.fromValues(-50, -50), vec2.fromValues(100, 100));
 
+    // draw fire
     drawTexture(fireTexture, vec2.fromValues(-0.5, -0.5));
-    drawTexture(treeTextures[0], player.position);
-    for (let item of items) {
-        drawTexture(treeTextures[0], item.position);
+
+    // draw player
+    drawTexture(playerTexture, player.position);
+    if (player.carrying) {
+        let offset = vec2.fromValues(0, 0);
+        vec2.add(offset, offset, player.position);
+        drawTexture(itemTextures[player.carrying], offset);
     }
+
+    // draw items
+    for (let item of items) {
+        drawTexture(itemTextures[item.id], item.pos);
+    }
+
+    // draw trees
     for (let tree of trees) {
         drawTexture(treeTextures[tree.type], tree.position, vec2.fromValues(2, 2));
     }
@@ -56,12 +70,13 @@ export function initGL() {
     initShaders();
     initSquare();
 
-    treeTextures = [];
     for (let i = 0; i < 4; i++) {
         treeTextures.push(loadTexture('./textures/tree' + i + '.svg'));
     }
+    itemTextures[ITEMS.WOOD] = loadTexture('./textures/wood_trunk.svg');
     fireTexture = loadTexture('./textures/fire0.svg');
     backgroundTexture = whiteTexture();
+    playerTexture = loadTexture('./textures/character.svg');
 
     let aspect = canvas.width / canvas.height;
     projectionMatrix = mat4.create();
