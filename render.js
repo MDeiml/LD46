@@ -9,11 +9,13 @@ export let invProjectionMatrix;
 
 let testTexture;
 let backgroundTexture;
+let fireTexture;
 
 // main render function
 export function render() {
     drawTexture(backgroundTexture, vec2.fromValues(-50, -50), vec2.fromValues(100, 100));
 
+    drawTexture(fireTexture, vec2.fromValues(-0.5, -0.5));
     drawTexture(testTexture, player.position);
     for (let item of items) {
         drawTexture(testTexture, item.position);
@@ -52,6 +54,7 @@ export function initGL() {
     initSquare();
 
     testTexture = loadTexture('./textures/tree1.svg');
+    fireTexture = loadTexture('./textures/fire0.svg');
     backgroundTexture = whiteTexture();
 
     let aspect = canvas.width / canvas.height;
@@ -153,13 +156,15 @@ function loadTexture(url) {
 
     const image = new Image();
     image.onload = function () {
+        image.width = 60;
+        image.height = 60;
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
 
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     };
     image.src = url;
     return texture;
