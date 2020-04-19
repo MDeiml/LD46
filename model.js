@@ -364,7 +364,6 @@ export function craft(desired) {
 	}
 	let recipe = canCraft(desired);
 	if (recipe) {
-		console.log(itemsInReachOfFire());
 		if (removeItemsInReachOfFire(recipe)) {
 			player.tools[desired] = true;
 			player.currentTool = desired;
@@ -388,8 +387,6 @@ export function canCraft(desired) {
 export function upgradeFire() {
 	let recipe = FIRES_UPGRADES[getNextFireName()];
 	let numWoodAndStone = countOccurences(itemsInReachOfFire());
-	console.log(numWoodAndStone);
-	console.log(itemsInReachOfFire());
 	if (numWoodAndStone.isPossible(recipe)) {
 		if (removeItemsInReachOfFire(recipe)) {
 			fire.size++;
@@ -417,21 +414,23 @@ export function removeItemsInReachOfFire(recipe) {
 	if (!countOccurences(items).isPossible(recipe)) {
 		return false;
 	}
+
 	for (let i = 0; i < items.length; i++) {
 		if (!inReachOfFire(items[i].pos)) {
 			continue;
 		}
 		if (recipe.wood > 0 && items[i].id == ITEMS.WOOD) {
 			items.splice(i, 1);
+			i--;
 			recipe.wood--;
 		} else if (recipe.stone > 0 && items[i].id == ITEMS.STONE) {
 			items.splice(i, 1);
+			i--;
 			recipe.stone--;
 		} else if (recipe.wood == 0 && recipe.stone == 0) {
 			break;
 		}
 	}
-	console.log(recipe);
 	return true;
 }
 
