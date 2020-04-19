@@ -1,5 +1,5 @@
 import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft,
-		decorations, quarry } from './model.js'
+		decorations, quarry, stumps } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -19,6 +19,7 @@ let playerTexture;
 let circleTexture;
 let animalTextures = [];
 let decorationTextures = [];
+let stumpTextures = [];
 let quarryTexture;
 
 let flicker = 0;
@@ -94,8 +95,13 @@ function drawObjects() {
     for (let decoration of decorations) {
 		mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(decoration.position), vec3.fromValues(0.5, 0.5, 0.5));
 		drawTexture(decorationTextures[decoration.type], transform);
-    }
-
+	}
+	
+    // draw decorations
+    for (let stump of stumps) {
+		mat4.fromTranslation(transform, vec2ToVec3(stump.position));
+		drawTexture(stumpTextures[stump.type], transform);
+	}
     // draw fire
     mat4.identity(transform);
     drawTexture(fireTextures[fire.size][Math.floor(fire.animationTime * 4) % 4], transform, 1);
@@ -218,6 +224,10 @@ export function initGL() {
 
     for (let i = 0; i < 7; i++) {
         decorationTextures.push(loadTexture('./textures/decoration/decoration' + i + '.svg'));
+	}
+
+    for (let i = 0; i < 4; i++) {
+        stumpTextures.push(loadTexture('./textures/stump' + i + '.svg'));
 	}
 
     toolTextures[TOOLS.ARROW] = loadTexture('./textures/arrow.svg');

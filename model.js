@@ -40,6 +40,7 @@ export let fireFuel = 2;
 
 export let items = [];
 export let trees = [];
+export let stumps = [];
 export let decorations = [];
 export let quarry;
 
@@ -99,7 +100,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: TOOLS.KNIFE,
+	currentTool: TOOLS.AXE,
 	facingLeft: false,
 	tools: {}
 };
@@ -199,7 +200,13 @@ export function chopDownTree(test) {
 		return false;
 	}
     if (!test) {
-        trees.splice(treePos, 1);
+		let type = trees[treePos].type;
+		let pos = trees[treePos].position;
+		trees.splice(treePos, 1);
+		stumps.push({
+			position: pos,
+			type: type
+		});
         for (let j = 0; j < WOOD_PER_TREE; j++) {
             let itemPos = vec2.clone(player.position);
             itemPos[0] += j * 0.5;
