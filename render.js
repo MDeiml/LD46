@@ -50,7 +50,7 @@ function drawObjects() {
 
     // draw player
     let angle = player.animationStatus == ANIMATIONS.WALKING ? Math.pow(Math.sin(player.animationTimer * 5), 2) * 10 : 0;
-    mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, 0, angle), vec2ToVec3(player.position), vec3.fromValues(1, 1, 1));
+    mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, 0, angle), vec2ToVec3(player.position), vec3.fromValues(-1, 1, 1));
     drawTexture(playerTexture, transform);
     if (player.carrying) {
         mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
@@ -133,11 +133,11 @@ export function updateProjection() {
     projectionMatrix = mat4.create();
     mat4.ortho(projectionMatrix, -aspect, aspect, -1, 1, -1, 1);
     mat4.scale(projectionMatrix, projectionMatrix, vec3.fromValues(0.2, 0.2, 0.2));
-    mat4.mul(projectionMatrix, projectionMatrix,
-        mat4.fromValues(1, 0, 0, 0,
-                        0, 1, 1, 0,
-                        0, 0, 0, 0,
-                        0, 0, 0, 1));
+    // mat4.mul(projectionMatrix, projectionMatrix,
+    //     mat4.fromValues(1, 0, 0, 0,
+    //                     0, 1, 1, 0,
+    //                     0, 0, 0, 0,
+    //                     0, 0, 0, 1));
 
     if (shadowTexture) {
         gl.deleteTexture(shadowTexture);
