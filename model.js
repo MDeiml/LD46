@@ -58,6 +58,13 @@ export const FIRES = {
 	BEACON: 3
 }
 
+export const FIRE_CAPACITY = {
+	OPEN_FIRE: 2,
+	CAMPFIRE: 4,
+	COOKING_FIRE: 6,
+	BEACON: 10
+}
+
 export const TOOLS = {
 	AXE: 0,
 	TORCH: 1,
@@ -465,6 +472,7 @@ export function upgradeFire() {
 	if (numWoodAndStone.isPossible(recipe)) {
 		if (removeItemsInReachOfFire(recipe)) {
 			fire.size++;
+			fire.capacity = FIRE_CAPACITY[getFireName()];
 			return true;
 		} else {
 			console.log("Something went wrong when removing the ingredients");
