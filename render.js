@@ -31,6 +31,8 @@ let defaultShader;
 let shadowShader;
 let shadowShaderActive = true;
 
+let drawOrder;
+
 function vec2ToVec3(v) {
     return vec3.fromValues(v[0], v[1], 0);
 }
@@ -59,7 +61,7 @@ export function render() {
 
     let transform = mat4.create();
     mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -50, 0), vec3.fromValues(100, 100, 100));
-    drawTexture(backgroundTexture, transform);
+    drawTexture(backgroundTexture, transform, 0, true);
 
     drawObjects();
 
@@ -72,11 +74,11 @@ export function render() {
             if (i == 0) {
 				// TODO: watch out fire.size + 1 isn't out of bounds
 				if (fireTextures[fire.size + 1] != null) {
-					drawTexture(fireTextures[fire.size + 1][0], transform, 2);
+					drawTexture(fireTextures[fire.size + 1][0], transform, 2, true);
 				}
             } else {
                 if (canCraft(i-1)) {
-					drawTexture(toolTextures[i - 1], transform, 2);
+					drawTexture(toolTextures[i - 1], transform, 2, true);
 				}
             }
         }
@@ -85,6 +87,7 @@ export function render() {
 
 
 function drawObjects() {
+    drawOrder = [];
     let transform = mat4.create();
 
     // draw decorations
@@ -135,9 +138,25 @@ function drawObjects() {
 	// draw quarry
 	mat4.fromTranslation(transform, vec2ToVec3(quarry.position));
 	drawTexture(quarryTexture, transform);
+
+    drawOrder.sort(function (a, b) {
+        return b.y - a.y;
+    });
+    for (let drawElement of drawOrder) {
+        drawTexture(drawElement.id, drawElement.transform, drawElement.lighting, true);
+    }
 }
 
-function drawTexture(id, transform, lighting) {
+function drawTexture(id, transform, lighting, reallyDraw) {
+    if (!reallyDraw) {
+        drawOrder.push({
+            id,
+            transform: mat4.clone(transform),
+            lighting,
+            y: mat4.getTranslation(vec3.create(), transform)[1]
+        });
+        return;
+    }
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
     gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
 
@@ -195,17 +214,7 @@ export function initGL() {
     for (let i = 0; i < 4; i++) {
         campfireTextures.push(loadTexture('./textures/campfire' + i + '.svg'));
     }
-	fireTextures.push(campfireTextures);
-	let cookingfireTextures = [];
-    for (let i = 0; i < 4; i++) {
-        cookingfireTextures.push(loadTexture('./textures/cookingfire' + i + '.svg'));
-    }
-	fireTextures.push(cookingfireTextures);
-	let beaconTextures = [];
-    for (let i = 0; i < 4; i++) {
-        beaconTextures.push(loadTexture('./textures/beacon' + i + '.svg'));
-    }
-    fireTextures.push(beaconTextures);
+    fireTextures.push(campfireTextures);
 
     for (let i = 0; i < 7; i++) {
         decorationTextures.push(loadTexture('./textures/decoration/decoration' + i + '.svg'));
