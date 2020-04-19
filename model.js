@@ -91,7 +91,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: TOOLS.PICKAXE,
+	currentTool: TOOLS.KNIFE,
 	facingLeft: false,
 	tools: {}
 };
@@ -113,7 +113,8 @@ export const ANIMATIONS = {
     WALKING: 1,
     CHOPPING: 2,
     CRAFTING: 3,
-    MINING: 4
+    MINING: 4,
+    FIGHTING: 5,
 };
 
 export function createItem(position, type) {
@@ -196,6 +197,22 @@ export function chopDownTree(test) {
         }
     }
 	return true;
+}
+
+export function hitAnimal() {
+    let nearestAnimal = -1;
+    let nearestRadius = 1;
+    for (let i = 0; i < animals.length; i++) {
+        let dist = vec2.distance(player.position, animals[i].position);
+        if (dist < nearestRadius) {
+            nearestAnimal = i;
+            nearestRadius = dist;
+        }
+    }
+    if (nearestAnimal == -1) {
+        return false;
+    }
+    return true;
 }
 
 export function mineStone(test) {

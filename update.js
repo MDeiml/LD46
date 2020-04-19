@@ -1,6 +1,6 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
-	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE, quarry } from './model.js';
+	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE, quarry, hitAnimal } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
@@ -47,7 +47,9 @@ export function update() {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 if (vec2.distance(player.position, player.goal) < 0.5 && !doubleClick) {
-                    if (refuelFire()) {
+                    if (hitAnimal(true)) {
+                        player.animationStatus = ANIMATIONS.FIGHTING;
+                    } else if (refuelFire()) {
                     } else if (layDown()) {
                     } else if (vec2.length(player.position) < PICK_UP_RADIUS) {
                         player.animationStatus = ANIMATIONS.CRAFTING;
@@ -72,6 +74,12 @@ export function update() {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 mineStone(false);
+            }
+        } else if (player.animationStatus == ANIMATIONS.FIGHTING) {
+            if (player.animationTimer >= 1) {
+                player.animationTimer = 0;
+                player.animationStatus = 0;
+                hitAnimal(false);
             }
         }
     }
