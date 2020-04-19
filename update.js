@@ -1,5 +1,6 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
-	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations } from './model.js';
+	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
+	initQuarry } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
@@ -7,6 +8,7 @@ export function init() {
     initTrees();
 	initItems();
 	initDecorations();
+	initQuarry();
 }
 
 // main update function (called every DELTA seconds)
