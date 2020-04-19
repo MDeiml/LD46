@@ -1,5 +1,5 @@
-import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree, layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS} from './model.js';
-import { mousePos, doubleClick } from './input.js';
+import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree, layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, trees } from './model.js';
+import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
 export function init() {
@@ -11,6 +11,17 @@ export function init() {
 export function update() {
     fire.fuel -= fire.burningSpeed * DELTA;
     fire.animationTime += DELTA;
+    if (player.animationStatus == ANIMATIONS.CRAFTING && mousePos) {
+        for (let i = 0; i < 9; i++) {
+            let angle = Math.PI * i / 5;
+            let point = vec2.fromValues(2 * Math.sin(angle), 2 * Math.cos(angle));
+            if (vec2.distance(mousePos, point) < 0.5) {
+                console.log(i);
+                clickHandled();
+                break;
+            }
+        }
+    }
     if (mousePos) {
         vec2.sub(player.goal, mousePos, vec2.fromValues(0, 0.3));
         player.animationStatus = ANIMATIONS.WALKING;
@@ -44,6 +55,14 @@ export function update() {
                 player.animationStatus = 0;
                 chopDownTree(false);
             }
+        }
+    }
+    for (let tree of trees) {
+        let dir = vec2.sub(vec2.create(), tree.position, player.position);
+        let dist = vec2.len(dir);
+        if (dist < 0.2) {
+            vec2.scale(dir, dir, -(0.2 - dist)/dist);
+            vec2.add(player.position, player.position, dir);
         }
     }
 }

@@ -1,8 +1,8 @@
-import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft } from './model.js'
+import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
-let matrixUniform, textureUniform, modelUniform, fireIntesityUniform, drawCircleUniform;
+let matrixUniform, textureUniform, modelUniform, fireIntesityUniform;
 let squareBuffer, squareTexCoordBuffer;
 let projectionMatrix;
 let pvMatrix = mat4.create();
@@ -15,6 +15,7 @@ let fireTextures = [];
 let toolTextures = [];
 let playerTexture;
 let circleTexture;
+let animalTextures = [];
 
 let flicker = 0;
 let flickerTimer = 0;
@@ -42,14 +43,16 @@ export function render() {
     drawTexture(backgroundTexture, transform);
     drawObjects();
     if (player.animationStatus == ANIMATIONS.CRAFTING) {
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 9; i++) {
             let angle = Math.PI * i / 5;
             mat4.fromTranslation(transform, vec3.fromValues(Math.sin(angle) * 2, Math.cos(angle) * 2 - 0.5, 0));
             drawTexture(circleTexture, transform);
+            mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
             if (i == 0) {
                 // TODO: watch out fire.size + 1 isn't out of bounds
-                mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
-                drawTexture(fireTextures[fire.size + 1][0], transform);
+                drawTexture(fireTextures[fire.size + 1][0], transform, 2);
+            } else {
+                drawTexture(toolTextures[i - 1], transform, 2);
             }
         }
     }
@@ -61,7 +64,7 @@ function drawObjects() {
 
     // draw fire
     mat4.identity(transform);
-    drawTexture(fireTextures[fire.size][Math.floor(fire.animationTime * 4) % 4], transform, true);
+    drawTexture(fireTextures[fire.size][Math.floor(fire.animationTime * 4) % 4], transform, 1);
 
     // draw player
     let angle = player.animationStatus == ANIMATIONS.WALKING ? Math.pow(Math.sin(player.animationTimer * 5), 2) * 10 : 0;
@@ -79,6 +82,12 @@ function drawObjects() {
         drawTexture(toolTextures[player.currentTool], transform);
     }
 
+    // draw animals
+    for (let animal of animals) {
+		mat4.fromTranslation(transform, vec2ToVec3(animal.position));
+        drawTexture(animalTextures[animal.type], transform);
+    }
+
     // draw items
     for (let item of items) {
 		mat4.fromTranslation(transform, vec2ToVec3(item.pos));
@@ -87,12 +96,12 @@ function drawObjects() {
 
     // draw trees
     for (let tree of trees) {
-        mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(tree.position), vec3.fromValues(2, 2, 2));
+        mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(tree.position), vec3.fromValues(tree.direction ? 2 : -2, 2, 2));
         drawTexture(treeTextures[tree.type], transform);
     }
 }
 
-function drawTexture(id, transform, isFire) {
+function drawTexture(id, transform, lighting) {
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
     gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
 
@@ -108,8 +117,13 @@ function drawTexture(id, transform, isFire) {
     mat4.mul(mvp, pvMatrix, transform);
     gl.uniformMatrix4fv(matrixUniform, false, mvp);
     let intensity = fire.fuel * 2 + flicker * 0.2;
-    gl.uniform1f(fireIntesityUniform, isFire ? 4 : intensity * intensity);
-    gl.uniform1i(drawCircleUniform, id == backgroundTexture ? 1 : 0);
+    intensity = intensity * intensity;
+    if (lighting == 1) {
+        intensity = 4;
+    } else if (lighting == 2) {
+        intensity = -1;
+    }
+    gl.uniform1f(fireIntesityUniform, intensity);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
@@ -143,9 +157,11 @@ export function initGL() {
     toolTextures[TOOLS.KNIFE] = loadTexture('./textures/knife.svg');
     toolTextures[TOOLS.PICKAXE] = loadTexture('./textures/pickaxe.svg');
     toolTextures[TOOLS.SPEAR] = loadTexture('./textures/spear.svg');
-    toolTextures[TOOLS.STONE] = loadTexture('./textures/stone.svg');
+    toolTextures[TOOLS.TORCH] = loadTexture('./textures/torch.svg');
     itemTextures[ITEMS.WOOD] = loadTexture('./textures/wood_trunk.svg');
     itemTextures[ITEMS.STONE] = loadTexture('./textures/stone.svg');
+    animalTextures[0] = loadTexture('./textures/wolf.svg');
+    animalTextures[1] = loadTexture('./textures/bear.svg');
     backgroundTexture = whiteTexture();
     playerTexture = loadTexture('./textures/character.svg');
     circleTexture = loadTexture('./textures/circle.svg');
@@ -208,7 +224,6 @@ function initShaders() {
     modelUniform = gl.getUniformLocation(program, 'M');
     textureUniform = gl.getUniformLocation(program, 'texture');
     fireIntesityUniform = gl.getUniformLocation(program, 'fireIntensity');
-    drawCircleUniform = gl.getUniformLocation(program, 'drawCircle');
 }
 
 function getShader(id) {
