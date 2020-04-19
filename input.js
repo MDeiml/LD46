@@ -31,6 +31,10 @@ export function initInput() {
     });
 }
 
+export function clickHandled() {
+    mousePos = null;
+}
+
 export function updateInput() {
     lastClick += DELTA;
     Object.assign(lastKeys, keys);

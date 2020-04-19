@@ -1,5 +1,5 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree, layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS} from './model.js';
-import { mousePos, doubleClick } from './input.js';
+import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
 export function init() {
@@ -11,6 +11,18 @@ export function init() {
 export function update() {
     fire.fuel -= fire.burningSpeed * DELTA;
     fire.animationTime += DELTA;
+    if (player.animationStatus == ANIMATIONS.CRAFTING && mousePos) {
+        console.log(mousePos);
+        for (let i = 0; i < 9; i++) {
+            let angle = Math.PI * i / 5;
+            let point = vec2.fromValues(2 * Math.sin(angle), 2 * Math.cos(angle));
+            if (vec2.distance(mousePos, point) < 0.5) {
+                console.log(i);
+                clickHandled();
+                break;
+            }
+        }
+    }
     if (mousePos) {
         vec2.sub(player.goal, mousePos, vec2.fromValues(0, 0.3));
         player.animationStatus = ANIMATIONS.WALKING;
