@@ -1,8 +1,8 @@
-import { gl, canvas, items, ITEMS, player, trees } from './model.js'
+import { gl, canvas, items, ITEMS, player, trees, fire } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
-let matrixUniform, textureUniform, modelUniform;
+let matrixUniform, textureUniform, modelUniform, fireIntesityUniform;
 let squareBuffer, squareTexCoordBuffer;
 let projectionMatrix;
 let pvMatrix = mat4.create();
@@ -69,6 +69,7 @@ function drawTexture(id, transform) {
     let mvp = mat4.create();
     mat4.mul(mvp, pvMatrix, transform);
     gl.uniformMatrix4fv(matrixUniform, false, mvp);
+    gl.uniform1f(fireIntesityUniform, fire.fuel * fire.fuel);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
@@ -126,6 +127,7 @@ function initShaders() {
     matrixUniform = gl.getUniformLocation(program, 'MVP');
     modelUniform = gl.getUniformLocation(program, 'M');
     textureUniform = gl.getUniformLocation(program, 'texture');
+    fireIntesityUniform = gl.getUniformLocation(program, 'fireIntensity');
 }
 
 function getShader(id) {

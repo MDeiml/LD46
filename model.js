@@ -10,12 +10,12 @@ export const DELTA = 1 / FPS;
 export const FIRE_RADIUS = 1;
 export const PICK_UP_RADIUS = 1;
 
-// Type of the fire
-export let fireSize = 0;
-// The capacity of logs a fire can hold
-export let fireCapacity = 2;
-// The fuel that the fire currently has
-export let fireFuel = 2;
+export let fire = {
+    size: 0,
+    capacity: 2,
+    fuel: 2,
+    burningSpeed: 0.1
+};
 
 export let items = [];
 export let trees = [];
@@ -173,7 +173,7 @@ export function getFireName() {
 	keys = Object.keys(FIRES);
 	let i;
 	for (i = 0; i < keys.length; i++) {
-		if (FIRES[keys[i]] == fireSize) {
+		if (FIRES[keys[i]] == fire.size) {
 			break;
 		}
 	}
@@ -208,7 +208,7 @@ export function upgradeFire() {
 	numWoodAndStone = countOccurences(itemsInReachOfFire());
 	if (numWoodAndStone.isPossible(recipe)) {
 		if (removeItemsInReachOfFire(recipe)) {
-			fireSize++;
+			fire.size++;
 			return true;
 		} else {
 			console.log("Something went wrong when removing the ingredients");
@@ -220,7 +220,7 @@ export function upgradeFire() {
 export function refuelFire() {
 	if (player.carrying == ITEMS.WOOD) {
 		player.carrying = null;
-		fireFuel = (fireFuel+1 > fireCapacity) ? fireCapacity : fireFuel+1;
+		fire.fuel = (fire.fuel+1 > fire.capacity) ? capacity : fire.fuel+1;
 		return true;
 	}
 	return false;

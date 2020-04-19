@@ -1,4 +1,4 @@
-import { DELTA, player, createTree, items, Item, ITEMS, pickUp } from './model.js';
+import { DELTA, player, createTree, items, Item, ITEMS, pickUp, fire } from './model.js';
 import { mousePos, doubleClick } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
@@ -13,6 +13,7 @@ export function init() {
 
 // main update function (called every DELTA seconds)
 export function update() {
+    fire.fuel -= fire.burningSpeed * DELTA;
     if (mousePos) {
         vec2.copy(player.goal, mousePos);
         player.walking = true;
