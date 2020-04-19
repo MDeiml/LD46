@@ -78,6 +78,8 @@ export const FOOD = {
 
 export let player = {
     speed: 2,
+    lastPosition: vec2.fromValues(1, -1),
+    actualSpeed: 0,
     position: vec2.fromValues(1, -1),
     goal: vec2.create(),
     animationStatus: 0,

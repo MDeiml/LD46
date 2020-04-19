@@ -31,17 +31,19 @@ export function update() {
     if (mousePos) {
         vec2.sub(player.goal, mousePos, vec2.fromValues(0, 0.3));
         player.animationStatus = ANIMATIONS.WALKING;
+        player.animationTimer = 0;
     }
     if (player.animationStatus) {
         player.animationTimer += DELTA;
         if (player.animationStatus == ANIMATIONS.WALKING) {
             let dir = vec2.sub(vec2.create(), player.goal, player.position);
             let dist = vec2.length(dir);
-            if (dist < player.speed * DELTA) {
-                vec2.copy(player.position, player.goal);
+            vec2.scale(dir, dir, Math.min(player.speed * DELTA / dist, 1));
+            vec2.add(player.position, player.position, dir)
+            if (dist < 0.01 || (player.animationTimer > DELTA && player.actualSpeed < 0.5 * player.speed)) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
-                if (!doubleClick) {
+                if (vec2.distance(player.position, player.goal) < 0.5 && !doubleClick) {
                     if (refuelFire()) {
                     } else if (layDown()) {
                     } else if (vec2.length(player.position) < PICK_UP_RADIUS) {
@@ -52,8 +54,6 @@ export function update() {
                     }
                 }
             } else {
-                vec2.scale(dir, dir, player.speed * DELTA / dist);
-                vec2.add(player.position, player.position, dir)
             }
         } else if (player.animationStatus == ANIMATIONS.CHOPPING) {
             if (player.animationTimer >= 2) {
@@ -65,6 +65,8 @@ export function update() {
     }
 
     handleCollision(player, 0.3);
+    player.actualSpeed = vec2.distance(player.lastPosition, player.position) / DELTA;
+    vec2.copy(player.lastPosition, player.position);
 
     // ANIMALS
     for (let animal of animals) {
@@ -98,7 +100,7 @@ function handleCollision(obj, fireRadius) {
     for (let tree of trees) {
         let dir = vec2.sub(vec2.create(), tree.position, obj.position);
         let dist = vec2.len(dir);
-        if (dist < 0.2 && obj.goal != null && vec2.distance(tree, obj.goal) >= 1) {
+        if (dist < 0.2) {
             vec2.scale(dir, dir, -(0.2 - dist)/dist);
             vec2.add(obj.position, obj.position, dir);
         }
