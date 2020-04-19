@@ -20,6 +20,7 @@ export const DISTANCE_BETWEEN_TREES = 1;
 export const NO_INIT_ITEMS_AROUND_FIRE_RADIUS = 3;
 export const DISTANCE_BETWEEN_ITEMS_OF_SAME_TYPE = 3;
 export const WOOD_PER_TREE = 2;
+export const QUARRY_RADIUS = 3;
 
 export let fire = {
     // Type of the fire
@@ -38,6 +39,7 @@ export let fireFuel = 2;
 export let items = [];
 export let trees = [];
 export let decorations = [];
+export let quarry;
 
 export let animals = [{
     position: vec2.fromValues(-5, 5),
@@ -238,6 +240,13 @@ export function initDecorations() {
 			continue;
 		}
 	}
+}
+
+export function initQuarry() {
+	let angle = Math.random() * Math.PI * 2;
+	quarry = {
+		position: vec2.fromValues(Math.cos(angle) * QUARRY_RADIUS, Math.sin(angle) * QUARRY_RADIUS)
+	};
 }
 
 export class Recipe {
