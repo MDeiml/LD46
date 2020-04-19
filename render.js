@@ -42,14 +42,16 @@ export function render() {
     drawTexture(backgroundTexture, transform);
     drawObjects();
     if (player.animationStatus == ANIMATIONS.CRAFTING) {
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 9; i++) {
             let angle = Math.PI * i / 5;
             mat4.fromTranslation(transform, vec3.fromValues(Math.sin(angle) * 2, Math.cos(angle) * 2 - 0.5, 0));
             drawTexture(circleTexture, transform);
+            mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
             if (i == 0) {
                 // TODO: watch out fire.size + 1 isn't out of bounds
-                mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
                 drawTexture(fireTextures[fire.size + 1][0], transform);
+            } else {
+                drawTexture(toolTextures[i - 1], transform);
             }
         }
     }
@@ -143,7 +145,7 @@ export function initGL() {
     toolTextures[TOOLS.KNIFE] = loadTexture('./textures/knife.svg');
     toolTextures[TOOLS.PICKAXE] = loadTexture('./textures/pickaxe.svg');
     toolTextures[TOOLS.SPEAR] = loadTexture('./textures/spear.svg');
-    toolTextures[TOOLS.STONE] = loadTexture('./textures/stone.svg');
+    toolTextures[TOOLS.TORCH] = loadTexture('./textures/torch.svg');
     itemTextures[ITEMS.WOOD] = loadTexture('./textures/wood_trunk.svg');
     itemTextures[ITEMS.STONE] = loadTexture('./textures/stone.svg');
     backgroundTexture = whiteTexture();
