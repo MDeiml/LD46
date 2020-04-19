@@ -1,4 +1,4 @@
-import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS } from './model.js'
+import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -50,7 +50,8 @@ function drawObjects() {
 
     // draw player
     let angle = player.animationStatus == ANIMATIONS.WALKING ? Math.pow(Math.sin(player.animationTimer * 5), 2) * 10 : 0;
-    mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, angle, 0), vec2ToVec3(player.position), vec3.fromValues(-1, 1, 1));
+	mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, angle, 0), vec2ToVec3(player.position),
+			vec3.fromValues(facingLeft()?-1:1, 1, 1));
     drawTexture(playerTexture, transform);
     if (player.carrying) {
         mat4.translate(transform, transform, vec3.fromValues(0, 0, 0.3));

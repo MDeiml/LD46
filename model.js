@@ -76,12 +76,21 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: TOOLS.AXE
+	currentTool: TOOLS.AXE,
+	facingLeft: false
 };
 
 export function facingLeft() {
-	let walkingDirection = vec2.sub(player.goal, player.position);
-	return walkingDirection[0] < 0;
+	let walkingDirection = vec2.create();
+	if (player.goal == null) {
+		return false;
+	}
+	vec2.sub(walkingDirection, player.goal, player.position);
+	if (vec2.length(walkingDirection) == 0) {
+		return player.facingLeft;
+	}
+	player.facingLeft = walkingDirection[0] < 0;
+	return player.facingLeft;
 }
 
 export const ANIMATIONS = {
