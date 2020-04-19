@@ -1,4 +1,4 @@
-import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft } from './model.js'
+import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -15,6 +15,7 @@ let fireTextures = [];
 let toolTextures = [];
 let playerTexture;
 let circleTexture;
+let animalTextures = [];
 
 let flicker = 0;
 let flickerTimer = 0;
@@ -79,6 +80,12 @@ function drawObjects() {
             mat4.rotate(transform, transform, Math.max(0, Math.sin(player.animationTimer * Math.PI * 2)), vec3.fromValues(0, -1, 0));
         }
         drawTexture(toolTextures[player.currentTool], transform);
+    }
+
+    // draw animals
+    for (let animal of animals) {
+		mat4.fromTranslation(transform, vec2ToVec3(animal.position));
+        drawTexture(animalTextures[animal.type], transform);
     }
 
     // draw items
@@ -153,6 +160,8 @@ export function initGL() {
     toolTextures[TOOLS.TORCH] = loadTexture('./textures/torch.svg');
     itemTextures[ITEMS.WOOD] = loadTexture('./textures/wood_trunk.svg');
     itemTextures[ITEMS.STONE] = loadTexture('./textures/stone.svg');
+    animalTextures[0] = loadTexture('./textures/wolf.svg');
+    animalTextures[1] = loadTexture('./textures/bear.svg');
     backgroundTexture = whiteTexture();
     playerTexture = loadTexture('./textures/character.svg');
     circleTexture = loadTexture('./textures/circle.svg');
