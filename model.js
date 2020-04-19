@@ -83,7 +83,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: TOOLS.AXE,
+	currentTool: null,
 	facingLeft: false,
 	tools: {}
 };
@@ -347,18 +347,24 @@ export function itemsInReachOfFire() {
 }
 
 export function craft(desired) {
-	let recipe = getRecipe(desired);
-	let numWoodAndStone = countOccurences(itemsInReachOfFire());
-	if (numWoodAndStone.isPossible(recipe)) {
+	let recipe = canCraft(desired);
+	if (recipe) {
 		console.log(itemsInReachOfFire());
 		if (removeItemsInReachOfFire(recipe)) {
 			player.tools[desired] = true;
+			player.currentTool = desired;
 			return desired;
 		} else {
 			console.log("Something went wrong when removing the ingredients");
 		}
 	}
 	return null;
+}
+
+export function canCraft(desired) {
+	let recipe = getRecipe(desired);
+	let numWoodAndStone = countOccurences(itemsInReachOfFire());
+	return numWoodAndStone.isPossible(recipe)?recipe:null;
 }
 
 export function upgradeFire() {

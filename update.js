@@ -56,7 +56,7 @@ export function update() {
                 vec2.add(player.position, player.position, dir)
             }
         } else if (player.animationStatus == ANIMATIONS.CHOPPING) {
-            if (player.animationTimer >= 5) {
+            if (player.animationTimer >= 2) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 chopDownTree(false);

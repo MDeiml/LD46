@@ -1,4 +1,4 @@
-import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals } from './model.js'
+import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -54,7 +54,9 @@ export function render() {
 					drawTexture(fireTextures[fire.size + 1][0], transform, 2);
 				}
             } else {
-                drawTexture(toolTextures[i - 1], transform, 2);
+                if (canCraft(i-1)) {
+					drawTexture(toolTextures[i - 1], transform, 2);
+				}
             }
         }
     }
