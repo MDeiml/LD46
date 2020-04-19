@@ -24,9 +24,11 @@ export function update() {
             player.walking = false;
             player.walkingTimer = 0;
             if (!doubleClick) {
-				if (!layDown()) {
-					if (!pickUp()) {
-						chopDownTree();
+				if (!refuelFire()) {
+					if (!layDown()) {
+						if (!pickUp()) {
+							chopDownTree();
+						}
 					}
 				}
             }
