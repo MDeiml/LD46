@@ -1,5 +1,5 @@
 import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft,
-		decorations, quarry } from './model.js'
+		decorations, quarry, gui, GAME_STATUS } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -20,6 +20,8 @@ let circleTexture;
 let animalTextures = [];
 let decorationTextures = [];
 let quarryTexture;
+
+let winscreenTexture;
 
 let flicker = 0;
 let flickerTimer = 0;
@@ -82,6 +84,11 @@ export function render() {
 				}
             }
         }
+    }
+
+    if (gui.gameStatus != GAME_STATUS.PLAYING) {
+        mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -6, 0), vec3.fromValues(10, 10, 10));
+        drawTexture(winscreenTexture, transform, 2, true);
     }
 }
 
@@ -236,6 +243,7 @@ export function initGL() {
     playerTexture = loadTexture('./textures/character.svg');
     circleTexture = loadTexture('./textures/circle.svg');
     quarryTexture = loadTexture('./textures/quarry.svg');
+    winscreenTexture = loadTexture('./textures/winscreen.png');
 
     updateProjection();
 }
