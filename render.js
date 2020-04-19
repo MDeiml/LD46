@@ -13,6 +13,8 @@ let itemTextures = {};
 let backgroundTexture;
 let fireTextures = [];
 let playerTexture;
+let flicker = 0;
+let flickerTimer = 0;
 
 function vec2ToVec3(v) {
     return vec3.fromValues(v[0], v[1], 0);
@@ -21,6 +23,11 @@ function vec2ToVec3(v) {
 
 // main render function
 export function render() {
+    if (fire.animationTime - flickerTimer > 0.25) {
+        flicker = Math.random();
+        flickerTimer += 0.25;
+    }
+
     mat4.fromTranslation(pvMatrix, vec3.fromValues(-player.position[0], -player.position[1], 0));
     mat4.mul(pvMatrix, projectionMatrix, pvMatrix);
     mat4.invert(invPvMatrix, pvMatrix);
@@ -70,7 +77,7 @@ function drawTexture(id, transform, isFire) {
     let mvp = mat4.create();
     mat4.mul(mvp, pvMatrix, transform);
     gl.uniformMatrix4fv(matrixUniform, false, mvp);
-    gl.uniform1f(fireIntesityUniform, isFire ? 4 : fire.fuel * fire.fuel * 4);
+    gl.uniform1f(fireIntesityUniform, isFire ? 4 : fire.fuel * fire.fuel * 4 + flicker);
     gl.uniform1i(drawCircleUniform, id == backgroundTexture ? 1 : 0);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
