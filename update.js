@@ -5,10 +5,10 @@ import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
 export function init() {
+	initQuarry();
     initTrees();
 	initItems();
 	initDecorations();
-	initQuarry();
 }
 
 // main update function (called every DELTA seconds)

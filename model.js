@@ -148,6 +148,9 @@ export function createTree(position) {
 	if (vec2.length(position) < NO_TREES_AROUND_FIRE_RADIUS) {
 		return false;
 	}
+	if (vec2.distance(quarry.position, position) < (DISTANCE_BETWEEN_TREES + 1)) {
+		return false;
+	}
 	for (let i = 0; i < trees.length; i++) {
 		if (vec2.distance(trees[i].position, position) < (DISTANCE_BETWEEN_TREES + 1)) {
 			return false;
