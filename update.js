@@ -1,6 +1,6 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
-	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE } from './model.js';
+	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE, quarry } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
@@ -100,6 +100,10 @@ export function update() {
                 if (animal.walkTimer <= 0) {
                     animal.walkTimer = Math.random() + 1;
                     animal.walkingDir = vec2.random(vec2.create());
+                    let dirToQuarry = vec2.sub(vec2.create(), quarry.position, animal.position);
+                    vec2.scale(dirToQuarry, dirToQuarry, 1/3);
+                    vec2.add(animal.walkingDir, animal.walkingDir, dirToQuarry);
+                    vec2.normalize(animal.walkingDir, animal.walkingDir);
                 }
             }
         }
