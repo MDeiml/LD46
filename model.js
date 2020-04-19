@@ -24,6 +24,17 @@ export const QUARRY_RADIUS = 5;
 export const TIME_TO_CHOP_DOWN_TREE = 2;
 export const TIME_TO_MINE_STONE = 3;
 
+export const GAME_STATUS = {
+    MENU: 0,
+    PLAYING: 1,
+    GAME_OVER: 2,
+    WIN: 3
+}
+
+export let gui = {
+    gameStatus: GAME_STATUS.PLAYING
+};
+
 export let fire = {
     // Type of the fire
     size: 0,
