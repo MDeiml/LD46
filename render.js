@@ -2,7 +2,7 @@ import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facin
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
-let matrixUniform, textureUniform, modelUniform, fireIntesityUniform, shadowTextureUniform;
+let matrixUniform, textureUniform, modelUniform, fireIntesityUniform, shadowTextureUniform, canvasSizeUniform;
 let matrixUniformShadow, textureUniformShadow, modelUniformShadow;
 let squareBuffer, squareTexCoordBuffer;
 let projectionMatrix;
@@ -143,6 +143,7 @@ function drawTexture(id, transform, lighting) {
         let mvp = mat4.create();
         mat4.mul(mvp, pvMatrix, transform);
         gl.uniformMatrix4fv(matrixUniform, false, mvp);
+        gl.uniform2f(canvasSizeUniform, canvas.width, canvas.height);
         let intensity = fire.fuel * 2 + flicker * 0.2;
         intensity = intensity * intensity;
         if (lighting == 1) {
@@ -253,6 +254,7 @@ function initShaders(name) {
     textureUniform = gl.getUniformLocation(defaultShader, 'texture');
     fireIntesityUniform = gl.getUniformLocation(defaultShader, 'fireIntensity');
     shadowTextureUniform = gl.getUniformLocation(defaultShader, 'shadowTexture');
+    canvasSizeUniform = gl.getUniformLocation(defaultShader, 'canvasSize');
 
     vs = getShader('shadow-vs');
     fs = getShader('shadow-fs');
