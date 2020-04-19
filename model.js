@@ -13,6 +13,7 @@ export const PICK_UP_RADIUS = 0.5;
 export const STARTING_WOOD = 3;
 export const STARTING_STONE = 5;
 export const STARTING_TREES = 40;
+export const STARTING_DECORATIONS = 40;
 export const RESOURCE_SPAWN_RADIUS = 10;
 export const NO_TREES_AROUND_FIRE_RADIUS = 2.5;
 export const DISTANCE_BETWEEN_TREES = 1;
@@ -36,6 +37,8 @@ export let fireFuel = 2;
 
 export let items = [];
 export let trees = [];
+export let decorations = [];
+
 export let animals = [{
     position: vec2.fromValues(-5, 5),
     type: 0,
@@ -146,6 +149,24 @@ export function createTree(position) {
 	return true;
 }
 
+export function createDecoration(position) {
+	if (vec2.length(position) < NO_TREES_AROUND_FIRE_RADIUS) {
+		return false;
+	}
+	for (let i = 0; i < decorations.length; i++) {
+		if (vec2.distance(decorations[i].position, position) < (DISTANCE_BETWEEN_TREES + 1)) {
+			return false;
+		}
+	}
+	position[0] += Math.random();
+	position[1] += Math.random();
+    decorations.push({
+        position: position,
+        type: Math.floor(Math.random() * 7)
+	});
+	return true;
+}
+
 export function chopDownTree(test) {
 	if (player.currentTool != TOOLS.AXE) {
 		return false;
@@ -200,6 +221,17 @@ export function initItems() {
 export function initTrees() {
 	for (let i = 0; i < STARTING_TREES; i++) {
 		if (!createTree(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
+				RESOURCE_SPAWN_RADIUS, Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
+				RESOURCE_SPAWN_RADIUS))) {
+			i--;
+			continue;
+		}
+	}
+}
+
+export function initDecorations() {
+	for (let i = 0; i < STARTING_DECORATIONS; i++) {
+		if (!createDecoration(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
 				RESOURCE_SPAWN_RADIUS, Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
 				RESOURCE_SPAWN_RADIUS))) {
 			i--;
