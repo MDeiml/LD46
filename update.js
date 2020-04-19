@@ -58,6 +58,8 @@ export function update() {
         }
     }
 
+    handleCollision(player);
+
     // ANIMALS
     for (let animal of animals) {
         let dir = vec2.sub(vec2.create(), player.position, animal.position);
@@ -82,14 +84,17 @@ export function update() {
                 }
             }
         }
+        handleCollision(animal);
     }
+}
 
+function handleCollision(obj) {
     for (let tree of trees) {
-        let dir = vec2.sub(vec2.create(), tree.position, player.position);
+        let dir = vec2.sub(vec2.create(), tree.position, obj.position);
         let dist = vec2.len(dir);
         if (dist < 0.2) {
             vec2.scale(dir, dir, -(0.2 - dist)/dist);
-            vec2.add(player.position, player.position, dir);
+            vec2.add(obj.position, obj.position, dir);
         }
     }
 }
