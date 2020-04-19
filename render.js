@@ -1,4 +1,4 @@
-import { gl, canvas, items, ITEMS, player, trees, fire } from './model.js'
+import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -12,6 +12,7 @@ let treeTextures = [];
 let itemTextures = {};
 let backgroundTexture;
 let fireTextures = [];
+let toolTextures = [];
 let playerTexture;
 let flicker = 0;
 let flickerTimer = 0;
@@ -47,6 +48,9 @@ export function render() {
     if (player.carrying) {
         mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
         drawTexture(itemTextures[player.carrying], transform);
+    } else if (player.currentTool != null) {
+        mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
+        drawTexture(toolTextures[player.currentTool], transform);
     }
 
     // draw items
@@ -77,7 +81,8 @@ function drawTexture(id, transform, isFire) {
     let mvp = mat4.create();
     mat4.mul(mvp, pvMatrix, transform);
     gl.uniformMatrix4fv(matrixUniform, false, mvp);
-    gl.uniform1f(fireIntesityUniform, isFire ? 4 : fire.fuel * fire.fuel * 4 + flicker);
+    let intensity = fire.fuel * 2 + flicker * 0.2;
+    gl.uniform1f(fireIntesityUniform, isFire ? 4 : intensity * intensity);
     gl.uniform1i(drawCircleUniform, id == backgroundTexture ? 1 : 0);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -97,6 +102,14 @@ export function initGL() {
     for (let i = 0; i < 4; i++) {
         fireTextures.push(loadTexture('./textures/fire' + i + '.svg'));
     }
+    toolTextures[TOOLS.ARROW] = loadTexture('./textures/arrow.svg');
+    toolTextures[TOOLS.AXE] = loadTexture('./textures/axe.svg');
+    toolTextures[TOOLS.BOW] = loadTexture('./textures/bow.svg');
+    toolTextures[TOOLS.FISHING_ROD] = loadTexture('./textures/fishingrod.svg');
+    toolTextures[TOOLS.KNIFE] = loadTexture('./textures/knife.svg');
+    toolTextures[TOOLS.PICKAXE] = loadTexture('./textures/pickaxe.svg');
+    toolTextures[TOOLS.SPEAR] = loadTexture('./textures/spear.svg');
+    toolTextures[TOOLS.STONE] = loadTexture('./textures/stone.svg');
     itemTextures[ITEMS.WOOD] = loadTexture('./textures/wood_trunk.svg');
     itemTextures[ITEMS.STONE] = loadTexture('./textures/stone.svg');
     backgroundTexture = whiteTexture();

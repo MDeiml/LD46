@@ -38,15 +38,6 @@ export let fireFuel = 2;
 export let items = [];
 export let trees = [];
 
-export let player = {
-    speed: 2,
-    position: vec2.create(),
-    goal: vec2.create(),
-    walking: false,
-    walkingTimer: 0,
-    carrying: null
-};
-
 export const FIRES = {
 	OPEN_FIRE: 0,
 	CAMPFIRE: 1,
@@ -77,6 +68,16 @@ export const FOOD = {
 	COOKED_FISH: 2003,
 	BERRIES: 2004
 }
+
+export let player = {
+    speed: 2,
+    position: vec2.create(),
+    goal: vec2.create(),
+    walking: false,
+    walkingTimer: 0,
+	carrying: null,
+	currentTool: TOOLS.AXE
+};
 
 export function createItem(position, type) {
 	if (vec2.length(position) < NO_INIT_ITEMS_AROUND_FIRE_RADIUS) {
