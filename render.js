@@ -53,10 +53,10 @@ function drawObjects() {
     mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, angle, 0), vec2ToVec3(player.position), vec3.fromValues(-1, 1, 1));
     drawTexture(playerTexture, transform);
     if (player.carrying) {
-        mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
+        mat4.translate(transform, transform, vec3.fromValues(0, 0, 0.3));
         drawTexture(itemTextures[player.carrying], transform);
     } else if (player.currentTool != null) {
-        mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
+        mat4.translate(transform, transform, vec3.fromValues(0, 0, 0.3));
         if (player.animationStatus == ANIMATIONS.CHOPPING) {
             mat4.rotate(transform, transform, Math.max(0, Math.sin(player.animationTimer * Math.PI * 2)), vec3.fromValues(0, -1, 0));
         }
