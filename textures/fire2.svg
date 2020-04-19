@@ -17,7 +17,7 @@
    inkscape:export-filename="/home/matthias/bitmap.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="fire2.svg">
   <defs
      id="defs64558" />
@@ -29,16 +29,24 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.38954534"
-     inkscape:cx="355.43184"
+     inkscape:cx="-61.721141"
      inkscape:cy="635.02799"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1052"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="1853"
+     inkscape:window-height="1057"
+     inkscape:window-x="1979"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="50.261585,201.04634"
+       orientation="1,0"
+       id="guide4800"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
   <metadata
      id="metadata64561">
     <rdf:RDF>
@@ -47,7 +55,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -58,19 +66,19 @@
      transform="translate(0,123)">
     <path
        style="fill:#2b1100;stroke-width:0.68524408"
-       d="m 39.801738,169.29812 323.117192,-14.11695 7.60276,72.6015 -338.322709,18.15038 z"
+       d="M 57.864343,222.27655 380.98154,208.1596 388.5843,280.7611 50.261586,298.91148 Z"
        id="rect64566"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
     <path
        style="fill:#ff6600;stroke-width:0.68524408"
-       d="m 105.21933,82.788822 83.21403,-179.37282 52.94814,171.572375 79.72229,98.343153 H 89.219671 Z"
+       d="m 123.28194,135.76725 83.21403,-179.372819 52.94814,171.572379 79.72229,98.34315 H 107.28228 Z"
        id="rect64568"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccc" />
     <path
        style="fill:#ffff00;stroke-width:0.44703919"
-       d="m 129.5856,83.416753 48.53398,-85.8841345 45.71676,85.1860585 52.7508,76.129753 H 134.03542 Z"
+       d="m 147.64821,136.39518 48.53398,-85.884133 45.71676,85.186063 52.7508,76.12975 H 152.09803 Z"
        id="rect64568-3"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccc" />
