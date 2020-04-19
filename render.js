@@ -2,7 +2,8 @@ import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facin
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
-let matrixUniform, textureUniform, modelUniform, fireIntesityUniform;
+let matrixUniform, textureUniform, modelUniform, fireIntesityUniform, shadowTextureUniform;
+let matrixUniformShadow, textureUniformShadow, modelUniformShadow;
 let squareBuffer, squareTexCoordBuffer;
 let projectionMatrix;
 let pvMatrix = mat4.create();
@@ -23,6 +24,10 @@ let flickerTimer = 0;
 let shadowTexture;
 let shadowFramebuffer;
 
+let defaultShader;
+let shadowShader;
+let shadowShaderActive = true;
+
 function vec2ToVec3(v) {
     return vec3.fromValues(v[0], v[1], 0);
 }
@@ -38,10 +43,23 @@ export function render() {
     mat4.mul(pvMatrix, projectionMatrix, pvMatrix);
     mat4.invert(invPvMatrix, pvMatrix);
 
+    gl.useProgram(shadowShader);
+    shadowShaderActive = true;
+    gl.bindFramebuffer(gl.FRAMEBUFFER, shadowFramebuffer);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+
+    drawObjects();
+
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
+    gl.useProgram(defaultShader);
+    shadowShaderActive = false;
+
     let transform = mat4.create();
     mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -50, 0), vec3.fromValues(100, 100, 100));
     drawTexture(backgroundTexture, transform);
+
     drawObjects();
+
     if (player.animationStatus == ANIMATIONS.CRAFTING) {
         for (let i = 0; i < 9; i++) {
             let angle = Math.PI * i / 5;
@@ -110,27 +128,37 @@ function drawTexture(id, transform, lighting) {
 
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, id);
-    gl.uniform1i(textureUniform, 0);
 
-    gl.uniformMatrix4fv(modelUniform, false, transform)
-    let mvp = mat4.create();
-    mat4.mul(mvp, pvMatrix, transform);
-    gl.uniformMatrix4fv(matrixUniform, false, mvp);
-    let intensity = fire.fuel * 2 + flicker * 0.2;
-    intensity = intensity * intensity;
-    if (lighting == 1) {
-        intensity = 4;
-    } else if (lighting == 2) {
-        intensity = -1;
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, shadowTexture);
+
+    if (shadowShaderActive) {
+        gl.uniform1i(textureUniformShadow, 0);
+        gl.uniformMatrix4fv(modelUniformShadow, false, transform)
+        gl.uniformMatrix4fv(matrixUniformShadow, false, pvMatrix);
+    } else {
+        gl.uniform1i(textureUniform, 0);
+        gl.uniform1i(shadowTextureUniform, 1);
+        gl.uniformMatrix4fv(modelUniform, false, transform)
+        let mvp = mat4.create();
+        mat4.mul(mvp, pvMatrix, transform);
+        gl.uniformMatrix4fv(matrixUniform, false, mvp);
+        let intensity = fire.fuel * 2 + flicker * 0.2;
+        intensity = intensity * intensity;
+        if (lighting == 1) {
+            intensity = 4;
+        } else if (lighting == 2) {
+            intensity = -1;
+        }
+        gl.uniform1f(fireIntesityUniform, intensity);
     }
-    gl.uniform1f(fireIntesityUniform, intensity);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
 
 // has to be called before calling render
 export function initGL() {
-    gl.clearColor(42/255, 51/255, 81/255, 1);
+    gl.clearColor(0, 0, 0, 1);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     initShaders();
@@ -199,31 +227,50 @@ export function updateProjection() {
     gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 }
 
-function initShaders() {
-    const vs = getShader('shader-vs');
-    const fs = getShader('shader-fs');
+function initShaders(name) {
+    let vs = getShader('shader-vs');
+    let fs = getShader('shader-fs');
 
-    const program = gl.createProgram();
-    gl.attachShader(program, vs);
-    gl.attachShader(program, fs);
-    gl.linkProgram(program);
+    defaultShader = gl.createProgram();
+    gl.attachShader(defaultShader, vs);
+    gl.attachShader(defaultShader, fs);
+    gl.linkProgram(defaultShader);
 
-    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    if (!gl.getProgramParameter(defaultShader, gl.LINK_STATUS)) {
         alert('Error when linking shaders');
     }
 
-    gl.useProgram(program);
+    gl.useProgram(defaultShader);
 
-    positionAttribute = gl.getAttribLocation(program, 'position');
+    positionAttribute = gl.getAttribLocation(defaultShader, 'position');
     gl.enableVertexAttribArray(positionAttribute);
 
-    texCoordAttribute = gl.getAttribLocation(program, 'texCoord');
+    texCoordAttribute = gl.getAttribLocation(defaultShader, 'texCoord');
     gl.enableVertexAttribArray(texCoordAttribute);
 
-    matrixUniform = gl.getUniformLocation(program, 'MVP');
-    modelUniform = gl.getUniformLocation(program, 'M');
-    textureUniform = gl.getUniformLocation(program, 'texture');
-    fireIntesityUniform = gl.getUniformLocation(program, 'fireIntensity');
+    matrixUniform = gl.getUniformLocation(defaultShader, 'MVP');
+    modelUniform = gl.getUniformLocation(defaultShader, 'M');
+    textureUniform = gl.getUniformLocation(defaultShader, 'texture');
+    fireIntesityUniform = gl.getUniformLocation(defaultShader, 'fireIntensity');
+    shadowTextureUniform = gl.getUniformLocation(defaultShader, 'shadowTexture');
+
+    vs = getShader('shadow-vs');
+    fs = getShader('shadow-fs');
+
+    shadowShader = gl.createProgram();
+    gl.attachShader(shadowShader, vs);
+    gl.attachShader(shadowShader, fs);
+    gl.linkProgram(shadowShader);
+
+    if (!gl.getProgramParameter(shadowShader, gl.LINK_STATUS)) {
+        alert('Error when linking shaders');
+    }
+
+    gl.useProgram(shadowShader);
+
+    matrixUniformShadow = gl.getUniformLocation(shadowShader, 'VP');
+    modelUniformShadow = gl.getUniformLocation(shadowShader, 'M');
+    textureUniformShadow = gl.getUniformLocation(shadowShader, 'texture');
 }
 
 function getShader(id) {
