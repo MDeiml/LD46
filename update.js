@@ -23,7 +23,7 @@ export function update() {
             vec2.copy(player.position, player.goal);
             player.walking = false;
             player.walkingTimer = 0;
-            if (doubleClick) {
+            if (!doubleClick) {
 				pickUp();
 				chopDownTree();
             }
