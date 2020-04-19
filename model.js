@@ -350,6 +350,10 @@ export function itemsInReachOfFire() {
 }
 
 export function craft(desired) {
+	if (player.tools[desired]) {
+		player.currentTool = desired;
+		return desired;
+	}
 	let recipe = canCraft(desired);
 	if (recipe) {
 		console.log(itemsInReachOfFire());
@@ -366,6 +370,9 @@ export function craft(desired) {
 
 export function canCraft(desired) {
 	let recipe = getRecipe(desired);
+	if (player.tools[desired]) {
+		return true;
+	}
 	let numWoodAndStone = countOccurences(itemsInReachOfFire());
 	return numWoodAndStone.isPossible(recipe)?recipe:null;
 }
