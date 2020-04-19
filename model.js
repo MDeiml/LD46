@@ -20,7 +20,7 @@ export const DISTANCE_BETWEEN_TREES = 1;
 export const NO_INIT_ITEMS_AROUND_FIRE_RADIUS = 3;
 export const DISTANCE_BETWEEN_ITEMS_OF_SAME_TYPE = 3;
 export const WOOD_PER_TREE = 2;
-export const QUARRY_RADIUS = 3;
+export const QUARRY_RADIUS = 5;
 
 export let fire = {
     // Type of the fire
