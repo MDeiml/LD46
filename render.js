@@ -49,9 +49,9 @@ export function render() {
             mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
             if (i == 0) {
                 // TODO: watch out fire.size + 1 isn't out of bounds
-                drawTexture(fireTextures[fire.size + 1][0], transform);
+                drawTexture(fireTextures[fire.size + 1][0], transform, 2);
             } else {
-                drawTexture(toolTextures[i - 1], transform);
+                drawTexture(toolTextures[i - 1], transform, 2);
             }
         }
     }
@@ -63,7 +63,7 @@ function drawObjects() {
 
     // draw fire
     mat4.identity(transform);
-    drawTexture(fireTextures[fire.size][Math.floor(fire.animationTime * 4) % 4], transform, true);
+    drawTexture(fireTextures[fire.size][Math.floor(fire.animationTime * 4) % 4], transform, 1);
 
     // draw player
     let angle = player.animationStatus == ANIMATIONS.WALKING ? Math.pow(Math.sin(player.animationTimer * 5), 2) * 10 : 0;
@@ -94,7 +94,7 @@ function drawObjects() {
     }
 }
 
-function drawTexture(id, transform, isFire) {
+function drawTexture(id, transform, lighting) {
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
     gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
 
@@ -110,7 +110,13 @@ function drawTexture(id, transform, isFire) {
     mat4.mul(mvp, pvMatrix, transform);
     gl.uniformMatrix4fv(matrixUniform, false, mvp);
     let intensity = fire.fuel * 2 + flicker * 0.2;
-    gl.uniform1f(fireIntesityUniform, isFire ? 4 : intensity * intensity);
+    intensity = intensity * intensity;
+    if (lighting == 1) {
+        intensity = 4;
+    } else if (lighting == 2) {
+        intensity = -1;
+    }
+    gl.uniform1f(fireIntesityUniform, intensity);
     gl.uniform1i(drawCircleUniform, id == backgroundTexture ? 1 : 0);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);

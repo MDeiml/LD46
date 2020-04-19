@@ -12,7 +12,6 @@ export function update() {
     fire.fuel -= fire.burningSpeed * DELTA;
     fire.animationTime += DELTA;
     if (player.animationStatus == ANIMATIONS.CRAFTING && mousePos) {
-        console.log(mousePos);
         for (let i = 0; i < 9; i++) {
             let angle = Math.PI * i / 5;
             let point = vec2.fromValues(2 * Math.sin(angle), 2 * Math.cos(angle));
