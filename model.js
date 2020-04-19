@@ -18,6 +18,7 @@ export const NO_TREES_AROUND_FIRE_RADIUS = 2.5;
 export const DISTANCE_BETWEEN_TREES = 1;
 export const NO_INIT_ITEMS_AROUND_FIRE_RADIUS = 3;
 export const DISTANCE_BETWEEN_ITEMS_OF_SAME_TYPE = 3;
+export const WOOD_PER_TREE = 2;
 
 export let fire = {
     // Type of the fire
@@ -114,6 +115,27 @@ export function createTree(position) {
 	return true;
 }
 
+export function chopDownTree() {
+	let treePos = -1;
+	for (let i = 0; i < trees.length; i++) {
+		if (vec2.distance(trees[i].position, player.position) <= 1) {
+			treePos = i;
+			break;
+		}
+	}
+	if (treePos < 0) {
+		return false;
+	}
+	trees.splice(treePos, 1);
+	for (let j = 0; j < WOOD_PER_TREE; j++) {
+		let itemPos = vec2.clone(player.position);
+		itemPos[0] += j * 0.5;
+		itemPos[1] += j * 0.5;
+		items.push(new Item(itemPos, ITEMS.WOOD));
+	}
+	return true;
+}
+
 export function initItems() {
 	for (let i = 0; i < STARTING_WOOD; i++) {
 		if (!createItem(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
@@ -176,11 +198,9 @@ export function distanceToFire(vec) {
 }
 
 export function layDown() {
-    console.log("ts1");
 	if (player.carrying == null) {
 		return false;
 	}
-    console.log("ts");
 	items.push(new Item(vec2.clone(player.position), player.carrying));
 	player.carrying = null;
 	return true;
