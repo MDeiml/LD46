@@ -310,7 +310,8 @@ export function getRecipe(tool) {
 			break;
 		}
 	}
-	return RECIPES[keys[i]];
+	let ret = JSON.parse(JSON.stringify(RECIPES[keys[i]]));
+	return ret;
 }
 
 export function getFireName() {
@@ -349,6 +350,7 @@ export function craft(desired) {
 	let recipe = getRecipe(desired);
 	let numWoodAndStone = countOccurences(itemsInReachOfFire());
 	if (numWoodAndStone.isPossible(recipe)) {
+		console.log(itemsInReachOfFire());
 		if (removeItemsInReachOfFire(recipe)) {
 			player.tools.push(desired);
 			return desired;
