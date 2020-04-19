@@ -31,7 +31,6 @@ export let fire = {
     animationTime: 0
 };
 
-export let fireSize = 0;
 export let fireCapacity = 2;
 export let fireFuel = 2;
 
@@ -218,7 +217,7 @@ export class Recipe {
 
 	// Returns, if it is possible to craft the object other out of the given Item Set
 	isPossible(other) {
-		if (other.neededFire > fireSize) {
+		if (other.neededFire > fire.size) {
 			return false;
 		}
 		return (other.wood <= this.wood) && (other.stone <= this.stone);
