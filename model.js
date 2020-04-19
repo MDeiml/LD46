@@ -26,7 +26,8 @@ export let fire = {
     capacity: 2,
     // The fuel that the fire currently has
     fuel: 2,
-    burningSpeed: 0.03
+    burningSpeed: 0.03,
+    animationTime: 0
 };
 
 export let fireSize = 0;

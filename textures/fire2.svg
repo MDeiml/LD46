@@ -18,7 +18,7 @@
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="fire0.svg">
+   sodipodi:docname="fire2.svg">
   <defs
      id="defs64558" />
   <sodipodi:namedview
@@ -47,7 +47,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -64,13 +64,13 @@
        sodipodi:nodetypes="ccccc" />
     <path
        style="fill:#ff6600;stroke-width:0.68524408"
-       d="m 140.53829,62.412503 98.83586,-125.03597 52.26894,124.027632 29.4607,111.927365 H 89.219671 Z"
+       d="m 105.21933,82.788822 83.21403,-179.37282 52.94814,171.572375 79.72229,98.343153 H 89.219671 Z"
        id="rect64568"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccc" />
     <path
        style="fill:#ffff00;stroke-width:0.44703919"
-       d="m 165.58376,82.058332 60.75977,-86.5633453 32.13255,85.8652693 18.11106,77.488174 H 134.03542 Z"
+       d="m 129.5856,83.416753 48.53398,-85.8841345 45.71676,85.1860585 52.7508,76.129753 H 134.03542 Z"
        id="rect64568-3"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccccc" />

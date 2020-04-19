@@ -11,7 +11,7 @@ export let invPvMatrix = mat4.create();
 let treeTextures = [];
 let itemTextures = {};
 let backgroundTexture;
-let fireTexture;
+let fireTextures = [];
 let playerTexture;
 
 function vec2ToVec3(v) {
@@ -31,7 +31,7 @@ export function render() {
 
     // draw fire
     mat4.identity(transform);
-    drawTexture(fireTexture, transform);
+    drawTexture(fireTextures[Math.floor(fire.animationTime * 4) % 4], transform);
 
     // draw player
     let angle = Math.pow(Math.sin(player.walkingTimer * 5), 2) * 10;
@@ -85,8 +85,10 @@ export function initGL() {
     for (let i = 0; i < 4; i++) {
         treeTextures.push(loadTexture('./textures/tree' + i + '.svg'));
     }
+    for (let i = 0; i < 4; i++) {
+        fireTextures.push(loadTexture('./textures/fire' + i + '.svg'));
+    }
     itemTextures[ITEMS.WOOD] = loadTexture('./textures/wood_trunk.svg');
-    fireTexture = loadTexture('./textures/fire0.svg');
     backgroundTexture = whiteTexture();
     playerTexture = loadTexture('./textures/character.svg');
 
