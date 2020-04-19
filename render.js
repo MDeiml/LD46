@@ -106,7 +106,7 @@ function drawObjects() {
 
     // draw decorations
     for (let stump of stumps) {
-		mat4.fromTranslation(transform, vec2ToVec3(stump.position));
+		mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(stump.position), vec3.fromValues(2, 2, 2));
 		drawTexture(stumpTextures[stump.type], transform);
 	}
     // draw fire
@@ -228,6 +228,18 @@ export function initGL() {
         campfireTextures.push(loadTexture('./textures/campfire' + i + '.svg'));
     }
     fireTextures.push(campfireTextures);
+
+    let cookingfireTextures = [];
+    for (let i = 0; i < 4; i++) {
+        cookingfireTextures.push(loadTexture('./textures/cookingfire' + i + '.svg'));
+    }
+    fireTextures.push(cookingfireTextures);
+
+    let beaconTextures = [];
+    for (let i = 0; i < 4; i++) {
+        beaconTextures.push(loadTexture('./textures/beacon' + i + '.svg'));
+    }
+    fireTextures.push(beaconTextures);
 
     for (let i = 0; i < 7; i++) {
         decorationTextures.push(loadTexture('./textures/decoration/decoration' + i + '.svg'));
