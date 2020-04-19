@@ -43,7 +43,7 @@ export function render() {
 
     // draw items
     for (let item of items) {
-        mat4.fromTranslation(transform, vec2ToVec3(item.pos));
+		mat4.fromTranslation(transform, vec2ToVec3(item.pos));
         drawTexture(itemTextures[item.id], transform);
     }
 
@@ -90,6 +90,7 @@ export function initGL() {
         fireTextures.push(loadTexture('./textures/fire' + i + '.svg'));
     }
     itemTextures[ITEMS.WOOD] = loadTexture('./textures/wood_trunk.svg');
+    itemTextures[ITEMS.STONE] = loadTexture('./textures/stone.svg');
     backgroundTexture = whiteTexture();
     playerTexture = loadTexture('./textures/character.svg');
 
