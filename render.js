@@ -41,7 +41,7 @@ function drawObjects() {
     mat4.invert(invPvMatrix, pvMatrix);
 
     let transform = mat4.create();
-    mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(0, -50, 0), vec3.fromValues(100, 100, 0));
+    mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -50, 0), vec3.fromValues(100, 100, 100));
     drawTexture(backgroundTexture, transform);
 
     // draw fire
@@ -50,7 +50,7 @@ function drawObjects() {
 
     // draw player
     let angle = player.animationStatus == ANIMATIONS.WALKING ? Math.pow(Math.sin(player.animationTimer * 5), 2) * 10 : 0;
-    mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, 0, angle), vec2ToVec3(player.position), vec3.fromValues(-1, 1, 1));
+    mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, angle, 0), vec2ToVec3(player.position), vec3.fromValues(-1, 1, 1));
     drawTexture(playerTexture, transform);
     if (player.carrying) {
         mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
@@ -58,7 +58,7 @@ function drawObjects() {
     } else if (player.currentTool != null) {
         mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
         if (player.animationStatus == ANIMATIONS.CHOPPING) {
-            mat4.rotate(transform, transform, Math.max(0, Math.sin(player.animationTimer * Math.PI * 2)), vec3.fromValues(0, 0, 1));
+            mat4.rotate(transform, transform, Math.max(0, Math.sin(player.animationTimer * Math.PI * 2)), vec3.fromValues(0, -1, 0));
         }
         drawTexture(toolTextures[player.currentTool], transform);
     }
@@ -71,7 +71,7 @@ function drawObjects() {
 
     // draw trees
     for (let tree of trees) {
-        mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(tree.position), vec3.fromValues(2, 2, 0));
+        mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(tree.position), vec3.fromValues(2, 2, 2));
         drawTexture(treeTextures[tree.type], transform);
     }
 }
@@ -133,11 +133,11 @@ export function updateProjection() {
     projectionMatrix = mat4.create();
     mat4.ortho(projectionMatrix, -aspect, aspect, -1, 1, -1, 1);
     mat4.scale(projectionMatrix, projectionMatrix, vec3.fromValues(0.2, 0.2, 0.2));
-    // mat4.mul(projectionMatrix, projectionMatrix,
-    //     mat4.fromValues(1, 0, 0, 0,
-    //                     0, 1, 1, 0,
-    //                     0, 0, 0, 0,
-    //                     0, 0, 0, 1));
+    mat4.mul(projectionMatrix, projectionMatrix,
+        mat4.fromValues(1, 0, 0, 0,
+                        0, 1, 0, 0,
+                        0, 1, 1, 0,
+                        0, 0, 0, 1));
 
     if (shadowTexture) {
         gl.deleteTexture(shadowTexture);
@@ -219,8 +219,8 @@ function initSquare() {
     squareBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
     const vertices = [
-        0.5, 1, 0,
-        -0.5, 1, 0,
+        0.5, 0, 1,
+        -0.5, 0, 1,
         0.5, 0, 0,
         -0.5, 0, 0
     ];
