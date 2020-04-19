@@ -21,6 +21,8 @@ export const NO_INIT_ITEMS_AROUND_FIRE_RADIUS = 3;
 export const DISTANCE_BETWEEN_ITEMS_OF_SAME_TYPE = 3;
 export const WOOD_PER_TREE = 2;
 export const QUARRY_RADIUS = 5;
+export const TIME_TO_CHOP_DOWN_TREE = 2;
+export const TIME_TO_MINE_STONE = 3;
 
 export let fire = {
     // Type of the fire
@@ -89,7 +91,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: null,
+	currentTool: TOOLS.PICKAXE,
 	facingLeft: false,
 	tools: {}
 };
@@ -110,7 +112,8 @@ export function facingLeft() {
 export const ANIMATIONS = {
     WALKING: 1,
     CHOPPING: 2,
-    CRAFTING: 3
+    CRAFTING: 3,
+    MINING: 4
 };
 
 export function createItem(position, type) {
@@ -191,6 +194,21 @@ export function chopDownTree(test) {
             itemPos[1] += j * 0.5;
             items.push(new Item(itemPos, ITEMS.WOOD));
         }
+    }
+	return true;
+}
+
+export function mineStone(test) {
+	if (player.currentTool != TOOLS.PICKAXE) {
+		return false;
+	}
+	if (vec2.distance(quarry.position, player.position) > 1) {
+		return false;
+	}
+    if (!test) {
+		let itemPos = vec2.clone(player.position);
+		itemPos[1] -= 1;
+        items.push(new Item(itemPos, ITEMS.STONE));
     }
 	return true;
 }

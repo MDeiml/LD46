@@ -107,7 +107,7 @@ function drawObjects() {
         drawTexture(itemTextures[player.carrying], transform);
     } else if (player.currentTool != null) {
         mat4.translate(transform, transform, vec3.fromValues(0, 0, 0.3));
-        if (player.animationStatus == ANIMATIONS.CHOPPING) {
+        if (player.animationStatus == ANIMATIONS.CHOPPING || player.animationStatus == ANIMATIONS.MINING) {
             mat4.rotate(transform, transform, Math.max(0, Math.sin(player.animationTimer * Math.PI * 2)), vec3.fromValues(0, -1, 0));
         }
         drawTexture(toolTextures[player.currentTool], transform);
