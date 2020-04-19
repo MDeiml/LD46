@@ -37,7 +37,7 @@
                     color.a = 0.0;
                 }
                 float dist = dot(worldPos, worldPos);
-                if (drawCircle != 0 && dist < 2.0 * 2.0 && dist > 1.95 * 1.95) {
+                if (drawCircle != 0 && dist < 2.0 * 2.0 && dist > 1.98 * 1.98) {
                     gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
                 } else {
                     float t = clamp(fireIntensity/dist, 0.0, 1.0);
