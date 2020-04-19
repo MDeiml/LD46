@@ -209,11 +209,6 @@ export function layDown() {
 export function pickUp() {
 	let wasCarrying = player.carrying != null;
 	let posNearest = nearestItem();
-    if (posNearest == -2) {
-        // nearest to fire
-        refuelFire();
-        return;
-    }
     if (posNearest < 0) {
 		return false;
 	}
@@ -327,6 +322,9 @@ export function upgradeFire() {
 }
 
 export function refuelFire() {
+	if (nearestItem() != -2) {
+		return false;
+	}
 	if (player.carrying == ITEMS.WOOD) {
 		player.carrying = null;
 		fire.fuel = (fire.fuel+1 > fire.capacity) ? fire.capacity : fire.fuel+1;
