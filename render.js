@@ -2,7 +2,7 @@ import { gl, canvas, items, ITEMS, player, trees, fire } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
-let matrixUniform, textureUniform, modelUniform, fireIntesityUniform;
+let matrixUniform, textureUniform, modelUniform, fireIntesityUniform, drawCircleUniform;
 let squareBuffer, squareTexCoordBuffer;
 let projectionMatrix;
 let pvMatrix = mat4.create();
@@ -70,6 +70,7 @@ function drawTexture(id, transform) {
     mat4.mul(mvp, pvMatrix, transform);
     gl.uniformMatrix4fv(matrixUniform, false, mvp);
     gl.uniform1f(fireIntesityUniform, fire.fuel * fire.fuel);
+    gl.uniform1i(drawCircleUniform, id == backgroundTexture ? 1 : 0);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
@@ -130,6 +131,7 @@ function initShaders() {
     modelUniform = gl.getUniformLocation(program, 'M');
     textureUniform = gl.getUniformLocation(program, 'texture');
     fireIntesityUniform = gl.getUniformLocation(program, 'fireIntensity');
+    drawCircleUniform = gl.getUniformLocation(program, 'drawCircle');
 }
 
 function getShader(id) {

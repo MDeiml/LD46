@@ -29,17 +29,23 @@
 
             uniform sampler2D texture;
             uniform float fireIntensity;
+            uniform int drawCircle;
 
             void main(void) {
                 vec4 color = texture2D(texture, vTexCoord);
                 if (color.a < 1.0) {
                     color.a = 0.0;
                 }
-                float t = clamp(fireIntensity/dot(worldPos, worldPos), 0.0, 1.0);
-                float gray = color.r * 0.3 + color.g * 0.59 + color.b * 0.11;
-                vec3 grayColor = gray * vec3(42.0/255.0, 51.0/255.0, 81.0/255.0);
-                color.rgb = (1.0 - t) * grayColor + t * color.rgb * vec3(235.0/255.0, 178.0/255.0, 145.0/255.0);
-                gl_FragColor = color;
+                float dist = dot(worldPos, worldPos);
+                if (drawCircle != 0 && dist < 2.0 * 2.0 && dist > 1.95 * 1.95) {
+                    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+                } else {
+                    float t = clamp(fireIntensity/dist, 0.0, 1.0);
+                    float gray = color.r * 0.3 + color.g * 0.59 + color.b * 0.11;
+                    vec3 grayColor = gray * vec3(42.0/255.0, 51.0/255.0, 81.0/255.0);
+                    color.rgb = (1.0 - t) * grayColor + t * color.rgb * vec3(235.0/255.0, 178.0/255.0, 145.0/255.0);
+                    gl_FragColor = color;
+                }
             }
         </script>
         <style>
