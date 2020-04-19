@@ -39,7 +39,10 @@ export let items = [];
 export let trees = [];
 export let animals = [{
     position: vec2.fromValues(-5, 5),
-    type: 0
+    type: 0,
+    speed: 2,
+    walkingDir: null,
+    walkTimer: 0,
 }];
 
 export const FIRES = {

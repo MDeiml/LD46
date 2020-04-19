@@ -1,4 +1,4 @@
-import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree, layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, trees } from './model.js';
+import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree, layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, trees, animals} from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
@@ -57,6 +57,33 @@ export function update() {
             }
         }
     }
+
+    // ANIMALS
+    for (let animal of animals) {
+        let dir = vec2.sub(vec2.create(), player.position, animal.position);
+        let dist = vec2.len(dir);
+        if (dist < 3) {
+            vec2.scale(dir, dir, animal.speed * DELTA / dist);
+            vec2.add(animal.position, animal.position, dir);
+            animal.walkingDir = null;
+            animal.walkTimer = 0;
+        } else {
+            animal.walkTimer -= DELTA;
+            if (animal.walkingDir) {
+                vec2.add(animal.position, animal.position, vec2.scale(dir, animal.walkingDir, DELTA * animal.speed));
+                if (animal.walkTimer <= 0) {
+                    animal.walkTimer = Math.random() + 1;
+                    animal.walkingDir = null;
+                }
+            } else {
+                if (animal.walkTimer <= 0) {
+                    animal.walkTimer = Math.random() + 1;
+                    animal.walkingDir = vec2.random(vec2.create());
+                }
+            }
+        }
+    }
+
     for (let tree of trees) {
         let dir = vec2.sub(vec2.create(), tree.position, player.position);
         let dist = vec2.len(dir);
