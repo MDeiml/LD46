@@ -75,7 +75,7 @@ export function update() {
                 mineStone(false);
             }
         } else if (player.animationStatus == ANIMATIONS.FIGHTING) {
-            if (player.animationTimer >= 1) {
+            if (player.animationTimer >= 0.5) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 hitAnimal(false);

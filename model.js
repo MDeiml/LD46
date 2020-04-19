@@ -45,6 +45,7 @@ export let quarry;
 
 export let animals = [{
     position: vec2.fromValues(-5, 5),
+    health: 2,
     type: 0,
     speed: 2,
     walkingDir: null,
@@ -206,7 +207,10 @@ export function chopDownTree(test) {
 	return true;
 }
 
-export function hitAnimal() {
+export function hitAnimal(test) {
+    if (player.currentTool != TOOLS.KNIFE) {
+        return false;
+    }
     let nearestAnimal = -1;
     let nearestRadius = 1;
     for (let i = 0; i < animals.length; i++) {
@@ -218,6 +222,12 @@ export function hitAnimal() {
     }
     if (nearestAnimal == -1) {
         return false;
+    }
+    if (!test) {
+        animals[nearestAnimal].health--;
+        if (animals[nearestAnimal].health <= 0) {
+            animals.splice(nearestAnimal, 1);
+        }
     }
     return true;
 }
