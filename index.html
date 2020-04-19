@@ -10,14 +10,14 @@
             attribute vec2 texCoord;
 
             varying mediump vec2 vTexCoord;
-            varying mediump vec2 worldPos;
+            varying mediump vec3 worldPos;
 
             uniform mat4 M;
             uniform mat4 MVP;
 
             void main(void) {
                 vTexCoord = texCoord;
-                worldPos = (M * vec4(position, 1.0)).xy;
+                worldPos = (M * vec4(position, 1.0)).xyz;
                 gl_Position = MVP * vec4(position, 1.0);
             }
         </script>
@@ -25,10 +25,12 @@
             precision mediump float;
 
             varying mediump vec2 vTexCoord;
-            varying mediump vec2 worldPos;
+            varying mediump vec3 worldPos;
 
             uniform sampler2D texture;
+            uniform sampler2D shadowTexture;
             uniform float fireIntensity;
+            uniform vec2 canvasSize;
 
             void main(void) {
                 vec4 color = texture2D(texture, vTexCoord);
@@ -40,11 +42,45 @@
                     gl_FragColor = color;
                 } else {
                     float t = clamp(fireIntensity/dist, 0.0, 1.0);
+                    if (worldPos.z <= 0.001) {
+                        t *= (1.0 - texture2D(shadowTexture, gl_FragCoord.xy / canvasSize).r);
+                    }
                     float gray = color.r * 0.3 + color.g * 0.59 + color.b * 0.11;
                     vec3 grayColor = gray * vec3(42.0/255.0, 51.0/255.0, 81.0/255.0);
                     color.rgb = (1.0 - t) * grayColor + t * color.rgb * vec3(235.0/255.0, 178.0/255.0, 145.0/255.0);
                     gl_FragColor = color;
                 }
+            }
+        </script>
+        <script id="shadow-vs" type="x-shader/x-vertex">
+            attribute vec3 position;
+            attribute vec2 texCoord;
+
+            varying mediump vec2 vTexCoord;
+
+            uniform mat4 M;
+            uniform mat4 VP;
+
+            void main(void) {
+                vTexCoord = texCoord;
+                vec3 pos = (M * vec4(position, 1.0)).xyz;
+                float oldY = pos.y;
+                pos.y += pos.z * pos.y / (2.5 - pos.z);
+                pos.x = pos.x / oldY * pos.y;
+                pos.z *= 0.1;
+                gl_Position = VP * vec4(pos, 1.0);
+            }
+        </script>
+        <script id="shadow-fs" type="x-shader/x-fragment">
+            precision mediump float;
+           
+            varying mediump vec2 vTexCoord;
+
+            uniform sampler2D texture;
+
+            void main(void) {
+                float alpha = texture2D(texture, vTexCoord).a;
+                gl_FragColor = vec4(1.0, 0, 0, alpha);
             }
         </script>
         <style>
