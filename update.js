@@ -12,7 +12,7 @@ export function update() {
     fire.fuel -= fire.burningSpeed * DELTA;
     fire.animationTime += DELTA;
     if (mousePos) {
-        vec2.sub(player.goal, mousePos, vec2.fromValues(0, 0.5));
+        vec2.sub(player.goal, mousePos, vec2.fromValues(0, 0.3));
         player.walking = true;
     }
     if (player.walking) {
@@ -24,9 +24,11 @@ export function update() {
             player.walking = false;
             player.walkingTimer = 0;
             if (!doubleClick) {
-				if (!layDown()) {
-					if (!pickUp()) {
-						chopDownTree();
+				if (!refuelFire()) {
+					if (!layDown()) {
+						if (!pickUp()) {
+							chopDownTree();
+						}
 					}
 				}
             }
