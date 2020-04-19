@@ -1,4 +1,4 @@
-import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree, layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS} from './model.js';
+import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree, layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, trees } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
@@ -55,6 +55,14 @@ export function update() {
                 player.animationStatus = 0;
                 chopDownTree(false);
             }
+        }
+    }
+    for (let tree of trees) {
+        let dir = vec2.sub(vec2.create(), tree.position, player.position);
+        let dist = vec2.len(dir);
+        if (dist < 0.2) {
+            vec2.scale(dir, dir, -(0.2 - dist)/dist);
+            vec2.add(player.position, player.position, dir);
         }
     }
 }
