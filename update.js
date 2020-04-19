@@ -64,13 +64,13 @@ export function update() {
         }
     }
 
-    handleCollision(player);
+    handleCollision(player, 0.3);
 
     // ANIMALS
     for (let animal of animals) {
         let dir = vec2.sub(vec2.create(), player.position, animal.position);
         let dist = vec2.len(dir);
-        if (dist < 3) {
+        if (dist < 3 && vec2.length(player.position) > fire.fuel * 2) {
             vec2.scale(dir, dir, animal.speed * DELTA / dist);
             vec2.add(animal.position, animal.position, dir);
             animal.walkingDir = null;
@@ -90,11 +90,11 @@ export function update() {
                 }
             }
         }
-        handleCollision(animal);
+        handleCollision(animal, fire.fuel * 2);
     }
 }
 
-function handleCollision(obj) {
+function handleCollision(obj, fireRadius) {
     for (let tree of trees) {
         let dir = vec2.sub(vec2.create(), tree.position, obj.position);
         let dist = vec2.len(dir);
@@ -102,5 +102,12 @@ function handleCollision(obj) {
             vec2.scale(dir, dir, -(0.2 - dist)/dist);
             vec2.add(obj.position, obj.position, dir);
         }
+    }
+
+    let dir = vec2.clone(obj.position);
+    let dist = vec2.len(dir);
+    if (dist < fireRadius) {
+        vec2.scale(dir, dir, (fireRadius - dist)/dist);
+        vec2.add(obj.position, obj.position, dir);
     }
 }
