@@ -188,8 +188,13 @@ export function layDown() {
 export function pickUp() {
 	let wasCarrying = player.carrying != null;
 	let posNearest = nearestItem();
+    if (posNearest == -2) {
+        // nearest to fire
+        refuelFire();
+        return;
+    }
     layDown();
-	if (posNearest < 0 || (inReachOfFire(player.position) && wasCarrying)) {
+    if (posNearest < 0) {
 		return;
 	}
 	let pickedUp = removeItem(posNearest);
@@ -214,6 +219,12 @@ export function nearestItem() {
 			lenMin = len;
 		}
 	}
+    let len = vec2.length(player.position);
+    if (len < lenMin) {
+        // nearest thing is fire
+        lenMin = len;
+        posMin = -2;
+    }
 	return posMin;
 }
 
@@ -297,7 +308,7 @@ export function upgradeFire() {
 export function refuelFire() {
 	if (player.carrying == ITEMS.WOOD) {
 		player.carrying = null;
-		fire.fuel = (fire.fuel+1 > fire.capacity) ? capacity : fire.fuel+1;
+		fire.fuel = (fire.fuel+1 > fire.capacity) ? fire.capacity : fire.fuel+1;
 		return true;
 	}
 	return false;
