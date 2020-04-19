@@ -1,5 +1,5 @@
 import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft,
-		decorations, quarry, gui, GAME_STATUS } from './model.js'
+		decorations, quarry, stumps, gui, GAME_STATUS } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -19,6 +19,7 @@ let playerTexture;
 let circleTexture;
 let animalTextures = [];
 let decorationTextures = [];
+let stumpTextures = [];
 let quarryTexture;
 
 let winscreenTexture;
@@ -71,7 +72,7 @@ export function render() {
         for (let i = 0; i < 9; i++) {
             let angle = Math.PI * i / 5;
             mat4.fromTranslation(transform, vec3.fromValues(Math.sin(angle) * 2, Math.cos(angle) * 2 - 0.5, 0));
-            drawTexture(circleTexture, transform);
+            drawTexture(circleTexture, transform, 2, true);
             mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
             if (i == 0) {
 				// TODO: watch out fire.size + 1 isn't out of bounds
@@ -101,8 +102,13 @@ function drawObjects() {
     for (let decoration of decorations) {
 		mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(decoration.position), vec3.fromValues(0.5, 0.5, 0.5));
 		drawTexture(decorationTextures[decoration.type], transform);
-    }
+	}
 
+    // draw decorations
+    for (let stump of stumps) {
+		mat4.fromTranslation(transform, vec2ToVec3(stump.position));
+		drawTexture(stumpTextures[stump.type], transform);
+	}
     // draw fire
     mat4.identity(transform);
     drawTexture(fireTextures[fire.size][Math.floor(fire.animationTime * 4) % 4], transform, 1);
@@ -225,6 +231,10 @@ export function initGL() {
 
     for (let i = 0; i < 7; i++) {
         decorationTextures.push(loadTexture('./textures/decoration/decoration' + i + '.svg'));
+	}
+
+    for (let i = 0; i < 4; i++) {
+        stumpTextures.push(loadTexture('./textures/stump' + i + '.svg'));
 	}
 
     toolTextures[TOOLS.ARROW] = loadTexture('./textures/arrow.svg');
