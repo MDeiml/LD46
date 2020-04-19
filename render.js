@@ -1,4 +1,5 @@
-import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft, decorations } from './model.js'
+import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft,
+		decorations, quarry } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -18,6 +19,7 @@ let playerTexture;
 let circleTexture;
 let animalTextures = [];
 let decorationTextures = [];
+let quarryTexture;
 
 let flicker = 0;
 let flickerTimer = 0;
@@ -87,7 +89,7 @@ function drawObjects() {
 
     // draw decorations
     for (let decoration of decorations) {
-		mat4.fromTranslation(transform, vec2ToVec3(decoration.position));
+		mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(decoration.position), vec3.fromValues(0.5, 0.5, 0.5));
 		drawTexture(decorationTextures[decoration.type], transform);
     }
 
@@ -105,7 +107,7 @@ function drawObjects() {
         drawTexture(itemTextures[player.carrying], transform);
     } else if (player.currentTool != null) {
         mat4.translate(transform, transform, vec3.fromValues(0, 0, 0.3));
-        if (player.animationStatus == ANIMATIONS.CHOPPING) {
+        if (player.animationStatus == ANIMATIONS.CHOPPING || player.animationStatus == ANIMATIONS.MINING || player.animationStatus == ANIMATIONS.FIGHTING) {
             mat4.rotate(transform, transform, Math.max(0, Math.sin(player.animationTimer * Math.PI * 2)), vec3.fromValues(0, -1, 0));
         }
         drawTexture(toolTextures[player.currentTool], transform);
@@ -128,7 +130,11 @@ function drawObjects() {
     for (let tree of trees) {
         mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(tree.position), vec3.fromValues(tree.direction ? 2 : -2, 2, 2));
         drawTexture(treeTextures[tree.type], transform);
-    }
+	}
+
+	// draw quarry
+	mat4.fromTranslation(transform, vec2ToVec3(quarry.position));
+	drawTexture(quarryTexture, transform);
 }
 
 function drawTexture(id, transform, lighting) {
@@ -189,7 +195,17 @@ export function initGL() {
     for (let i = 0; i < 4; i++) {
         campfireTextures.push(loadTexture('./textures/campfire' + i + '.svg'));
     }
-    fireTextures.push(campfireTextures);
+	fireTextures.push(campfireTextures);
+	let cookingfireTextures = [];
+    for (let i = 0; i < 4; i++) {
+        cookingfireTextures.push(loadTexture('./textures/cookingfire' + i + '.svg'));
+    }
+	fireTextures.push(cookingfireTextures);
+	let beaconTextures = [];
+    for (let i = 0; i < 4; i++) {
+        beaconTextures.push(loadTexture('./textures/beacon' + i + '.svg'));
+    }
+    fireTextures.push(beaconTextures);
 
     for (let i = 0; i < 7; i++) {
         decorationTextures.push(loadTexture('./textures/decoration/decoration' + i + '.svg'));
@@ -210,6 +226,7 @@ export function initGL() {
     backgroundTexture = whiteTexture();
     playerTexture = loadTexture('./textures/character.svg');
     circleTexture = loadTexture('./textures/circle.svg');
+    quarryTexture = loadTexture('./textures/quarry.svg');
 
     updateProjection();
 }

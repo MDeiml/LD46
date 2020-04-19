@@ -20,6 +20,9 @@ export const DISTANCE_BETWEEN_TREES = 1;
 export const NO_INIT_ITEMS_AROUND_FIRE_RADIUS = 3;
 export const DISTANCE_BETWEEN_ITEMS_OF_SAME_TYPE = 3;
 export const WOOD_PER_TREE = 2;
+export const QUARRY_RADIUS = 5;
+export const TIME_TO_CHOP_DOWN_TREE = 2;
+export const TIME_TO_MINE_STONE = 3;
 
 export let fire = {
     // Type of the fire
@@ -38,6 +41,7 @@ export let fireFuel = 2;
 export let items = [];
 export let trees = [];
 export let decorations = [];
+export let quarry;
 
 export let animals = [{
     position: vec2.fromValues(-5, 5),
@@ -52,6 +56,13 @@ export const FIRES = {
 	CAMPFIRE: 1,
 	COOKING_FIRE: 2,
 	BEACON: 3
+}
+
+export const FIRE_CAPACITY = {
+	OPEN_FIRE: 2,
+	CAMPFIRE: 4,
+	COOKING_FIRE: 6,
+	BEACON: 10
 }
 
 export const TOOLS = {
@@ -87,7 +98,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: null,
+	currentTool: TOOLS.KNIFE,
 	facingLeft: false,
 	tools: {}
 };
@@ -108,7 +119,9 @@ export function facingLeft() {
 export const ANIMATIONS = {
     WALKING: 1,
     CHOPPING: 2,
-    CRAFTING: 3
+    CRAFTING: 3,
+    MINING: 4,
+    FIGHTING: 5,
 };
 
 export function createItem(position, type) {
@@ -193,6 +206,37 @@ export function chopDownTree(test) {
 	return true;
 }
 
+export function hitAnimal() {
+    let nearestAnimal = -1;
+    let nearestRadius = 1;
+    for (let i = 0; i < animals.length; i++) {
+        let dist = vec2.distance(player.position, animals[i].position);
+        if (dist < nearestRadius) {
+            nearestAnimal = i;
+            nearestRadius = dist;
+        }
+    }
+    if (nearestAnimal == -1) {
+        return false;
+    }
+    return true;
+}
+
+export function mineStone(test) {
+	if (player.currentTool != TOOLS.PICKAXE) {
+		return false;
+	}
+	if (vec2.distance(quarry.position, player.position) > 1) {
+		return false;
+	}
+    if (!test) {
+		let itemPos = vec2.clone(player.position);
+		itemPos[1] -= 1;
+        items.push(new Item(itemPos, ITEMS.STONE));
+    }
+	return true;
+}
+
 export function initItems() {
 	items.push(new Item(vec2.fromValues(2, 1), ITEMS.WOOD));
 	items.push(new Item(vec2.fromValues(2, 2), ITEMS.WOOD));
@@ -238,6 +282,13 @@ export function initDecorations() {
 			continue;
 		}
 	}
+}
+
+export function initQuarry() {
+	let angle = Math.random() * Math.PI * 2;
+	quarry = {
+		position: vec2.fromValues(Math.cos(angle) * QUARRY_RADIUS, Math.sin(angle) * QUARRY_RADIUS)
+	};
 }
 
 export class Recipe {
@@ -421,6 +472,7 @@ export function upgradeFire() {
 	if (numWoodAndStone.isPossible(recipe)) {
 		if (removeItemsInReachOfFire(recipe)) {
 			fire.size++;
+			fire.capacity = FIRE_CAPACITY[getFireName()];
 			return true;
 		} else {
 			console.log("Something went wrong when removing the ingredients");

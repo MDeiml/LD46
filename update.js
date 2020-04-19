@@ -1,5 +1,6 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
-	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations } from './model.js';
+	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
+	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE, quarry, hitAnimal } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
@@ -7,6 +8,7 @@ export function init() {
     initTrees();
 	initItems();
 	initDecorations();
+	initQuarry();
 }
 
 // main update function (called every DELTA seconds)
@@ -45,22 +47,38 @@ export function update() {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 if (vec2.distance(player.position, player.goal) < 0.5 && !doubleClick) {
-                    if (refuelFire()) {
+                    if (hitAnimal(true)) {
+                        player.animationStatus = ANIMATIONS.FIGHTING;
+                    } else if (refuelFire()) {
                     } else if (layDown()) {
                     } else if (vec2.length(player.position) < PICK_UP_RADIUS) {
                         player.animationStatus = ANIMATIONS.CRAFTING;
                     } else if (pickUp()) {
                     } else if (chopDownTree(true)) {
                         player.animationStatus = ANIMATIONS.CHOPPING;
+                    } else if (mineStone(true)) {
+                        player.animationStatus = ANIMATIONS.MINING;
                     }
                 }
             } else {
             }
         } else if (player.animationStatus == ANIMATIONS.CHOPPING) {
-            if (player.animationTimer >= 2) {
+            if (player.animationTimer >= TIME_TO_CHOP_DOWN_TREE) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 chopDownTree(false);
+            }
+        } else if (player.animationStatus == ANIMATIONS.MINING) {
+            if (player.animationTimer >= TIME_TO_MINE_STONE) {
+                player.animationTimer = 0;
+                player.animationStatus = 0;
+                mineStone(false);
+            }
+        } else if (player.animationStatus == ANIMATIONS.FIGHTING) {
+            if (player.animationTimer >= 1) {
+                player.animationTimer = 0;
+                player.animationStatus = 0;
+                hitAnimal(false);
             }
         }
     }
@@ -90,6 +108,10 @@ export function update() {
                 if (animal.walkTimer <= 0) {
                     animal.walkTimer = Math.random() + 1;
                     animal.walkingDir = vec2.random(vec2.create());
+                    let dirToQuarry = vec2.sub(vec2.create(), quarry.position, animal.position);
+                    vec2.scale(dirToQuarry, dirToQuarry, 1/3);
+                    vec2.add(animal.walkingDir, animal.walkingDir, dirToQuarry);
+                    vec2.normalize(animal.walkingDir, animal.walkingDir);
                 }
             }
         }
