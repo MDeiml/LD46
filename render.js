@@ -195,7 +195,17 @@ export function initGL() {
     for (let i = 0; i < 4; i++) {
         campfireTextures.push(loadTexture('./textures/campfire' + i + '.svg'));
     }
-    fireTextures.push(campfireTextures);
+	fireTextures.push(campfireTextures);
+	let cookingfireTextures = [];
+    for (let i = 0; i < 4; i++) {
+        cookingfireTextures.push(loadTexture('./textures/cookingfire' + i + '.svg'));
+    }
+	fireTextures.push(cookingfireTextures);
+	let beaconTextures = [];
+    for (let i = 0; i < 4; i++) {
+        beaconTextures.push(loadTexture('./textures/beacon' + i + '.svg'));
+    }
+    fireTextures.push(beaconTextures);
 
     for (let i = 0; i < 7; i++) {
         decorationTextures.push(loadTexture('./textures/decoration/decoration' + i + '.svg'));

@@ -55,7 +55,6 @@ export function update() {
                     } else if (chopDownTree(true)) {
                         player.animationStatus = ANIMATIONS.CHOPPING;
                     } else if (mineStone(true)) {
-						console.log("Test");
                         player.animationStatus = ANIMATIONS.MINING;
                     }
                 }
