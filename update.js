@@ -1,6 +1,6 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
-	initQuarry } from './model.js';
+	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
@@ -54,15 +54,24 @@ export function update() {
                     } else if (pickUp()) {
                     } else if (chopDownTree(true)) {
                         player.animationStatus = ANIMATIONS.CHOPPING;
+                    } else if (mineStone(true)) {
+						console.log("Test");
+                        player.animationStatus = ANIMATIONS.MINING;
                     }
                 }
             } else {
             }
         } else if (player.animationStatus == ANIMATIONS.CHOPPING) {
-            if (player.animationTimer >= 2) {
+            if (player.animationTimer >= TIME_TO_CHOP_DOWN_TREE) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 chopDownTree(false);
+            }
+        } else if (player.animationStatus == ANIMATIONS.MINING) {
+            if (player.animationTimer >= TIME_TO_MINE_STONE) {
+                player.animationTimer = 0;
+                player.animationStatus = 0;
+                mineStone(false);
             }
         }
     }
