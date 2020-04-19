@@ -17,13 +17,20 @@ let playerTexture;
 let flicker = 0;
 let flickerTimer = 0;
 
+let shadowTexture;
+let shadowFramebuffer;
+
 function vec2ToVec3(v) {
     return vec3.fromValues(v[0], v[1], 0);
 }
 
-
 // main render function
 export function render() {
+    drawObjects();
+}
+
+
+function drawObjects() {
     if (fire.animationTime - flickerTimer > 0.25) {
         flicker = Math.random();
         flickerTimer += 0.25;
@@ -118,17 +125,37 @@ export function initGL() {
     backgroundTexture = whiteTexture();
     playerTexture = loadTexture('./textures/character.svg');
 
-    let aspect = canvas.width / canvas.height;
-    projectionMatrix = mat4.create();
-    mat4.ortho(projectionMatrix, -aspect, aspect, -1, 1, -1, 1);
-    mat4.scale(projectionMatrix, projectionMatrix, vec3.fromValues(0.2, 0.2, 1));
+    updateProjection();
 }
 
 export function updateProjection() {
     let aspect = canvas.width / canvas.height;
     projectionMatrix = mat4.create();
     mat4.ortho(projectionMatrix, -aspect, aspect, -1, 1, -1, 1);
-    mat4.scale(projectionMatrix, projectionMatrix, vec3.fromValues(0.2, 0.2, 1));
+    mat4.scale(projectionMatrix, projectionMatrix, vec3.fromValues(0.2, 0.2, 0.2));
+    mat4.mul(projectionMatrix, projectionMatrix,
+        mat4.fromValues(1, 0, 0, 0,
+                        0, 1, 1, 0,
+                        0, 0, 0, 0,
+                        0, 0, 0, 1));
+
+    if (shadowTexture) {
+        gl.deleteTexture(shadowTexture);
+        gl.deleteFramebuffer(shadowFramebuffer);
+    }
+    shadowTexture = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, shadowTexture);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, canvas.width, canvas.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+    shadowFramebuffer = gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER, shadowFramebuffer);
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, shadowTexture, 0);
+    gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 }
 
 function initShaders() {
