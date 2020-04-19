@@ -178,7 +178,7 @@ export function initGL() {
     }
     fireTextures = [fireTextures];
     let campfireTextures = [];
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 4; i++) {
         campfireTextures.push(loadTexture('./textures/campfire' + i + '.svg'));
     }
     fireTextures.push(campfireTextures);
