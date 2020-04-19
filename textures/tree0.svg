@@ -14,7 +14,7 @@
    viewBox="0 0 200 200"
    version="1.1"
    id="svg8"
-   sodipodi:docname="tree4.svg"
+   sodipodi:docname="tree0.svg"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)">
   <defs
      id="defs2" />
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.49497475"
-     inkscape:cx="547.17172"
-     inkscape:cy="379.63492"
+     inkscape:zoom="1.979899"
+     inkscape:cx="520.34415"
+     inkscape:cy="430.76206"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -45,7 +45,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -54,14 +54,13 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-97)">
-    <rect
+    <path
+       transform="matrix(0.99816962,-0.06047644,0.10504815,0.99446714,0,0)"
        style="fill:#552200;stroke-width:0.24247943"
+       d="m 55.730545,203.87665 h 28.754986 l -0.168626,99.88148 -28.58636,-1.60228 z"
        id="rect3717"
-       width="28.650064"
-       height="98.004059"
-       x="55.730545"
-       y="203.87665"
-       transform="matrix(0.99816962,-0.06047644,0.10504815,0.99446714,0,0)" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
     <ellipse
        style="fill:#445016;stroke-width:0.41173223"
        id="path3787"
