@@ -79,6 +79,11 @@ export let player = {
 	currentTool: TOOLS.AXE
 };
 
+export function facingLeft() {
+	let walkingDirection = vec2.sub(player.goal, player.position);
+	return walkingDirection[0] < 0;
+}
+
 export const ANIMATIONS = {
     WALKING: 1,
     CHOPPING: 2
