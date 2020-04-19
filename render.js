@@ -1,4 +1,4 @@
-import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft } from './model.js'
+import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft, decorations } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -17,6 +17,7 @@ let toolTextures = [];
 let playerTexture;
 let circleTexture;
 let animalTextures = [];
+let decorationTextures = [];
 
 let flicker = 0;
 let flickerTimer = 0;
@@ -83,6 +84,12 @@ export function render() {
 
 function drawObjects() {
     let transform = mat4.create();
+
+    // draw decorations
+    for (let decoration of decorations) {
+        mat4.fromRotationTranslationScale(transform, quat.create(), decoration.position, vec3.fromValues(0.3, 0.3, 0.3));
+        drawTexture(decorationTextures[decoration.type], transform);
+    }
 
     // draw fire
     mat4.identity(transform);
@@ -183,6 +190,10 @@ export function initGL() {
         campfireTextures.push(loadTexture('./textures/campfire' + i + '.svg'));
     }
     fireTextures.push(campfireTextures);
+
+    for (let i = 0; i < 7; i++) {
+        decorationTextures.push(loadTexture('./textures/decoration/decoration' + i + '.svg'));
+    }
 
     toolTextures[TOOLS.ARROW] = loadTexture('./textures/arrow.svg');
     toolTextures[TOOLS.AXE] = loadTexture('./textures/axe.svg');
