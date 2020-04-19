@@ -180,7 +180,7 @@ export function initItems() {
 	items.push(new Item(vec2.fromValues(-2, -1), ITEMS.STONE));
 	//items.push(new Item(vec2.fromValues(-2, -2), ITEMS.STONE));
 	//items.push(new Item(vec2.fromValues(-1, -2), ITEMS.STONE));
-	/*for (let i = 0; i < STARTING_WOOD; i++) {
+	for (let i = 0; i < STARTING_WOOD; i++) {
 		if (!createItem(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
 				RESOURCE_SPAWN_RADIUS, Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
 				RESOURCE_SPAWN_RADIUS), ITEMS.WOOD)) {
@@ -195,7 +195,7 @@ export function initItems() {
 			i--;
 			continue;
 		}
-	}*/
+	}
 }
 
 export function initTrees() {
