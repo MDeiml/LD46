@@ -84,7 +84,8 @@ export let player = {
     animationTimer: 0,
 	carrying: null,
 	currentTool: TOOLS.AXE,
-	facingLeft: false
+	facingLeft: false,
+	tools: {}
 };
 
 export function facingLeft() {
@@ -287,25 +288,34 @@ export const RECIPES = {
 	ARROW: new Recipe(1, 1, FIRES.COOKING_FIRE)
 }
 
+// For testing
+export const FIRES_UPGRADES = {
+	CAMPFIRE:  new Recipe(1, 1, FIRES.OPEN_FIRE),
+	COOKING_FIRE:  new Recipe(2, 1, FIRES.CAMPFIRE),
+	BEACON:   new Recipe(3, 1, FIRES.COOKING_FIRE)
+}
+
+/*
 export const FIRES_UPGRADES = {
 	CAMPFIRE:  new Recipe(10, 5, FIRES.OPEN_FIRE),
 	COOKING_FIRE:  new Recipe(20, 10, FIRES.CAMPFIRE),
 	BEACON:   new Recipe(40, 20, FIRES.COOKING_FIRE)
-}
+}*/
 
 export function getRecipe(tool) {
-	keys = Object.keys(TOOLS);
+	let keys = Object.keys(TOOLS);
 	let i;
 	for (i = 0; i < keys.length; i++) {
 		if (TOOLS[keys[i]] == tool) {
 			break;
 		}
 	}
-	return RECIPES[keys[i]];
+	let ret = JSON.parse(JSON.stringify(RECIPES[keys[i]]));
+	return ret;
 }
 
 export function getFireName() {
-	keys = Object.keys(FIRES);
+	let keys = Object.keys(FIRES);
 	let i;
 	for (i = 0; i < keys.length; i++) {
 		if (FIRES[keys[i]] == fire.size) {
@@ -315,8 +325,19 @@ export function getFireName() {
 	return keys[i];
 }
 
+export function getNextFireName() {
+	let keys = Object.keys(FIRES);
+	let i;
+	for (i = 0; i < keys.length; i++) {
+		if (FIRES[keys[i]] == fire.size) {
+			break;
+		}
+	}
+	return keys[i+1];
+}
+
 export function itemsInReachOfFire() {
-	ret = [];
+	let ret = [];
 	for (let i = 0; i < items.length; i++) {
 		if (inReachOfFire(items[i].pos)) {
 			ret.push(items[i]);
@@ -326,10 +347,12 @@ export function itemsInReachOfFire() {
 }
 
 export function craft(desired) {
-	recipe = getRecipe(desired);
-	numWoodAndStone = countOccurences(itemsInReachOfFire());
+	let recipe = getRecipe(desired);
+	let numWoodAndStone = countOccurences(itemsInReachOfFire());
 	if (numWoodAndStone.isPossible(recipe)) {
+		console.log(itemsInReachOfFire());
 		if (removeItemsInReachOfFire(recipe)) {
+			player.tools[desired] = true;
 			return desired;
 		} else {
 			console.log("Something went wrong when removing the ingredients");
@@ -339,8 +362,10 @@ export function craft(desired) {
 }
 
 export function upgradeFire() {
-	recipe = FIRES_UPGRADES[getFireName()];
-	numWoodAndStone = countOccurences(itemsInReachOfFire());
+	let recipe = FIRES_UPGRADES[getNextFireName()];
+	let numWoodAndStone = countOccurences(itemsInReachOfFire());
+	console.log(numWoodAndStone);
+	console.log(itemsInReachOfFire());
 	if (numWoodAndStone.isPossible(recipe)) {
 		if (removeItemsInReachOfFire(recipe)) {
 			fire.size++;
@@ -408,14 +433,14 @@ export function removeFoodInReachOfFire(items, recipe) {
 
 // Get a Recipe from a List of items
 export function countOccurences(items) {
-	wood = 0;
-	stone = 0;
+	let wood = 0;
+	let stone = 0;
 	for (let i = 0; i < items.length; i++) {
-		switch(items[i]) {
-			case Item.WOOD:
+		switch(items[i].id) {
+			case ITEMS.WOOD:
 				wood++;
 				break;
-			case Item.STONE:
+			case ITEMS.STONE:
 				stone++;
 				break;
 		}

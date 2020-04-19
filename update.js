@@ -1,4 +1,5 @@
-import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree, layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, trees, animals} from './model.js';
+import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
+	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
@@ -16,7 +17,12 @@ export function update() {
             let angle = Math.PI * i / 5;
             let point = vec2.fromValues(2 * Math.sin(angle), 2 * Math.cos(angle));
             if (vec2.distance(mousePos, point) < 0.5) {
-                console.log(i);
+				if (i == 0) {
+					console.log(upgradeFire());
+				} else {
+					console.log(craft(i-1));
+					console.log(player.tools);
+				}
                 clickHandled();
                 break;
             }
@@ -92,7 +98,7 @@ function handleCollision(obj) {
     for (let tree of trees) {
         let dir = vec2.sub(vec2.create(), tree.position, obj.position);
         let dist = vec2.len(dir);
-        if (dist < 0.2) {
+        if (dist < 0.2 && obj.goal != null && vec2.distance(tree, obj.goal) >= 1) {
             vec2.scale(dir, dir, -(0.2 - dist)/dist);
             vec2.add(obj.position, obj.position, dir);
         }

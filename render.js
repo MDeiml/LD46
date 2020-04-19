@@ -67,8 +67,10 @@ export function render() {
             drawTexture(circleTexture, transform);
             mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
             if (i == 0) {
-                // TODO: watch out fire.size + 1 isn't out of bounds
-                drawTexture(fireTextures[fire.size + 1][0], transform, 2);
+				// TODO: watch out fire.size + 1 isn't out of bounds
+				if (fireTextures[fire.size + 1] != null) {
+					drawTexture(fireTextures[fire.size + 1][0], transform, 2);
+				}
             } else {
                 drawTexture(toolTextures[i - 1], transform, 2);
             }
