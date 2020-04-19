@@ -87,7 +87,7 @@ function drawObjects() {
 
     // draw decorations
     for (let decoration of decorations) {
-		mat4.fromRotationTranslationScale(transform, quat.create(), decoration.position, vec3.fromValues(0.3, 0.3, 0.3));
+		mat4.fromTranslation(transform, vec2ToVec3(decoration.position));
 		drawTexture(decorationTextures[decoration.type], transform);
     }
 
@@ -192,10 +192,8 @@ export function initGL() {
     fireTextures.push(campfireTextures);
 
     for (let i = 0; i < 7; i++) {
-		// TODO: Maybe error here?
-        decorationTextures[i] = (loadTexture('./textures/decoration/decoration' + i + '.svg'));
+        decorationTextures.push(loadTexture('./textures/decoration/decoration' + i + '.svg'));
 	}
-	console.log(decorationTextures);
 
     toolTextures[TOOLS.ARROW] = loadTexture('./textures/arrow.svg');
     toolTextures[TOOLS.AXE] = loadTexture('./textures/axe.svg');
