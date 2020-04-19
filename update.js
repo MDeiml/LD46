@@ -135,4 +135,11 @@ function handleCollision(obj, fireRadius) {
         vec2.scale(dir, dir, (fireRadius - dist)/dist);
         vec2.add(obj.position, obj.position, dir);
     }
+
+    dir = vec2.sub(vec2.create(), quarry.position, obj.position);
+    dist = vec2.len(dir);
+    if (dist < 0.3) {
+        vec2.scale(dir, dir, -(0.3 - dist)/dist);
+        vec2.add(obj.position, obj.position, dir);
+    }
 }
