@@ -6,3 +6,4 @@ Welcome to the cold and dark forests of the northern tundra! You just woke up an
 Click somewhere to **walk** there and **pick things up** or **lay them down**.
 Pick up wood and **throw it in your fire** by clicking on it, or else it will extinguish!
 You can use your tools to chop wood or break stones.
+If you stand near the fire, you can craft more tools.
