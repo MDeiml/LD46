@@ -1,4 +1,5 @@
-import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft, decorations } from './model.js'
+import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft,
+		decorations, quarry } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -18,6 +19,7 @@ let playerTexture;
 let circleTexture;
 let animalTextures = [];
 let decorationTextures = [];
+let quarryTexture;
 
 let flicker = 0;
 let flickerTimer = 0;
@@ -128,7 +130,11 @@ function drawObjects() {
     for (let tree of trees) {
         mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(tree.position), vec3.fromValues(tree.direction ? 2 : -2, 2, 2));
         drawTexture(treeTextures[tree.type], transform);
-    }
+	}
+	
+	// draw quarry
+	mat4.fromTranslation(transform, vec2ToVec3(quarry.position));
+	drawTexture(quarryTexture, transform);
 }
 
 function drawTexture(id, transform, lighting) {
@@ -210,6 +216,7 @@ export function initGL() {
     backgroundTexture = whiteTexture();
     playerTexture = loadTexture('./textures/character.svg');
     circleTexture = loadTexture('./textures/circle.svg');
+    quarryTexture = loadTexture('./textures/quarry.svg');
 
     updateProjection();
 }
