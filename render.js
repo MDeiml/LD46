@@ -31,7 +31,7 @@ export function render() {
 
     // draw fire
     mat4.identity(transform);
-    drawTexture(fireTextures[Math.floor(fire.animationTime * 4) % 4], transform);
+    drawTexture(fireTextures[Math.floor(fire.animationTime * 4) % 4], transform, true);
 
     // draw player
     let angle = Math.pow(Math.sin(player.walkingTimer * 5), 2) * 10;
@@ -54,7 +54,7 @@ export function render() {
     }
 }
 
-function drawTexture(id, transform) {
+function drawTexture(id, transform, isFire) {
     gl.bindBuffer(gl.ARRAY_BUFFER, squareBuffer);
     gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
 
@@ -69,7 +69,7 @@ function drawTexture(id, transform) {
     let mvp = mat4.create();
     mat4.mul(mvp, pvMatrix, transform);
     gl.uniformMatrix4fv(matrixUniform, false, mvp);
-    gl.uniform1f(fireIntesityUniform, fire.fuel * fire.fuel);
+    gl.uniform1f(fireIntesityUniform, isFire ? 4: fire.fuel * fire.fuel);
     gl.uniform1i(drawCircleUniform, id == backgroundTexture ? 1 : 0);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
