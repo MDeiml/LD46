@@ -2,7 +2,7 @@ import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facin
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
-let matrixUniform, textureUniform, modelUniform, fireIntesityUniform, drawCircleUniform;
+let matrixUniform, textureUniform, modelUniform, fireIntesityUniform;
 let squareBuffer, squareTexCoordBuffer;
 let projectionMatrix;
 let pvMatrix = mat4.create();
@@ -89,7 +89,7 @@ function drawObjects() {
 
     // draw trees
     for (let tree of trees) {
-        mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(tree.position), vec3.fromValues(2, 2, 2));
+        mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(tree.position), vec3.fromValues(tree.direction ? 2 : -2, 2, 2));
         drawTexture(treeTextures[tree.type], transform);
     }
 }
@@ -117,7 +117,6 @@ function drawTexture(id, transform, lighting) {
         intensity = -1;
     }
     gl.uniform1f(fireIntesityUniform, intensity);
-    gl.uniform1i(drawCircleUniform, id == backgroundTexture ? 1 : 0);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 }
@@ -216,7 +215,6 @@ function initShaders() {
     modelUniform = gl.getUniformLocation(program, 'M');
     textureUniform = gl.getUniformLocation(program, 'texture');
     fireIntesityUniform = gl.getUniformLocation(program, 'fireIntensity');
-    drawCircleUniform = gl.getUniformLocation(program, 'drawCircle');
 }
 
 function getShader(id) {

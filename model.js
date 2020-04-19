@@ -131,7 +131,8 @@ export function createTree(position) {
 	position[1] += Math.random();
     trees.push({
         position: position,
-        type: Math.floor(Math.random() * 4)
+        type: Math.floor(Math.random() * 4),
+        direction: Math.random() > 0.5
 	});
 	return true;
 }
