@@ -86,7 +86,8 @@ export function facingLeft() {
 
 export const ANIMATIONS = {
     WALKING: 1,
-    CHOPPING: 2
+    CHOPPING: 2,
+    CRAFTING: 3
 };
 
 export function createItem(position, type) {
