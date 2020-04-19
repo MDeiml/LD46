@@ -1,4 +1,4 @@
-import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS } from './model.js'
+import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -42,7 +42,7 @@ export function render() {
     drawTexture(fireTextures[Math.floor(fire.animationTime * 4) % 4], transform, true);
 
     // draw player
-    let angle = Math.pow(Math.sin(player.walkingTimer * 5), 2) * 10;
+    let angle = player.animationStatus == ANIMATIONS.WALKING ? Math.pow(Math.sin(player.animationTimer * 5), 2) * 10 : 0;
     mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, 0, angle), vec2ToVec3(player.position), vec3.fromValues(1, 1, 1));
     drawTexture(playerTexture, transform);
     if (player.carrying) {
@@ -50,6 +50,9 @@ export function render() {
         drawTexture(itemTextures[player.carrying], transform);
     } else if (player.currentTool != null) {
         mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
+        if (player.animationStatus == ANIMATIONS.CHOPPING) {
+            mat4.rotate(transform, transform, Math.max(0, Math.sin(player.animationTimer * Math.PI * 2)), vec3.fromValues(0, 0, 1));
+        }
         drawTexture(toolTextures[player.currentTool], transform);
     }
 

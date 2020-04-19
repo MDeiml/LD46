@@ -73,10 +73,15 @@ export let player = {
     speed: 2,
     position: vec2.create(),
     goal: vec2.create(),
-    walking: false,
-    walkingTimer: 0,
+    animationStatus: 0,
+    animationTimer: 0,
 	carrying: null,
 	currentTool: TOOLS.AXE
+};
+
+export const ANIMATIONS = {
+    WALKING: 1,
+    CHOPPING: 2
 };
 
 export function createItem(position, type) {
@@ -116,7 +121,7 @@ export function createTree(position) {
 	return true;
 }
 
-export function chopDownTree() {
+export function chopDownTree(test) {
 	let treePos = -1;
 	for (let i = 0; i < trees.length; i++) {
 		if (vec2.distance(trees[i].position, player.position) <= 1) {
@@ -127,13 +132,15 @@ export function chopDownTree() {
 	if (treePos < 0) {
 		return false;
 	}
-	trees.splice(treePos, 1);
-	for (let j = 0; j < WOOD_PER_TREE; j++) {
-		let itemPos = vec2.clone(player.position);
-		itemPos[0] += j * 0.5;
-		itemPos[1] += j * 0.5;
-		items.push(new Item(itemPos, ITEMS.WOOD));
-	}
+    if (!test) {
+        trees.splice(treePos, 1);
+        for (let j = 0; j < WOOD_PER_TREE; j++) {
+            let itemPos = vec2.clone(player.position);
+            itemPos[0] += j * 0.5;
+            itemPos[1] += j * 0.5;
+            items.push(new Item(itemPos, ITEMS.WOOD));
+        }
+    }
 	return true;
 }
 
