@@ -77,7 +77,8 @@ function drawTexture(id, transform, isFire) {
     let mvp = mat4.create();
     mat4.mul(mvp, pvMatrix, transform);
     gl.uniformMatrix4fv(matrixUniform, false, mvp);
-    gl.uniform1f(fireIntesityUniform, isFire ? 4 : fire.fuel * fire.fuel * 4 + flicker);
+    let intensity = fire.fuel * 2 + flicker * 0.2;
+    gl.uniform1f(fireIntesityUniform, isFire ? 4 : intensity * intensity);
     gl.uniform1i(drawCircleUniform, id == backgroundTexture ? 1 : 0);
 
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
