@@ -1,21 +1,17 @@
-import { DELTA, player, createTree, items, Item, ITEMS, pickUp, fire } from './model.js';
+import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire } from './model.js';
 import { mousePos, doubleClick } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
 export function init() {
-    for (let i = 0; i < 20; i++) {
-        createTree(vec2.fromValues(Math.random() * 20 - 10, Math.random() * 20 - 10));
-    }
-    items.push(new Item(vec2.fromValues(3, 0), ITEMS.WOOD));
-
-    player.carrying = ITEMS.WOOD;
+    initTrees();
+	initItems();
 }
 
 // main update function (called every DELTA seconds)
 export function update() {
     fire.fuel -= fire.burningSpeed * DELTA;
     if (mousePos) {
-        vec2.copy(player.goal, mousePos);
+        vec2.sub(player.goal, mousePos, vec2.fromValues(0, 0.5));
         player.walking = true;
     }
     if (player.walking) {
