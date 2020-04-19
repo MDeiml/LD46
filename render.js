@@ -38,6 +38,7 @@ export function render() {
     mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, 0, angle), vec2ToVec3(player.position), vec3.fromValues(1, 1, 1));
     drawTexture(playerTexture, transform);
     if (player.carrying) {
+        mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
         drawTexture(itemTextures[player.carrying], transform);
     }
 
