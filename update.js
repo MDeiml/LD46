@@ -1,4 +1,5 @@
-import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree, layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS} from './model.js';
+import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
+	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
@@ -16,7 +17,12 @@ export function update() {
             let angle = Math.PI * i / 5;
             let point = vec2.fromValues(2 * Math.sin(angle), 2 * Math.cos(angle));
             if (vec2.distance(mousePos, point) < 0.5) {
-                console.log(i);
+				if (i == 0) {
+					console.log(upgradeFire());
+				} else {
+					console.log(craft(i-1));
+					console.log(player.tools);
+				}
                 clickHandled();
                 break;
             }
