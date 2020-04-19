@@ -87,8 +87,8 @@ function drawObjects() {
 
     // draw decorations
     for (let decoration of decorations) {
-        mat4.fromRotationTranslationScale(transform, quat.create(), decoration.position, vec3.fromValues(0.3, 0.3, 0.3));
-        drawTexture(decorationTextures[decoration.type], transform);
+		mat4.fromRotationTranslationScale(transform, quat.create(), decoration.position, vec3.fromValues(0.3, 0.3, 0.3));
+		drawTexture(decorationTextures[decoration.type], transform);
     }
 
     // draw fire
@@ -192,8 +192,10 @@ export function initGL() {
     fireTextures.push(campfireTextures);
 
     for (let i = 0; i < 7; i++) {
-        decorationTextures.push(loadTexture('./textures/decoration/decoration' + i + '.svg'));
-    }
+		// TODO: Maybe error here?
+        decorationTextures[i] = (loadTexture('./textures/decoration/decoration' + i + '.svg'));
+	}
+	console.log(decorationTextures);
 
     toolTextures[TOOLS.ARROW] = loadTexture('./textures/arrow.svg');
     toolTextures[TOOLS.AXE] = loadTexture('./textures/axe.svg');

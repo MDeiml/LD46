@@ -12,8 +12,8 @@ export const PICK_UP_RADIUS = 0.5;
 
 export const STARTING_WOOD = 3;
 export const STARTING_STONE = 5;
-export const STARTING_TREES = 40;
-export const STARTING_DECORATIONS = 40;
+export const STARTING_TREES = 0;
+export const STARTING_DECORATIONS = 20;
 export const RESOURCE_SPAWN_RADIUS = 10;
 export const NO_TREES_AROUND_FIRE_RADIUS = 2.5;
 export const DISTANCE_BETWEEN_TREES = 1;
@@ -238,6 +238,7 @@ export function initDecorations() {
 			continue;
 		}
 	}
+	console.log(decorations);
 }
 
 export class Recipe {
