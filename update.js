@@ -1,4 +1,4 @@
-import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree, layDown } from './model.js';
+import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree, layDown, refuelFire } from './model.js';
 import { mousePos, doubleClick } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
