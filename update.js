@@ -98,7 +98,7 @@ function handleCollision(obj) {
     for (let tree of trees) {
         let dir = vec2.sub(vec2.create(), tree.position, obj.position);
         let dist = vec2.len(dir);
-        if (dist < 0.2) {
+        if (dist < 0.2 && obj.goal != null && vec2.distance(tree, obj.goal) >= 1) {
             vec2.scale(dir, dir, -(0.2 - dist)/dist);
             vec2.add(obj.position, obj.position, dir);
         }

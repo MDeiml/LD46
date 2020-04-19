@@ -85,7 +85,7 @@ export let player = {
 	carrying: null,
 	currentTool: TOOLS.AXE,
 	facingLeft: false,
-	tools: []
+	tools: {}
 };
 
 export function facingLeft() {
@@ -352,7 +352,7 @@ export function craft(desired) {
 	if (numWoodAndStone.isPossible(recipe)) {
 		console.log(itemsInReachOfFire());
 		if (removeItemsInReachOfFire(recipe)) {
-			player.tools.push(desired);
+			player.tools[desired] = true;
 			return desired;
 		} else {
 			console.log("Something went wrong when removing the ingredients");
