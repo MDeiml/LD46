@@ -146,6 +146,9 @@ export function createTree(position) {
 }
 
 export function chopDownTree(test) {
+	if (player.currentTool != TOOLS.AXE) {
+		return false;
+	}
 	let treePos = -1;
 	for (let i = 0; i < trees.length; i++) {
 		if (vec2.distance(trees[i].position, player.position) <= 1) {
