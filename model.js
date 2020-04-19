@@ -238,7 +238,6 @@ export function initDecorations() {
 			continue;
 		}
 	}
-	console.log(decorations);
 }
 
 export class Recipe {
