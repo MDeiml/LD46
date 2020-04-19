@@ -106,7 +106,8 @@ function drawObjects() {
 
     // draw animals
     for (let animal of animals) {
-		mat4.fromTranslation(transform, vec2ToVec3(animal.position));
+        angle = animal.walkingDir ? Math.pow(Math.sin(animal.walkTimer * 5), 2) * 10 : 0;
+		mat4.fromRotationTranslation(transform, quat.fromEuler(quat.create(), 0, angle, 0), vec2ToVec3(animal.position));
         drawTexture(animalTextures[animal.type], transform);
     }
 
