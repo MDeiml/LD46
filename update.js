@@ -1,4 +1,4 @@
-import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree } from './model.js';
+import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree, layDown } from './model.js';
 import { mousePos, doubleClick } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
@@ -24,8 +24,11 @@ export function update() {
             player.walking = false;
             player.walkingTimer = 0;
             if (!doubleClick) {
-				pickUp();
-				chopDownTree();
+				if (!layDown()) {
+					if (!pickUp()) {
+						chopDownTree();
+					}
+				}
             }
         } else {
             vec2.scale(dir, dir, player.speed * DELTA / dist);
