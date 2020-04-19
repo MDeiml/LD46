@@ -89,7 +89,7 @@ function drawObjects() {
 
     // draw decorations
     for (let decoration of decorations) {
-		mat4.fromTranslation(transform, vec2ToVec3(decoration.position));
+		mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(decoration.position), vec3.fromValues(0.5, 0.5, 0.5));
 		drawTexture(decorationTextures[decoration.type], transform);
     }
 

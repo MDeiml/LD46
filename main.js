@@ -2,6 +2,7 @@ import { canvas, gl, setCanvas, FRAME_TIME } from './model.js'
 import { initGL, render, updateProjection } from './render.js'
 import { initInput, updateInput } from './input.js'
 import { update, init } from './update.js'
+import { updateAudio, initAudio } from './audio.js';
 
 window.running = false;
 let unprocessed = 0;
@@ -12,6 +13,7 @@ function main() {
     setCanvas(document.getElementById('glCanvas'));
     initGL();
     initInput();
+    initAudio();
     init();
 
     window.running = true;
@@ -51,6 +53,7 @@ function tick(now) {
         unprocessed -= FRAME_TIME;
         updateInput();
         update();
+        updateAudio();
         shouldRender = true;
         fps += 1;
     }
