@@ -46,6 +46,11 @@ export function render() {
             let angle = Math.PI * i / 5;
             mat4.fromTranslation(transform, vec3.fromValues(Math.sin(angle) * 2, Math.cos(angle) * 2 - 0.5, 0));
             drawTexture(circleTexture, transform);
+            if (i == 0) {
+                // TODO: watch out fire.size + 1 isn't out of bounds
+                mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
+                drawTexture(fireTextures[fire.size + 1][0], transform);
+            }
         }
     }
 }
@@ -56,7 +61,7 @@ function drawObjects() {
 
     // draw fire
     mat4.identity(transform);
-    drawTexture(fireTextures[Math.floor(fire.animationTime * 4) % 4], transform, true);
+    drawTexture(fireTextures[fire.size][Math.floor(fire.animationTime * 4) % 4], transform, true);
 
     // draw player
     let angle = player.animationStatus == ANIMATIONS.WALKING ? Math.pow(Math.sin(player.animationTimer * 5), 2) * 10 : 0;
@@ -120,9 +125,17 @@ export function initGL() {
     for (let i = 0; i < 4; i++) {
         treeTextures.push(loadTexture('./textures/tree' + i + '.svg'));
     }
+
     for (let i = 0; i < 4; i++) {
         fireTextures.push(loadTexture('./textures/fire' + i + '.svg'));
     }
+    fireTextures = [fireTextures];
+    let campfireTextures = [];
+    for (let i = 0; i < 1; i++) {
+        campfireTextures.push(loadTexture('./textures/campfire' + i + '.svg'));
+    }
+    fireTextures.push(campfireTextures);
+
     toolTextures[TOOLS.ARROW] = loadTexture('./textures/arrow.svg');
     toolTextures[TOOLS.AXE] = loadTexture('./textures/axe.svg');
     toolTextures[TOOLS.BOW] = loadTexture('./textures/bow.svg');
