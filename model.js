@@ -214,12 +214,12 @@ export function pickUp() {
         refuelFire();
         return;
     }
-    layDown();
     if (posNearest < 0) {
-		return;
+		return false;
 	}
 	let pickedUp = removeItem(posNearest);
 	player.carrying = pickedUp.id;
+	return true;
 }
 
 export function removeItem(posInArray) {
