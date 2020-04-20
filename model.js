@@ -58,8 +58,6 @@ export let fire = {
     animationTime: 0
 };
 
-export let fireCapacity = 2;
-export let fireFuel = 2;
 export let timeToHarvest;
 
 export let items = [];
@@ -148,7 +146,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: null,
+	currentTool: TOOLS.PICKAXE,
 	facingLeft: false,
 	tools: {},
     energy: MAX_ENERGY,
