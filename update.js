@@ -212,8 +212,6 @@ export function update() {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 fishFish(false);
-				// TODO: Fishing Audio
-				// playAudio('drop_stone');
             }
         } else if (player.animationStatus == ANIMATIONS.FIGHTING) {
 			if (Math.ceil(oldAnimationTimer + 0.5) != Math.ceil(player.animationTimer + 0.5)) {

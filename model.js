@@ -6,7 +6,6 @@ export const FPS = 60;
 export const FRAME_TIME = 1000 / FPS;
 export const DELTA = 1 / FPS;
 
-// TODO define Radius
 export const FIRE_RADIUS = 2;
 export const PICK_UP_RADIUS = 0.5;
 

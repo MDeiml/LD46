@@ -111,7 +111,6 @@ export function render() {
             let angle = Math.PI * i / 5;
             mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(Math.sin(angle) * 3, Math.cos(angle) * 3 - 0.75, 0), vec3.fromValues(1.5, 1.5, 1.5));
             if (i == 0) {
-				// TODO: watch out fire.size + 1 isn't out of bounds
                 let j = fire.size == 0 ? 0 : fire.size + 7;
 				if (craftingTextures[j] != null) {
                     drawTexture(circleTexture, transform, 2, true);
