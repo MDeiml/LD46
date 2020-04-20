@@ -27,7 +27,7 @@ export function update() {
     }
     if (fire.fuel <= 0 || player.energy <= 0) {
 		if (gui.gameStatus != GAME_STATUS.GAME_OVER) {
-			playAudio('oof');
+			playAudio('willhelm');
 		}
 		gui.gameStatus = GAME_STATUS.GAME_OVER;
     }

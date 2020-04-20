@@ -22,6 +22,7 @@ export function initAudio() {
     sounds['mining'] = new Audio('./sounds/stoneChipping0.ogg');
 	sounds['water'] = new Audio('./sounds/water0.ogg');
 	sounds['water'].loop = true;
+    sounds['willhelm'] = new Audio('./sounds/wilhelmscream.ogg');
 }
 
 export function playAudio(name) {
@@ -43,6 +44,9 @@ export function updateAudio() {
 
     if (gui.gameStatus != GAME_STATUS.PLAYING && !sounds['fire'].paused) {
         for (let sound in sounds) {
+            if (sound == 'willhelm') {
+                continue;
+            }
             sounds[sound].pause();
             sounds[sound].currentTime = 0;
         }
