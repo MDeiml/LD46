@@ -1,5 +1,5 @@
 import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft,
-		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY, ANIMAL_ANIMATION, FOOD } from './model.js'
+		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY, ANIMAL_ANIMATION, FOOD, tutorials } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -89,6 +89,12 @@ export function render() {
 				}
             }
         }
+    }
+
+    for (let tutorial of tutorials) {
+        let pos = vec2ToVec3(tutorial.position);
+        mat4.fromRotationTranslationScale(transform, quat.create(), vec3.sub(pos, pos, vec3.fromValues(0, 0, 1.5)), vec3.fromValues(3, 3, 3));
+        drawTexture(tutorialTextures[tutorial.type], transform, 2, true);
     }
 
     if (gui.gameStatus == GAME_STATUS.MENU) {
