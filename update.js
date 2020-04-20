@@ -184,7 +184,6 @@ export function update() {
 			if (Math.ceil(oldAnimationTimer + 0.5) != Math.ceil(player.animationTimer + 0.5)) {
                 playAudio('mining');
             }
-            player.energy -= 20;
             if (player.animationTimer >= timeToHarvest) {
                 player.energy -= 20;
                 player.animationTimer = 0;
