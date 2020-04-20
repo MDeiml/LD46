@@ -108,21 +108,9 @@ export function spawnAnimal() {
         objective: 'lake'
     });
     animals.push({
-        position: vec2.fromValues(5, 0),
-        health: 2,
-        type: 1,
-        speed: 1,
-        walkingDir: null,
-        animationStatus: 0,
-        animationTimer: 0,
-        damage: 0,
-        facingLeft: false,
-        objective: null,
-    });
-    animals.push({
         position: vec2.fromValues(5, 1),
         health: 2,
-        type: 1,
+        type: 2,
         speed: 1,
         walkingDir: null,
         animationStatus: 0,
@@ -134,7 +122,7 @@ export function spawnAnimal() {
     animals.push({
         position: vec2.fromValues(5, 0),
         health: 2,
-        type: 1,
+        type: 2,
         speed: 1,
         walkingDir: null,
         animationStatus: 0,
@@ -146,7 +134,7 @@ export function spawnAnimal() {
     animals.push({
         position: vec2.fromValues(-5, -5),
         health: 2,
-        type: 1,
+        type: 2,
         speed: 1,
         walkingDir: null,
         animationStatus: 0,
@@ -158,7 +146,7 @@ export function spawnAnimal() {
     animals.push({
         position: vec2.fromValues(-4, -5),
         health: 2,
-        type: 1,
+        type: 2,
         speed: 1,
         walkingDir: null,
         animationStatus: 0,
@@ -178,9 +166,9 @@ export const FIRES = {
 
 export const FIRE_CAPACITY = {
 	OPEN_FIRE: 2,
-	CAMPFIRE: 4,
-	COOKING_FIRE: 6,
-	BEACON: 10
+	CAMPFIRE: 3,
+	COOKING_FIRE: 4,
+	BEACON: 5
 }
 
 export const TOOLS = {
@@ -497,16 +485,16 @@ export function reset() {
         burningSpeed: 0.03,
         animationTime: 0
 	};
-	FIRES_UPGRADES = {
-		CAMPFIRE:  new Recipe(1, 1, FIRES.OPEN_FIRE),
-		COOKING_FIRE:  new Recipe(4, 6, FIRES.CAMPFIRE),
-		BEACON:   new Recipe(7, 9, FIRES.COOKING_FIRE)
-	}
+    FIRES_UPGRADES = {
+        CAMPFIRE:  new Recipe(1, 1, FIRES.OPEN_FIRE),
+        COOKING_FIRE:  new Recipe(2, 4, FIRES.CAMPFIRE),
+        BEACON:   new Recipe(6, 6, FIRES.COOKING_FIRE)
+    }
 	RECIPES = {
         AXE: new Recipe(2, 1, FIRES.OPEN_FIRE),
-        KNIFE: new Recipe(2, 2, FIRES.CAMPFIRE),
+        KNIFE: new Recipe(2, 1, FIRES.CAMPFIRE),
         PICKAXE: new Recipe(2, 3, FIRES.CAMPFIRE),
-        SPEAR: new Recipe(3, 3, FIRES.COOKING_FIRE),
+        SPEAR: new Recipe(3, 2, FIRES.COOKING_FIRE),
         FISHING_ROD: new Recipe(5, 1, FIRES.COOKING_FIRE),
 	}
 }
@@ -675,18 +663,18 @@ export function nearestItem() {
 
 // (Wood, Stone)
 export let RECIPES = {
-	AXE: new Recipe(2, 1, FIRES.OPEN_FIRE),
-	KNIFE: new Recipe(2, 2, FIRES.CAMPFIRE),
-	PICKAXE: new Recipe(2, 3, FIRES.CAMPFIRE),
-	SPEAR: new Recipe(3, 3, FIRES.COOKING_FIRE),
-	FISHING_ROD: new Recipe(5, 1, FIRES.COOKING_FIRE),
+    AXE: new Recipe(2, 1, FIRES.OPEN_FIRE),
+    KNIFE: new Recipe(2, 1, FIRES.CAMPFIRE),
+    PICKAXE: new Recipe(2, 3, FIRES.CAMPFIRE),
+    SPEAR: new Recipe(3, 2, FIRES.COOKING_FIRE),
+    FISHING_ROD: new Recipe(5, 1, FIRES.COOKING_FIRE),
 }
 
 // For testing
 export let FIRES_UPGRADES = {
-	CAMPFIRE:  new Recipe(1, 1, FIRES.OPEN_FIRE),
-	COOKING_FIRE:  new Recipe(2, 1, FIRES.CAMPFIRE),
-	BEACON:   new Recipe(3, 1, FIRES.COOKING_FIRE)
+    CAMPFIRE:  new Recipe(1, 1, FIRES.OPEN_FIRE),
+    COOKING_FIRE:  new Recipe(2, 4, FIRES.CAMPFIRE),
+    BEACON:   new Recipe(6, 6, FIRES.COOKING_FIRE)
 }
 
 /*
