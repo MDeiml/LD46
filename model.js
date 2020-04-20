@@ -10,7 +10,7 @@ export const DELTA = 1 / FPS;
 export const FIRE_RADIUS = 2;
 export const PICK_UP_RADIUS = 0.5;
 
-export const TUTORIAL_WOOD = 2;
+export const TUTORIAL_WOOD = 3;
 export const TUTORIAL_STONE = 1;
 export const TUTORIAL_ITEM_SPAWN_RADIUS = 3;
 export const STARTING_WOOD = 3;
