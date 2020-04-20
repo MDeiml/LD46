@@ -23,6 +23,7 @@ let stumpTextures = [];
 let quarryTexture;
 
 let winscreenTexture;
+let menuTexture;
 
 let flicker = 0;
 let flickerTimer = 0;
@@ -87,7 +88,10 @@ export function render() {
         }
     }
 
-    if (gui.gameStatus != GAME_STATUS.PLAYING) {
+    if (gui.gameStatus == GAME_STATUS.MENU) {
+        mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -6, 0), vec3.fromValues(10, 10, 10));
+        drawTexture(menuTexture, transform, 2, true);
+    } else if (gui.gameStatus != GAME_STATUS.PLAYING) {
         mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -6, 0), vec3.fromValues(10, 10, 10));
         drawTexture(winscreenTexture, transform, 2, true);
     }
@@ -266,6 +270,7 @@ export function initGL() {
     circleTexture = loadTexture('./textures/circle.svg');
     quarryTexture = loadTexture('./textures/quarry.svg');
     winscreenTexture = loadTexture('./textures/winscreen.png');
+    menuTexture = loadTexture('./textures/menu.svg');
 
     updateProjection();
 }
