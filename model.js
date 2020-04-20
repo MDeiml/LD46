@@ -10,6 +10,9 @@ export const DELTA = 1 / FPS;
 export const FIRE_RADIUS = 2;
 export const PICK_UP_RADIUS = 0.5;
 
+export const TUTORIAL_WOOD = 2;
+export const TUTORIAL_STONE = 1;
+export const TUTORIAL_ITEM_SPAWN_RADIUS = 3;
 export const STARTING_WOOD = 3;
 export const STARTING_STONE = 8;
 export const STARTING_TREES = 40;
@@ -142,6 +145,11 @@ export function facingLeft() {
 	}
 	player.facingLeft = walkingDirection[0] < 0;
 	return player.facingLeft;
+}
+
+export function randomVector(radius) {
+	let angle = Math.random() * Math.PI * 2;
+	return vec2.fromValues(Math.cos(angle) * radius, Math.sin(angle) * radius);
 }
 
 export const ANIMATIONS = {
@@ -308,12 +316,7 @@ export function eatFood() {
 }
 
 export function initItems() {
-	items.push(new Item(vec2.fromValues(2, 1), ITEMS.WOOD));
-	items.push(new Item(vec2.fromValues(2, 2), ITEMS.WOOD));
-	//items.push(new Item(vec2.fromValues(1, 2), ITEMS.WOOD));
-	items.push(new Item(vec2.fromValues(-2, -1), ITEMS.STONE));
-	//items.push(new Item(vec2.fromValues(-2, -2), ITEMS.STONE));
-	//items.push(new Item(vec2.fromValues(-1, -2), ITEMS.STONE));
+	initStartingItems();
 	for (let i = 0; i < STARTING_WOOD; i++) {
 		if (!createItem(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
 				RESOURCE_SPAWN_RADIUS, Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
@@ -329,6 +332,19 @@ export function initItems() {
 			i--;
 			continue;
 		}
+	}
+}
+
+export function initStartingItems() {
+	items.push(new Item(vec2.fromValues(-1, -1), ITEMS.WOOD));
+	let vec;
+	for (let i = 0; i < TUTORIAL_WOOD-1; i++) {
+		vec = randomVector(TUTORIAL_ITEM_SPAWN_RADIUS);
+		items.push(new Item(vec, ITEMS.WOOD));
+	}
+	for (let i = 0; i < TUTORIAL_STONE; i++) {
+		vec = randomVector(TUTORIAL_ITEM_SPAWN_RADIUS);
+		items.push(new Item(vec, ITEMS.STONE));
 	}
 }
 
@@ -355,9 +371,8 @@ export function initDecorations() {
 }
 
 export function initQuarry() {
-	let angle = Math.random() * Math.PI * 2;
 	quarry = {
-		position: vec2.fromValues(Math.cos(angle) * QUARRY_RADIUS, Math.sin(angle) * QUARRY_RADIUS)
+		position: randomVector(QUARRY_RADIUS)
 	};
 }
 
