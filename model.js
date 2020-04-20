@@ -30,6 +30,9 @@ export const LAKE_RADIUS = 8;
 export const TIME_TO_CHOP_DOWN_TREE = 2;
 export const TIME_TO_MINE_STONE = 3;
 export const TIME_TO_FISH = 4;
+export const TIME_TO_CHOP_DOWN_TREE_MAX = 2;
+export const TIME_TO_MINE_STONE_MAX = 3;
+export const TIME_TO_FISH_MAX = 4;
 export const ENERGY_DEPLETING_SPEED = 1;
 export const MAX_ENERGY = 120;
 export const ENERGY_PER_FOOD = 40;
@@ -336,7 +339,7 @@ export function fishFish(test) {
 	if (player.currentTool != TOOLS.FISHING_ROD) {
 		return false;
 	}
-	if (vec2.distance(lake.position, player.position) >= DISTANCE_AROUND_LAKE) {
+	if (vec2.distance(lake.position, player.position) > 1) {
 		return false;
 	}
     if (!test) {

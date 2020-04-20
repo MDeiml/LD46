@@ -104,14 +104,15 @@ export function render() {
     }
 
     if (player.animationStatus == ANIMATIONS.CRAFTING) {
-        for (let i = 0; i < 9; i++) {
+        for (let i = 0; i < 8; i++) {
             let angle = Math.PI * i / 5;
             mat4.fromTranslation(transform, vec3.fromValues(Math.sin(angle) * 2, Math.cos(angle) * 2 - 0.5, 0));
             drawTexture(circleTexture, transform, 2, true);
             if (i == 0) {
 				// TODO: watch out fire.size + 1 isn't out of bounds
-				if (craftingTextures[0] != null) {
-					drawTexture(craftingTextures[0], transform, 2, true);
+                let j = fire.size == 0 ? 0 : fire.size + 7;
+				if (craftingTextures[j] != null) {
+					drawTexture(craftingTextures[j], transform, 2, true);
 				}
             } else {
                 // if (canCraft(i-1)) {
@@ -268,7 +269,7 @@ export function initGL() {
         tutorialTextures.push(loadTexture('./textures/tutorial/tutorial' + i + '.svg'));
     }
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 10; i++) {
         craftingTextures.push(loadTexture('./textures/crafting' + i + '.svg'));
     }
 
