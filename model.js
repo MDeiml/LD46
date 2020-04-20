@@ -376,6 +376,38 @@ export function fishFish(test) {
 	return true;
 }
 
+export function reset() {
+    trees = [];
+    items = [];
+    animals = [];
+    stumps = [];
+    decorations = [];
+    player = {
+        speed: 2,
+        lastPosition: vec2.fromValues(1, -1),
+        actualSpeed: 0,
+        position: vec2.fromValues(1, -1),
+        goal: vec2.create(),
+        animationStatus: 0,
+        animationTimer: 0,
+        carrying: null,
+        currentTool: TOOLS.FISHING_ROD,
+        facingLeft: false,
+        tools: {},
+        energy: MAX_ENERGY,
+    };
+    fire = {
+        // Type of the fire
+        size: 0,
+        // The capacity of logs a fire can hold
+        capacity: 2,
+        // The fuel that the fire currently has
+        fuel: 2,
+        burningSpeed: 0.03,
+        animationTime: 0
+    };
+}
+
 export function initItems() {
 	for (let i = 0; i < STARTING_WOOD; i++) {
 		if (!createItem(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
