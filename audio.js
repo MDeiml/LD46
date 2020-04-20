@@ -6,7 +6,7 @@ let sounds = {};
 export function initAudio() {
     sounds['step'] = new Audio('./sounds/steps.ogg');
     sounds['step'].loop = true;
-    sounds['fire'] = new Audio('./sounds/fire.ogg');
+    sounds['fire'] = new Audio('./sounds/realfire0.ogg');
     sounds['fire'].loop = true;
     sounds['drop_wood'] = new Audio('./sounds/drop_wood0.wav');
     sounds['drop_stone'] = new Audio('./sounds/drop_stone0.wav');
@@ -16,7 +16,7 @@ export function initAudio() {
     sounds['music'].loop = true;
     sounds['cooking'] = new Audio('./sounds/cooking0.ogg');
     sounds['eating'] = new Audio('./sounds/eating0.ogg');
-    sounds['fishing_rod'] = new Audio('./sounds/fishing_rod0.ogg');
+    sounds['fishing'] = new Audio('./sounds/fishing_rod0.ogg');
     sounds['knife'] = new Audio('./sounds/knife0.ogg');
     sounds['oof'] = new Audio('./sounds/oof0.ogg');
     sounds['mining'] = new Audio('./sounds/stoneChipping0.ogg');
