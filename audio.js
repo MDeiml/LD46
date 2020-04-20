@@ -14,6 +14,7 @@ export function initAudio() {
     sounds['tree_down'] = new Audio('./sounds/tree_down0.wav');
     sounds['music'] = new Audio('./sounds/music.ogg');
     sounds['music'].loop = true;
+    sounds['music'].volume = 0.7;
     sounds['cooking'] = new Audio('./sounds/cooking0.ogg');
     sounds['eating'] = new Audio('./sounds/eating0.ogg');
     sounds['fishing'] = new Audio('./sounds/fishing_rod0.ogg');
