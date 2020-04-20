@@ -130,7 +130,7 @@ export function update() {
                             tutorial.position = null;
                         }
                     } else if (pickUp()) {
-                        if (tutorial.type == 0) {
+                        if (tutorial.type == 0 && player.carrying == ITEMS.WOOD) {
                             tutorial.type = 1;
                             tutorial.position = vec2.fromValues(0, 0);
                         }
