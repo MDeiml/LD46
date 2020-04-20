@@ -1,12 +1,14 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
 	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE, quarry, hitAnimal, gui, GAME_STATUS,
-    ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial, initStartingItems } from './model.js';
+	ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial, initStartingItems, initLake,
+	TIME_TO_FISH, fishFish } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 import { playAudio } from './audio.js'
 
 export function init() {
+	initLake();
 	initQuarry();
 	initStartingItems();
     initTrees();
@@ -99,6 +101,8 @@ export function update() {
                         player.animationStatus = ANIMATIONS.CHOPPING;
                     } else if (mineStone(true)) {
                         player.animationStatus = ANIMATIONS.MINING;
+                    } else if (fishFish(true)) {
+                        player.animationStatus = ANIMATIONS.FISHING;
                     }
                 }
             } else {
@@ -119,6 +123,14 @@ export function update() {
                 player.animationStatus = 0;
                 mineStone(false);
                 playAudio('drop_stone');
+            }
+        } else if (player.animationStatus == ANIMATIONS.FISHING) {
+            if (player.animationTimer >= TIME_TO_FISH) {
+                player.animationTimer = 0;
+                player.animationStatus = 0;
+                fishFish(false);
+				// TODO: Fishing Audio
+				// playAudio('drop_stone');
             }
         } else if (player.animationStatus == ANIMATIONS.FIGHTING) {
             if (player.animationTimer >= 0.5) {

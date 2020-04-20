@@ -1,5 +1,6 @@
 import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, getRecipe,
-		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY, ANIMAL_ANIMATION, FOOD, tutorial, FIRE_RADIUS } from './model.js'
+		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY, ANIMAL_ANIMATION, FOOD, tutorial, FIRE_RADIUS,
+		lake } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -21,6 +22,7 @@ let animalTextures = [];
 let decorationTextures = [];
 let stumpTextures = [];
 let quarryTexture;
+let lakeTexture;
 let energyTexture;
 let firecircleTexture;
 let markerTexture;
@@ -151,7 +153,8 @@ function drawObjects() {
         drawTexture(itemTextures[player.carrying], transform);
     } else if (player.currentTool != null) {
         mat4.translate(transform, transform, vec3.fromValues(0, 0, 0.3));
-        if (player.animationStatus == ANIMATIONS.CHOPPING || player.animationStatus == ANIMATIONS.MINING || player.animationStatus == ANIMATIONS.FIGHTING) {
+		if (player.animationStatus == ANIMATIONS.CHOPPING || player.animationStatus == ANIMATIONS.MINING ||
+				player.animationStatus == ANIMATIONS.MINING || player.animationStatus == ANIMATIONS.FISHING) {
             mat4.rotate(transform, transform, Math.max(0, Math.sin(player.animationTimer * Math.PI * 2)), vec3.fromValues(0, -1, 0));
         }
         drawTexture(toolTextures[player.currentTool], transform);
@@ -184,6 +187,10 @@ function drawObjects() {
 	// draw quarry
 	mat4.fromTranslation(transform, vec2ToVec3(quarry.position));
 	drawTexture(quarryTexture, transform);
+
+	// draw lake
+	mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(lake.position), vec3.fromValues(4, 4, 4));
+	drawTexture(lakeTexture, transform);
 
     drawOrder.sort(function (a, b) {
         return b.y - a.y;
@@ -302,12 +309,15 @@ export function initGL() {
     itemTextures[ITEMS.STONE] = loadTexture('./textures/stone.svg');
     itemTextures[FOOD.MEAT] = loadTexture('./textures/meat.svg');
     itemTextures[FOOD.COOKED_MEAT] = loadTexture('./textures/cooked_meat.svg');
+    itemTextures[FOOD.FISH] = loadTexture('./textures/torch.svg');
+    itemTextures[FOOD.COOKED_FISH] = loadTexture('./textures/arrow.svg');
     animalTextures[0] = loadTexture('./textures/wolf.svg');
     animalTextures[1] = loadTexture('./textures/bear.svg');
     backgroundTexture = colorTexture([255, 255, 255, 255]);
     playerTexture = loadTexture('./textures/character.svg');
     circleTexture = loadTexture('./textures/circle.svg');
     quarryTexture = loadTexture('./textures/quarry.svg');
+    lakeTexture = loadTexture('./textures/lake.svg');
     winscreenTexture = loadTexture('./textures/winscreen.png');
     menuTexture = loadTexture('./textures/menu.svg');
     energyTexture = colorTexture([255, 255, 0, 255]);
