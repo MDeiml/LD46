@@ -57,13 +57,21 @@ export let stumps = [];
 export let decorations = [];
 export let quarry;
 
+export const ANIMAL_ANIMATION = {
+    WALKING: 1,
+    HUNTING: 2,
+    ATTACKING: 3
+}
+
 export let animals = [{
     position: vec2.fromValues(-5, 5),
     health: 2,
     type: 0,
     speed: 2,
     walkingDir: null,
-    walkTimer: 0,
+    animationStatus: 0,
+    animationTimer: 0,
+    damage: 30
 }];
 
 export const FIRES = {

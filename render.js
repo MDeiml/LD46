@@ -1,5 +1,5 @@
 import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft,
-		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY } from './model.js'
+		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY, ANIMAL_ANIMATION } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -139,7 +139,7 @@ function drawObjects() {
 
     // draw animals
     for (let animal of animals) {
-        angle = animal.walkingDir ? Math.pow(Math.sin(animal.walkTimer * 5), 2) * 10 : 0;
+        angle = animal.animationStatus == ANIMAL_ANIMATION.WALKING ? Math.pow(Math.sin(animal.animationTimer * 5), 2) * 10 : 0;
 		mat4.fromRotationTranslation(transform, quat.fromEuler(quat.create(), 0, angle, 0), vec2ToVec3(animal.position));
         drawTexture(animalTextures[animal.type], transform);
     }
