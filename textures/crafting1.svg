@@ -15,7 +15,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="axe.svg">
+   sodipodi:docname="crafting1.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -26,17 +26,17 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.49497475"
-     inkscape:cx="-165.63544"
-     inkscape:cy="669.30572"
+     inkscape:cx="309.69767"
+     inkscape:cy="639.67946"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      showguides="false"
-     inkscape:window-width="1920"
+     inkscape:window-width="960"
      inkscape:window-height="1052"
-     inkscape:window-x="0"
+     inkscape:window-x="960"
      inkscape:window-y="0"
-     inkscape:window-maximized="1"
+     inkscape:window-maximized="0"
      units="cm" />
   <metadata
      id="metadata5">
@@ -46,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -67,5 +67,29 @@
        id="rect35"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccc" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:62.81964493px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;stroke-width:1.57049119"
+       x="8.2343225"
+       y="187.68866"
+       id="text309"
+       transform="scale(1.0814603,0.92467566)"><tspan
+         sodipodi:role="line"
+         id="tspan307"
+         x="8.2343225"
+         y="187.68866"
+         style="fill:#808080;stroke-width:1.57049119">1</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:62.98006821px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#c87137;fill-opacity:1;stroke:none;stroke-width:1.57450163"
+       x="133.46329"
+       y="200.45801"
+       id="text309-9"
+       transform="scale(1.1602706,0.86186793)"><tspan
+         sodipodi:role="line"
+         id="tspan307-8"
+         x="133.46329"
+         y="200.45801"
+         style="fill:#c87137;stroke-width:1.57450163">2</tspan></text>
   </g>
 </svg>
