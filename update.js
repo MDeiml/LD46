@@ -181,13 +181,10 @@ export function update() {
                 playAudio('tree_down');
             }
         } else if (player.animationStatus == ANIMATIONS.MINING) {
-<<<<<<< HEAD
 			if (Math.ceil(oldAnimationTimer + 0.5) != Math.ceil(player.animationTimer + 0.5)) {
                 playAudio('mining');
             }
             player.energy -= 20;
-=======
->>>>>>> dd52ae89568fda76247969adc3abaccf8dea169e
             if (player.animationTimer >= timeToHarvest) {
                 player.energy -= 20;
                 player.animationTimer = 0;
