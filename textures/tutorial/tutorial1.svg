@@ -15,7 +15,7 @@
    version="1.1"
    id="svg8"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
-   sodipodi:docname="tutorial0.svg">
+   sodipodi:docname="tutorial1.svg">
   <defs
      id="defs2" />
   <sodipodi:namedview
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="401.93976"
-     inkscape:cy="733.00873"
+     inkscape:zoom="0.7"
+     inkscape:cx="328.98388"
+     inkscape:cy="556.72532"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -54,7 +54,7 @@
        id="guide850"
        inkscape:locked="false" />
     <sodipodi:guide
-       position="95.214768,174.39337"
+       position="66.523809,130.1183"
        orientation="0,1"
        id="guide852"
        inkscape:locked="false" />
@@ -67,7 +67,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -86,7 +86,7 @@
            height="722.85712"
            x="14.285714"
            y="15.905518" /></flowRegion><flowPara
-         id="flowPara821" /></flowRoot>    <text
+         id="flowPara821"></flowPara></flowRoot>    <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
        x="25.702381"
@@ -96,12 +96,12 @@
          id="tspan823"
          x="25.702381"
          y="124.17925"
-         style="stroke-width:0.26458332" /></text>
+         style="stroke-width:0.26458332"></tspan></text>
     <rect
-       style="opacity:1;fill:#dbdbe3;fill-opacity:1;stroke:none;stroke-width:1.21383166;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       style="opacity:1;fill:#dbdbe3;fill-opacity:1;stroke:none;stroke-width:1.96996295;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
        id="rect844"
        width="199.95671"
-       height="27.354631"
+       height="72.049362"
        x="0.043889567"
        y="97.027672" />
   </g>
@@ -112,25 +112,28 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="1.7198875"
-       y="12.054127"
+       x="2.1437199"
+       y="16.967817"
        id="text829"><tspan
          sodipodi:role="line"
-         x="1.7198875"
-         y="21.417896"
+         id="tspan827"
+         x="2.1437199"
+         y="16.967817"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.75555611px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332">Refuel fire</tspan><tspan
+         sodipodi:role="line"
+         x="2.1437199"
+         y="35.41975"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.69999981px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
-         id="tspan856" /></text>
-    <flowRoot
-       xml:space="preserve"
-       id="flowRoot1483"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-       transform="matrix(0.26458333,0,0,0.26458333,0,-1.2027129)"><flowRegion
-         id="flowRegion1485"><rect
-           id="rect1487"
-           width="740.63812"
-           height="196.3445"
-           x="7.5761437"
-           y="7.5126367" /></flowRegion><flowPara
-         id="flowPara1489"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:center;writing-mode:lr-tb;text-anchor:middle">Click on this log to walk there and pick it up!</flowPara></flowRoot>  </g>
+         id="tspan856">Your fire is running out of fuel!</tspan><tspan
+         sodipodi:role="line"
+         x="2.1437199"
+         y="51.29475"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.69999981px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan872">Click on the fire to walk there</tspan><tspan
+         sodipodi:role="line"
+         x="2.1437199"
+         y="67.169746"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.69999981px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start;stroke-width:0.26458332"
+         id="tspan874">and throw your log into it.</tspan></text>
+  </g>
 </svg>
