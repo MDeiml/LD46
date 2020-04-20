@@ -1,8 +1,8 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
-	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE, quarry, hitAnimal, gui, GAME_STATUS,
+	initQuarry, mineStone, quarry, hitAnimal, gui, GAME_STATUS,
 	ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial, initStartingItems, initLake,
-	TIME_TO_FISH, fishFish, TOOLS, canCraft, FOOD, lake, canvas } from './model.js';
+	fishFish, TOOLS, canCraft, FOOD, lake, timeToHarvest, canvas } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 import { playAudio } from './audio.js'
@@ -146,7 +146,7 @@ export function update() {
             if (Math.ceil(oldAnimationTimer + 0.5) != Math.ceil(player.animationTimer + 0.5)) {
                 playAudio('hack');
             }
-            if (player.animationTimer >= TIME_TO_CHOP_DOWN_TREE) {
+            if (player.animationTimer >= timeToHarvest(ITEMS.WOOD)) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 chopDownTree(false);
@@ -157,14 +157,14 @@ export function update() {
                 playAudio('tree_down');
             }
         } else if (player.animationStatus == ANIMATIONS.MINING) {
-            if (player.animationTimer >= TIME_TO_MINE_STONE) {
+            if (player.animationTimer >= timeToHarvest(ITEMS.STONE)) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 mineStone(false);
                 playAudio('drop_stone');
             }
         } else if (player.animationStatus == ANIMATIONS.FISHING) {
-            if (player.animationTimer >= TIME_TO_FISH) {
+            if (player.animationTimer >= timeToHarvest(ITEMS.STONE)) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 fishFish(false);
