@@ -2,7 +2,7 @@ import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pi
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
 	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE, quarry, hitAnimal, gui, GAME_STATUS,
 	ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial, initStartingItems, initLake,
-	TIME_TO_FISH, fishFish, TOOLS, canCraft, FOOD } from './model.js';
+	TIME_TO_FISH, fishFish, TOOLS, canCraft, FOOD, lake } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 import { playAudio } from './audio.js'
@@ -68,14 +68,14 @@ export function update() {
     }
     if (mousePos) {
 		vec2.sub(player.goal, mousePos, vec2.fromValues(0, 0.3));
-        let eaten = eatFood();
-        if (eaten && tutorial.type == 7) {
-            tutorial.type = 8;
-        }
-		if (vec2.distance(player.goal, player.position) > 0.5 || !eaten) {
+		if (vec2.distance(player.goal, player.position) > 0.5) {
         	player.animationStatus = ANIMATIONS.WALKING;
 			player.animationTimer = 0;
-		}
+		} else if (eatFood()) {
+            if (tutorial.type == 7) {
+                tutorial.type = 8;
+            }
+        }
     }
     if (tutorial.type == 2 && canCraft(TOOLS.AXE)) {
         tutorial.type = 3;
@@ -249,6 +249,13 @@ function handleCollision(obj, fireRadius) {
     dist = vec2.len(dir);
     if (dist < 0.3) {
         vec2.scale(dir, dir, -(0.3 - dist)/dist);
+        vec2.add(obj.position, obj.position, dir);
+    }
+
+    dir = vec2.sub(vec2.create(), lake.position, obj.position);
+    dist = vec2.len(dir);
+    if (dist < 0.5) {
+        vec2.scale(dir, dir, -(0.5 - dist)/dist);
         vec2.add(obj.position, obj.position, dir);
     }
 }
