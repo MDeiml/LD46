@@ -418,18 +418,15 @@ export function reset() {
 	};
 	FIRES_UPGRADES = {
 		CAMPFIRE:  new Recipe(1, 1, FIRES.OPEN_FIRE),
-		COOKING_FIRE:  new Recipe(2, 1, FIRES.CAMPFIRE),
-		BEACON:   new Recipe(3, 1, FIRES.COOKING_FIRE)
+		COOKING_FIRE:  new Recipe(4, 6, FIRES.CAMPFIRE),
+		BEACON:   new Recipe(7, 9, FIRES.COOKING_FIRE)
 	}
 	RECIPES = {
-		AXE: new Recipe(2, 1, FIRES.OPEN_FIRE),
-		TORCH: new Recipe(1, 0, FIRES.OPEN_FIRE),
-		KNIFE: new Recipe(1, 2, FIRES.CAMPFIRE),
-		SPEAR: new Recipe(3, 1, FIRES.CAMPFIRE),
-		PICKAXE: new Recipe(2, 3, FIRES.CAMPFIRE),
-		FISHING_ROD: new Recipe(3, 0, FIRES.COOKING_FIRE),
-		BOW: new Recipe(4, 0, FIRES.COOKING_FIRE),
-		ARROW: new Recipe(1, 1, FIRES.COOKING_FIRE)
+        AXE: new Recipe(2, 1, FIRES.OPEN_FIRE),
+        KNIFE: new Recipe(2, 2, FIRES.CAMPFIRE),
+        PICKAXE: new Recipe(2, 3, FIRES.CAMPFIRE),
+        SPEAR: new Recipe(3, 3, FIRES.COOKING_FIRE),
+        FISHING_ROD: new Recipe(5, 1, FIRES.COOKING_FIRE),
 	}
 }
 
@@ -596,13 +593,10 @@ export function nearestItem() {
 // (Wood, Stone)
 export let RECIPES = {
 	AXE: new Recipe(2, 1, FIRES.OPEN_FIRE),
-	TORCH: new Recipe(1, 0, FIRES.OPEN_FIRE),
-	KNIFE: new Recipe(1, 2, FIRES.CAMPFIRE),
-	SPEAR: new Recipe(3, 1, FIRES.CAMPFIRE),
+	KNIFE: new Recipe(2, 2, FIRES.CAMPFIRE),
 	PICKAXE: new Recipe(2, 3, FIRES.CAMPFIRE),
-	FISHING_ROD: new Recipe(3, 0, FIRES.COOKING_FIRE),
-	BOW: new Recipe(4, 0, FIRES.COOKING_FIRE),
-	ARROW: new Recipe(1, 1, FIRES.COOKING_FIRE)
+	SPEAR: new Recipe(3, 3, FIRES.COOKING_FIRE),
+	FISHING_ROD: new Recipe(5, 1, FIRES.COOKING_FIRE),
 }
 
 // For testing

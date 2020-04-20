@@ -106,7 +106,7 @@ export function render() {
     }
 
     if (player.animationStatus == ANIMATIONS.CRAFTING) {
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 6; i++) {
             let angle = Math.PI * i / 5;
             mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(Math.sin(angle) * 3, Math.cos(angle) * 3 - 0.75, 0), vec3.fromValues(1.5, 1.5, 1.5));
             if (i == 0) {

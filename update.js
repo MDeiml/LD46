@@ -60,7 +60,7 @@ export function update() {
     }
 
     if (player.animationStatus == ANIMATIONS.CRAFTING && mousePos) {
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 6; i++) {
             let angle = Math.PI * i / 5;
             let point = vec2.fromValues(3 * Math.sin(angle), 3 * Math.cos(angle));
             if (vec2.distance(mousePos, point) < 0.75) {
