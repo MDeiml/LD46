@@ -21,4 +21,11 @@ export function updateAudio() {
         sounds['step'].pause();
         sounds['step'].currentTime = 0;
     }
+
+    if (gui.gameStatus != GAME_STATUS.PLAYING && !sounds['fire'].paused) {
+        for (let sound in sounds) {
+            sounds[sound].pause();
+            sounds[sound].currentTime = 0;
+        }
+    }
 }
