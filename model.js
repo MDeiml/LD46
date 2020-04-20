@@ -11,7 +11,7 @@ export const FIRE_RADIUS = 2;
 export const PICK_UP_RADIUS = 0.5;
 
 export const STARTING_WOOD = 3;
-export const STARTING_STONE = 5;
+export const STARTING_STONE = 8;
 export const STARTING_TREES = 40;
 export const STARTING_DECORATIONS = 20;
 export const RESOURCE_SPAWN_RADIUS = 10;
@@ -124,8 +124,8 @@ export let player = {
     goal: vec2.create(),
     animationStatus: 0,
     animationTimer: 0,
-	carrying: null,
-	currentTool: TOOLS.KNIFE,
+	carrying: FOOD.MEAT,
+	currentTool: TOOLS.AXE,
 	facingLeft: false,
 	tools: {},
     energy: MAX_ENERGY,
@@ -149,7 +149,7 @@ export const ANIMATIONS = {
     CHOPPING: 2,
     CRAFTING: 3,
     MINING: 4,
-    FIGHTING: 5,
+    FIGHTING: 5
 };
 
 export function createItem(position, type) {
@@ -282,6 +282,20 @@ export function mineStone(test) {
         items.push(new Item(itemPos, ITEMS.STONE));
     }
 	return true;
+}
+
+export function cookFood() {
+	if (nearestItem() != -2) {
+		return false;
+	}
+	if (player.carrying == FOOD.FISH) {
+		player.carrying = FOOD.COOKED_FISH;
+		return true;
+	} else if (player.carrying == FOOD.MEAT) {
+		player.carrying = FOOD.COOKED_MEAT;
+		return true;
+	}
+	return false;
 }
 
 export function initItems() {
@@ -600,18 +614,6 @@ export function countOccurences(items) {
 		}
 	}
 	return new Recipe(wood, stone, 0);
-}
-
-// TODO: Not yet finished. Don't use food system
-// Cooking food won't remove the raw item
-export function cook(food) {
-	switch(food) {
-		case FOOD.FISH:
-			return FOOD.COOKED_FISH;
-		case FOOD.MEAT:
-			return FOOD.COOKED_MEAT;
-	}
-	return null;
 }
 
 export function setCanvas(c) {
