@@ -23,6 +23,7 @@ let stumpTextures = [];
 let quarryTexture;
 let energyTexture;
 let firecircleTexture;
+let markerTexture;
 
 let winscreenTexture;
 let menuTexture;
@@ -77,6 +78,12 @@ export function render() {
     drawObjects();
 
     if (tutorial.enabled && gui.gameStatus == GAME_STATUS.PLAYING) {
+        if (tutorial.position) {
+            let pos = vec2ToVec3(tutorial.position)
+            vec3.add(pos, pos, vec3.fromValues(0, 0, 0.3));
+            mat4.fromRotationTranslationScale(transform, quat.create(), pos, vec3.fromValues(0.5, 0.5, 0.5));
+            drawTexture(markerTexture, transform, 2, true);
+        }
         mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -5, 0), vec3.fromValues(10, 10, 10));
         drawTexture(tutorialTextures[tutorial.type], transform, 2, true, true);
     }
@@ -305,6 +312,7 @@ export function initGL() {
     menuTexture = loadTexture('./textures/menu.svg');
     energyTexture = colorTexture([255, 255, 0, 255]);
     firecircleTexture = loadTexture('./textures/fireCircle.svg');
+    markerTexture = loadTexture('./textures/marker.svg');
 
     updateProjection();
 }
