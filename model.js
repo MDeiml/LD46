@@ -166,9 +166,9 @@ export const FIRES = {
 
 export const FIRE_CAPACITY = {
 	OPEN_FIRE: 2,
-	CAMPFIRE: 4,
-	COOKING_FIRE: 6,
-	BEACON: 10
+	CAMPFIRE: 3,
+	COOKING_FIRE: 4,
+	BEACON: 5
 }
 
 export const TOOLS = {
