@@ -193,6 +193,9 @@ export function update() {
                 playAudio('drop_stone');
             }
         } else if (player.animationStatus == ANIMATIONS.FISHING) {
+			if (Math.ceil(oldAnimationTimer + 0.5) != Math.ceil(player.animationTimer + 0.5)) {
+                playAudio('fishing');
+            }
             if (player.animationTimer >= timeToHarvest) {
                 player.energy -= 10;
                 player.animationTimer = 0;

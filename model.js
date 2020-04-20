@@ -146,7 +146,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: TOOLS.PICKAXE,
+	currentTool: TOOLS.FISHING_ROD,
 	facingLeft: false,
 	tools: {},
     energy: MAX_ENERGY,
