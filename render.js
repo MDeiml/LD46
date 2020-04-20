@@ -4,7 +4,7 @@ import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facin
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
-let matrixUniform, textureUniform, modelUniform, fireIntesityUniform, shadowTextureUniform, canvasSizeUniform;
+let matrixUniform, textureUniform, modelUniform, fireIntesityUniform, shadowTextureUniform, canvasSizeUniform, specialUniform;
 let matrixUniformShadow, textureUniformShadow, modelUniformShadow;
 let squareBuffer, squareTexCoordBuffer;
 let projectionMatrix;
@@ -88,7 +88,7 @@ export function render() {
     lakePosition = vec2ToVec3(lake.position);
     vec3.sub(lakePosition, lakePosition, vec3.fromValues(0, 0.5, 0));
 	mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), lakePosition, vec3.fromValues(1, 1, 1));
-	drawTexture(iceholeTexture, transform, 0, true);
+	drawTexture(iceholeTexture, transform, player.currentTool == TOOLS.FISHING_ROD ? 3 : 0, true);
 
 
     drawObjects();
@@ -107,19 +107,21 @@ export function render() {
     if (player.animationStatus == ANIMATIONS.CRAFTING) {
         for (let i = 0; i < 8; i++) {
             let angle = Math.PI * i / 5;
-            mat4.fromTranslation(transform, vec3.fromValues(Math.sin(angle) * 2, Math.cos(angle) * 2 - 0.5, 0));
-            drawTexture(circleTexture, transform, 2, true);
+            mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(Math.sin(angle) * 3, Math.cos(angle) * 3 - 0.75, 0), vec3.fromValues(1.5, 1.5, 1.5));
             if (i == 0) {
 				// TODO: watch out fire.size + 1 isn't out of bounds
                 let j = fire.size == 0 ? 0 : fire.size + 7;
 				if (craftingTextures[j] != null) {
+                    drawTexture(circleTexture, transform, 2, true);
 					drawTexture(craftingTextures[j], transform, 2, true);
 				}
             } else {
                 // if (canCraft(i-1)) {
                 if (player.tools[i - 1]) {
+                    drawTexture(circleTexture, transform, 2, true);
 					drawTexture(toolTextures[i - 1], transform, 2, true);
                 } else if (craftingTextures[i] != null && getRecipe(i - 1).neededFire <= fire.size) {
+                    drawTexture(circleTexture, transform, 2, true);
 					drawTexture(craftingTextures[i], transform, 2, true);
 				}
             }
@@ -186,7 +188,7 @@ function drawObjects() {
         } else if (animal.animationStatus == ANIMAL_ANIMATION.ATTACKING) {
             angle = -Math.max(0, Math.sin(animal.animationTimer * Math.PI * 2)) * 10;
         }
-		mat4.fromRotationTranslation(transform, quat.fromEuler(quat.create(), 0, angle, 0), vec2ToVec3(animal.position));
+		mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, angle, 0), vec2ToVec3(animal.position), vec3.fromValues(animal.facingLeft ? -1 : 1, 1, 1));
         drawTexture(animalTextures[animal.type], transform);
     }
 
@@ -199,12 +201,12 @@ function drawObjects() {
     // draw trees
     for (let tree of trees) {
         mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(tree.position), vec3.fromValues(tree.direction ? 2 : -2, 2, 2));
-        drawTexture(treeTextures[tree.type], transform);
+        drawTexture(treeTextures[tree.type], transform, tree.highlight ? 3 : 0);
 	}
 
 	// draw quarry
 	mat4.fromTranslation(transform, vec2ToVec3(quarry.position));
-	drawTexture(quarryTexture, transform);
+	drawTexture(quarryTexture, transform, player.currentTool == TOOLS.PICKAXE ? 3 : 0);
 
     drawOrder.sort(function (a, b) {
         return b.y - a.y;
@@ -247,6 +249,7 @@ function drawTexture(id, transform, lighting, reallyDraw, isGUI) {
         let mvp = mat4.create();
         mat4.mul(mvp, isGUI ? projectionMatrix : pvMatrix, transform);
         gl.uniformMatrix4fv(matrixUniform, false, mvp);
+        gl.uniform1i(specialUniform, lighting == 3 ? 1 : 0);
         gl.uniform2f(canvasSizeUniform, canvas.width, canvas.height);
         let intensity = fire.fuel * 2 + flicker * 0.2;
         intensity = intensity * intensity;
@@ -401,6 +404,7 @@ function initShaders(name) {
     fireIntesityUniform = gl.getUniformLocation(defaultShader, 'fireIntensity');
     shadowTextureUniform = gl.getUniformLocation(defaultShader, 'shadowTexture');
     canvasSizeUniform = gl.getUniformLocation(defaultShader, 'canvasSize');
+    specialUniform = gl.getUniformLocation(defaultShader, 'special');
 
     vs = getShader('shadow-vs');
     fs = getShader('shadow-fs');
