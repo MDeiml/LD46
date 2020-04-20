@@ -1,13 +1,16 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
 	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE, quarry, hitAnimal, gui, GAME_STATUS,
-    ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial } from './model.js';
+	ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial, initStartingItems, initLake,
+	TIME_TO_FISH, fishFish, TOOLS, canCraft } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 import { playAudio } from './audio.js'
 
 export function init() {
+	initLake();
 	initQuarry();
+	initStartingItems();
     initTrees();
 	initItems();
 	initDecorations();
@@ -48,6 +51,9 @@ export function update() {
 					console.log(craft(i-1));
 					console.log(player.tools);
 				}
+                if (tutorial.type == 4) {
+                    tutorial.type = 5;
+                }
                 clickHandled();
                 break;
             }
@@ -55,10 +61,18 @@ export function update() {
     }
     if (mousePos) {
 		vec2.sub(player.goal, mousePos, vec2.fromValues(0, 0.3));
-		if (vec2.distance(player.goal, player.position) > 0.5 || !eatFood()) {
+        let eaten = eatFood();
+        if (eaten && tutorial.type == 7) {
+            tutorial.type = 8;
+        }
+		if (vec2.distance(player.goal, player.position) > 0.5 || !eaten) {
         	player.animationStatus = ANIMATIONS.WALKING;
 			player.animationTimer = 0;
 		}
+    }
+    if (tutorial.type == 2 && canCraft(TOOLS.AXE)) {
+        tutorial.type = 3;
+        tutorial.position = vec2.fromValues(0, 0);
     }
     if (player.animationStatus) {
         let oldAnimationTimer = player.animationTimer;
@@ -78,9 +92,13 @@ export function update() {
                     } else if (refuelFire()) {
                         if (tutorial.type == 1) {
                             tutorial.type = 2;
-                            tutorial.position = null;
+                            tutorial.position = vec2.fromValues(3, 1);
                         }
                     } else if (cookFood()) {
+                        if (tutorial.type == 6) {
+                            tutorial.type = 7;
+                            tutorial.position = null;
+                        }
 					} else if (layDown()) {
                         if (oldCarrying == ITEMS.STONE) {
                             playAudio('drop_stone');
@@ -89,15 +107,24 @@ export function update() {
                         }
                     } else if (vec2.length(player.position) < PICK_UP_RADIUS) {
                         player.animationStatus = ANIMATIONS.CRAFTING;
+                        if (tutorial.type == 3) {
+                            tutorial.type = 4;
+                            tutorial.position = null;
+                        }
                     } else if (pickUp()) {
                         if (tutorial.type == 0) {
                             tutorial.type = 1;
                             tutorial.position = vec2.fromValues(0, 0);
                         }
+                        if (tutorial.type == 2 && player.carrying == ITEMS.STONE) {
+                            tutorial.position = null;
+                        }
                     } else if (chopDownTree(true)) {
                         player.animationStatus = ANIMATIONS.CHOPPING;
                     } else if (mineStone(true)) {
                         player.animationStatus = ANIMATIONS.MINING;
+                    } else if (fishFish(true)) {
+                        player.animationStatus = ANIMATIONS.FISHING;
                     }
                 }
             } else {
@@ -110,6 +137,10 @@ export function update() {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 chopDownTree(false);
+                if (tutorial.type == 5) {
+                    tutorial.type = 6;
+                    tutorial.position = vec2.fromValues(0, 0);
+                }
                 playAudio('tree_down');
             }
         } else if (player.animationStatus == ANIMATIONS.MINING) {
@@ -118,6 +149,14 @@ export function update() {
                 player.animationStatus = 0;
                 mineStone(false);
                 playAudio('drop_stone');
+            }
+        } else if (player.animationStatus == ANIMATIONS.FISHING) {
+            if (player.animationTimer >= TIME_TO_FISH) {
+                player.animationTimer = 0;
+                player.animationStatus = 0;
+                fishFish(false);
+				// TODO: Fishing Audio
+				// playAudio('drop_stone');
             }
         } else if (player.animationStatus == ANIMATIONS.FIGHTING) {
             if (player.animationTimer >= 0.5) {
