@@ -1,4 +1,4 @@
-import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft,
+import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, getRecipe,
 		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY, ANIMAL_ANIMATION, FOOD, tutorial } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
@@ -90,7 +90,7 @@ export function render() {
 				}
             } else {
                 // if (canCraft(i-1)) {
-                if (craftingTextures[i] != null) {
+                if (craftingTextures[i] != null && getRecipe(i - 1).neededFire <= fire.size) {
 					drawTexture(craftingTextures[i], transform, 2, true);
 				}
             }
