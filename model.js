@@ -25,6 +25,7 @@ export const TIME_TO_CHOP_DOWN_TREE = 2;
 export const TIME_TO_MINE_STONE = 3;
 export const ENERGY_DEPLETING_SPEED = 1;
 export const MAX_ENERGY = 120;
+export const ENERGY_PER_FOOD = 40;
 
 export const GAME_STATUS = {
     MENU: 0,
@@ -289,6 +290,15 @@ export function cookFood() {
 		return true;
 	} else if (player.carrying == FOOD.MEAT) {
 		player.carrying = FOOD.COOKED_MEAT;
+		return true;
+	}
+	return false;
+}
+
+export function eatFood() {
+	if (player.carrying == FOOD.COOKED_FISH || player.carrying == FOOD.COOKED_MEAT) {
+		player.carrying = null;
+		player.energy = player.energy+ENERGY_PER_FOOD<MAX_ENERGY?player.energy+ENERGY_PER_FOOD:MAX_ENERGY;
 		return true;
 	}
 	return false;
