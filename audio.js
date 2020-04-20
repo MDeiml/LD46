@@ -18,7 +18,7 @@ export function initAudio() {
     sounds['eating'] = new Audio('./sounds/eating0.ogg');
     sounds['fishing'] = new Audio('./sounds/fishing_rod0.ogg');
     sounds['knife'] = new Audio('./sounds/knife0.ogg');
-    sounds['oof'] = new Audio('./sounds/oof0.ogg');
+    sounds['oof'] = new Audio('./sounds/Villager_hurt1.ogg');
     sounds['mining'] = new Audio('./sounds/stoneChipping0.ogg');
 	sounds['water'] = new Audio('./sounds/water0.ogg');
 	sounds['water'].loop = true;
