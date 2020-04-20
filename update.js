@@ -68,14 +68,14 @@ export function update() {
     }
     if (mousePos) {
 		vec2.sub(player.goal, mousePos, vec2.fromValues(0, 0.3));
-        let eaten = eatFood();
-        if (eaten && tutorial.type == 7) {
-            tutorial.type = 8;
-        }
-		if (vec2.distance(player.goal, player.position) > 0.5 || !eaten) {
+		if (vec2.distance(player.goal, player.position) > 0.5) {
         	player.animationStatus = ANIMATIONS.WALKING;
 			player.animationTimer = 0;
-		}
+		} else if (eatFood()) {
+            if (tutorial.type == 7) {
+                tutorial.type = 8;
+            }
+        }
     }
     if (tutorial.type == 2 && canCraft(TOOLS.AXE)) {
         tutorial.type = 3;
