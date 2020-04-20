@@ -14,6 +14,14 @@ export function initAudio() {
     sounds['tree_down'] = new Audio('./sounds/tree_down0.wav');
     sounds['music'] = new Audio('./sounds/music.ogg');
     sounds['music'].loop = true;
+    sounds['cooking'] = new Audio('./sounds/cooking0.ogg');
+    sounds['eating'] = new Audio('./sounds/eating0.ogg');
+    sounds['fishing_rod'] = new Audio('./sounds/fishing_rod0.ogg');
+    sounds['knife'] = new Audio('./sounds/knife0.ogg');
+    sounds['oof'] = new Audio('./sounds/oof0.ogg');
+    sounds['mining'] = new Audio('./sounds/stoneChipping0.ogg');
+	sounds['water'] = new Audio('./sounds/water0.ogg');
+	sounds['water'].loop = true;
 }
 
 export function playAudio(name) {
