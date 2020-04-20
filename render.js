@@ -37,6 +37,7 @@ let shadowShader;
 let shadowShaderActive = true;
 
 let tutorialTextures = [];
+let craftingTextures = [];
 
 let drawOrder;
 
@@ -77,11 +78,11 @@ export function render() {
             let angle = Math.PI * i / 5;
             mat4.fromTranslation(transform, vec3.fromValues(Math.sin(angle) * 2, Math.cos(angle) * 2 - 0.5, 0));
             drawTexture(circleTexture, transform, 2, true);
-            mat4.translate(transform, transform, vec3.fromValues(0, 0.3, 0));
+            mat4.translate(transform, transform, vec3.fromValues(0, 0.2, 0));
             if (i == 0) {
 				// TODO: watch out fire.size + 1 isn't out of bounds
-				if (fireTextures[fire.size + 1] != null) {
-					drawTexture(fireTextures[fire.size + 1][0], transform, 2, true);
+				if (craftingTextures[0] != null) {
+					drawTexture(craftingTextures[0], transform, 2, true);
 				}
             } else {
                 if (canCraft(i-1)) {
@@ -238,6 +239,10 @@ export function initGL() {
 
     for (let i = 0; i < 1; i++) {
         tutorialTextures.push(loadTexture('./textures/tutorial' + i + '.svg'));
+    }
+
+    for (let i = 0; i < 1; i++) {
+        craftingTextures.push(loadTexture('./textures/crafting' + i + '.svg'));
     }
 
     for (let i = 0; i < 4; i++) {
