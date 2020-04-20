@@ -39,7 +39,7 @@ export function update() {
             return;
         }
     }
-    if (gui.gameStatus == GAME_STATUS.GAME_OVER) {
+    if (gui.gameStatus == GAME_STATUS.GAME_OVER || gui.gameStatus == GAME_STATUS.WIN) {
         if (mousePos) {
             reset();
             init();
@@ -130,7 +130,7 @@ export function update() {
                             tutorial.position = null;
                         }
                     } else if (pickUp()) {
-                        if (tutorial.type == 0) {
+                        if (tutorial.type == 0 && player.carrying == ITEMS.WOOD) {
                             tutorial.type = 1;
                             tutorial.position = vec2.fromValues(0, 0);
                         }

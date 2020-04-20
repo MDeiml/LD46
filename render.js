@@ -270,7 +270,7 @@ export function initGL() {
     initSquare();
 
     for (let i = 0; i < 10; i++) {
-        tutorialTextures.push(loadTexture('./textures/tutorial/tutorial' + i + '.svg'));
+        tutorialTextures.push(loadTexture('./textures/tutorial/tutorial' + i + '.svg', [1024, 1024]));
     }
 
     for (let i = 0; i < 10; i++) {
@@ -334,9 +334,9 @@ export function initGL() {
     quarryTexture = loadTexture('./textures/quarry.svg');
     lakeTexture = loadTexture('./textures/lake.svg');
     iceholeTexture = loadTexture('./textures/icehole.svg');
-    winscreenTexture = loadTexture('./textures/winscreen.svg');
-    loosescreenTexture = loadTexture('./textures/loosescreen.svg');
-    menuTexture = loadTexture('./textures/menu.svg');
+    winscreenTexture = loadTexture('./textures/winscreen.svg', [1024, 1024]);
+    loosescreenTexture = loadTexture('./textures/loosescreen.svg', [1024, 1024]);
+    menuTexture = loadTexture('./textures/menu.svg', [1024, 1024]);
     energyTexture = colorTexture([255, 255, 0, 255]);
     firecircleTexture = loadTexture('./textures/fireCircle.svg');
     markerTexture = loadTexture('./textures/marker.svg');
@@ -479,12 +479,16 @@ function colorTexture(color) {
     return texture;
 }
 
-function loadTexture(url) {
+function loadTexture(url, resolution) {
     const texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([0, 0, 255, 255]));
 
     const image = new Image();
+    if (resolution) {
+        image.width = resolution[0];
+        image.height = resolution[1];
+    }
     image.onload = function () {
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
