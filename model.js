@@ -108,21 +108,9 @@ export function spawnAnimal() {
         objective: 'lake'
     });
     animals.push({
-        position: vec2.fromValues(5, 0),
-        health: 2,
-        type: 1,
-        speed: 1,
-        walkingDir: null,
-        animationStatus: 0,
-        animationTimer: 0,
-        damage: 0,
-        facingLeft: false,
-        objective: null,
-    });
-    animals.push({
         position: vec2.fromValues(5, 1),
         health: 2,
-        type: 1,
+        type: 2,
         speed: 1,
         walkingDir: null,
         animationStatus: 0,
@@ -134,7 +122,7 @@ export function spawnAnimal() {
     animals.push({
         position: vec2.fromValues(5, 0),
         health: 2,
-        type: 1,
+        type: 2,
         speed: 1,
         walkingDir: null,
         animationStatus: 0,
@@ -146,7 +134,7 @@ export function spawnAnimal() {
     animals.push({
         position: vec2.fromValues(-5, -5),
         health: 2,
-        type: 1,
+        type: 2,
         speed: 1,
         walkingDir: null,
         animationStatus: 0,
@@ -158,7 +146,7 @@ export function spawnAnimal() {
     animals.push({
         position: vec2.fromValues(-4, -5),
         health: 2,
-        type: 1,
+        type: 2,
         speed: 1,
         walkingDir: null,
         animationStatus: 0,
