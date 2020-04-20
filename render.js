@@ -255,7 +255,7 @@ export function initGL() {
     initShaders();
     initSquare();
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 10; i++) {
         tutorialTextures.push(loadTexture('./textures/tutorial/tutorial' + i + '.svg'));
     }
 
