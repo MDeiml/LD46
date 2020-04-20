@@ -1,25 +1,31 @@
-import { player, ANIMATIONS } from './model.js';
+import { player, ANIMATIONS, gui, GAME_STATUS } from './model.js';
 import { vec2 } from './gl-matrix-min.js'
-let stepAudio;
-let fireAudio;
+
+let sounds = {};
 
 export function initAudio() {
-    stepAudio = new Audio('./sounds/steps.ogg');
-    stepAudio.loop = true;
-    fireAudio = new Audio('./sounds/fire.ogg');
-    fireAudio.loop = true;
+    sounds['step'] = new Audio('./sounds/steps.ogg');
+    sounds['step'].loop = true;
+    sounds['fire'] = new Audio('./sounds/fire.ogg');
+    sounds['fire'].loop = true;
 }
 
 export function updateAudio() {
-    fireAudio.volume = 1 / Math.max(1, vec2.length(player.position));
-    // TODO: remove this (after creating menu)
-    if (player.animationStatus == ANIMATIONS.WALKING && fireAudio.paused) {
-        fireAudio.play();
+    sounds['fire'].volume = 1 / Math.max(1, vec2.length(player.position));
+    if (gui.gameStatus == GAME_STATUS.PLAYING && sounds['fire'].paused) {
+        sounds['fire'].play();
     }
-    if (player.animationStatus == ANIMATIONS.WALKING && stepAudio.paused) {
-        stepAudio.play();
-    } else if (player.animationStatus != ANIMATIONS.WALKING && !stepAudio.paused) {
-        stepAudio.pause();
-        stepAudio.currentTime = 0;
+    if (player.animationStatus == ANIMATIONS.WALKING && sounds['step'].paused) {
+        sounds['step'].play();
+    } else if (player.animationStatus != ANIMATIONS.WALKING && !sounds['step'].paused) {
+        sounds['step'].pause();
+        sounds['step'].currentTime = 0;
+    }
+
+    if (gui.gameStatus != GAME_STATUS.PLAYING && !sounds['fire'].paused) {
+        for (let sound in sounds) {
+            sounds[sound].pause();
+            sounds[sound].currentTime = 0;
+        }
     }
 }

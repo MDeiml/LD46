@@ -11,7 +11,7 @@ export const FIRE_RADIUS = 2;
 export const PICK_UP_RADIUS = 0.5;
 
 export const STARTING_WOOD = 3;
-export const STARTING_STONE = 5;
+export const STARTING_STONE = 8;
 export const STARTING_TREES = 40;
 export const STARTING_DECORATIONS = 20;
 export const RESOURCE_SPAWN_RADIUS = 10;
@@ -23,6 +23,8 @@ export const WOOD_PER_TREE = 2;
 export const QUARRY_RADIUS = 5;
 export const TIME_TO_CHOP_DOWN_TREE = 2;
 export const TIME_TO_MINE_STONE = 3;
+export const ENERGY_DEPLETING_SPEED = 1;
+export const MAX_ENERGY = 120;
 
 export const GAME_STATUS = {
     MENU: 0,
@@ -32,7 +34,7 @@ export const GAME_STATUS = {
 }
 
 export let gui = {
-    gameStatus: GAME_STATUS.PLAYING
+    gameStatus: GAME_STATUS.MENU
 };
 
 export let fire = {
@@ -53,7 +55,17 @@ export let items = [];
 export let trees = [];
 export let stumps = [];
 export let decorations = [];
+export let tutorials = [{
+    position: vec2.fromValues(-2, -1),
+    type: 0
+}];
 export let quarry;
+
+export const ANIMAL_ANIMATION = {
+    WALKING: 1,
+    HUNTING: 2,
+    ATTACKING: 3
+}
 
 export let animals = [{
     position: vec2.fromValues(-5, 5),
@@ -61,7 +73,9 @@ export let animals = [{
     type: 0,
     speed: 2,
     walkingDir: null,
-    walkTimer: 0,
+    animationStatus: 0,
+    animationTimer: 0,
+    damage: 30
 }];
 
 export const FIRES = {
@@ -110,10 +124,11 @@ export let player = {
     goal: vec2.create(),
     animationStatus: 0,
     animationTimer: 0,
-	carrying: null,
+	carrying: FOOD.MEAT,
 	currentTool: TOOLS.AXE,
 	facingLeft: false,
-	tools: {}
+	tools: {},
+    energy: MAX_ENERGY,
 };
 
 export function facingLeft() {
@@ -134,7 +149,7 @@ export const ANIMATIONS = {
     CHOPPING: 2,
     CRAFTING: 3,
     MINING: 4,
-    FIGHTING: 5,
+    FIGHTING: 5
 };
 
 export function createItem(position, type) {
@@ -247,6 +262,7 @@ export function hitAnimal(test) {
     if (!test) {
         animals[nearestAnimal].health--;
         if (animals[nearestAnimal].health <= 0) {
+            items.push(new Item(animals[nearestAnimal].position, FOOD.MEAT));
             animals.splice(nearestAnimal, 1);
         }
     }
@@ -266,6 +282,20 @@ export function mineStone(test) {
         items.push(new Item(itemPos, ITEMS.STONE));
     }
 	return true;
+}
+
+export function cookFood() {
+	if (nearestItem() != -2) {
+		return false;
+	}
+	if (player.carrying == FOOD.FISH) {
+		player.carrying = FOOD.COOKED_FISH;
+		return true;
+	} else if (player.carrying == FOOD.MEAT) {
+		player.carrying = FOOD.COOKED_MEAT;
+		return true;
+	}
+	return false;
 }
 
 export function initItems() {
@@ -584,18 +614,6 @@ export function countOccurences(items) {
 		}
 	}
 	return new Recipe(wood, stone, 0);
-}
-
-// TODO: Not yet finished. Don't use food system
-// Cooking food won't remove the raw item
-export function cook(food) {
-	switch(food) {
-		case FOOD.FISH:
-			return FOOD.COOKED_FISH;
-		case FOOD.MEAT:
-			return FOOD.COOKED_MEAT;
-	}
-	return null;
 }
 
 export function setCanvas(c) {
