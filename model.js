@@ -107,6 +107,66 @@ export function spawnAnimal() {
         facingLeft: false,
         objective: 'lake'
     });
+    animals.push({
+        position: vec2.fromValues(5, 0),
+        health: 2,
+        type: 1,
+        speed: 1,
+        walkingDir: null,
+        animationStatus: 0,
+        animationTimer: 0,
+        damage: 0,
+        facingLeft: false,
+        objective: null,
+    });
+    animals.push({
+        position: vec2.fromValues(5, 1),
+        health: 2,
+        type: 1,
+        speed: 1,
+        walkingDir: null,
+        animationStatus: 0,
+        animationTimer: 0,
+        damage: 0,
+        facingLeft: false,
+        objective: null,
+    });
+    animals.push({
+        position: vec2.fromValues(5, 0),
+        health: 2,
+        type: 1,
+        speed: 1,
+        walkingDir: null,
+        animationStatus: 0,
+        animationTimer: 0,
+        damage: 0,
+        facingLeft: false,
+        objective: null,
+    });
+    animals.push({
+        position: vec2.fromValues(-5, -5),
+        health: 2,
+        type: 1,
+        speed: 1,
+        walkingDir: null,
+        animationStatus: 0,
+        animationTimer: 0,
+        damage: 0,
+        facingLeft: false,
+        objective: null,
+    });
+    animals.push({
+        position: vec2.fromValues(-4, -5),
+        health: 2,
+        type: 1,
+        speed: 1,
+        walkingDir: null,
+        animationStatus: 0,
+        animationTimer: 0,
+        damage: 0,
+        facingLeft: false,
+        objective: null,
+    });
 }
 
 export const FIRES = {
@@ -147,9 +207,9 @@ export const FOOD = {
 }
 
 export const FOOD_VALUE = {}
-FOOD_VALUE[FOOD.COOKED_FISH] = 30;
-FOOD_VALUE[FOOD.COOKED_MEAT] = 60;
-FOOD_VALUE[FOOD.BERRIES] = 20;
+FOOD_VALUE[FOOD.COOKED_FISH] = 60;
+FOOD_VALUE[FOOD.COOKED_MEAT] = 80;
+FOOD_VALUE[FOOD.BERRIES] = 50;
 
 export let player = {
     speed: 2,
