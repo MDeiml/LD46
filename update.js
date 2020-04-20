@@ -154,7 +154,7 @@ export function update() {
             if (Math.ceil(oldAnimationTimer + 0.5) != Math.ceil(player.animationTimer + 0.5)) {
                 playAudio('hack');
             }
-            if (player.animationTimer >= timeToHarvest(ITEMS.WOOD)) {
+            if (player.animationTimer >= timeToHarvest) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 chopDownTree(false);
@@ -165,14 +165,14 @@ export function update() {
                 playAudio('tree_down');
             }
         } else if (player.animationStatus == ANIMATIONS.MINING) {
-            if (player.animationTimer >= timeToHarvest(ITEMS.STONE)) {
+            if (player.animationTimer >= timeToHarvest) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 mineStone(false);
                 playAudio('drop_stone');
             }
         } else if (player.animationStatus == ANIMATIONS.FISHING) {
-            if (player.animationTimer >= timeToHarvest(ITEMS.STONE)) {
+            if (player.animationTimer >= timeToHarvest) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 fishFish(false);
