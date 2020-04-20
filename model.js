@@ -626,6 +626,9 @@ export function layDown() {
 }
 
 export function pickUp() {
+    if (player.carrying != null) {
+        return false;
+    }
 	let wasCarrying = player.carrying != null;
 	let posNearest = nearestItem();
     if (posNearest < 0) {
