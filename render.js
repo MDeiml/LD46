@@ -77,6 +77,10 @@ export function render() {
     mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -FIRE_RADIUS, 0), vec3.fromValues(FIRE_RADIUS * 2, FIRE_RADIUS * 2, FIRE_RADIUS * 2));
     drawTexture(firecircleTexture, transform, 0, true);
 
+	// draw lake
+	mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec2ToVec3(lake.position), vec3.fromValues(4, 4, 4));
+	drawTexture(lakeTexture, transform, 0, true);
+
     drawObjects();
 
     if (tutorial.enabled && gui.gameStatus == GAME_STATUS.PLAYING) {
@@ -187,10 +191,6 @@ function drawObjects() {
 	// draw quarry
 	mat4.fromTranslation(transform, vec2ToVec3(quarry.position));
 	drawTexture(quarryTexture, transform);
-
-	// draw lake
-	mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(lake.position), vec3.fromValues(4, 4, 4));
-	drawTexture(lakeTexture, transform);
 
     drawOrder.sort(function (a, b) {
         return b.y - a.y;

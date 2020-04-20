@@ -389,11 +389,8 @@ export function initStartingItems() {
 		vec = randomVector(TUTORIAL_ITEM_SPAWN_RADIUS);
 		items.push(new Item(vec, ITEMS.STONE));
 	}
-	let position = vec2.fromValues(-0.5, 1);
-	position[0] += Math.random();
-	position[1] += Math.random();
     trees.push({
-        position: position,
+        position: vec2.fromValues(-0.5, 2),
         type: Math.floor(Math.random() * 4),
         direction: Math.random() > 0.5
 	});
