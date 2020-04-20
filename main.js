@@ -20,6 +20,7 @@ function main() {
     requestAnimationFrame(tick);
     window.addEventListener('resize', resize);
     window.addEventListener('orientationchange', resize);
+    window.addEventListener('fullscreenchange', resize);
 }
 
 function resize(event) {
