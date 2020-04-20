@@ -14,7 +14,7 @@
    viewBox="0 0 210 210"
    version="1.1"
    id="svg694"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="fireCircle.svg">
   <defs
      id="defs688" />
@@ -25,16 +25,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="-98.571429"
-     inkscape:cy="560"
+     inkscape:zoom="0.7"
+     inkscape:cx="337.7081"
+     inkscape:cy="406.631"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1052"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-width="1853"
+     inkscape:window-height="1057"
+     inkscape:window-x="1979"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata691">
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -53,12 +53,11 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-87)">
-    <ellipse
+    <path
        style="fill:#806600;stroke-width:0.26458332"
+       d="M 207.8869,191.92262 C 215.27195,249.48344 138.58109,297 80.130949,297 21.680815,297 -1.1351243e-8,249.1993 -1.1351243e-8,191.16667 2.7886488e-6,133.13404 44.207804,78.461597 102.05357,86.845245 c 52.7196,7.640707 99.47538,55.522005 105.83333,105.077375 z"
        id="path696"
-       cx="105.83333"
-       cy="191.92262"
-       rx="105.83333"
-       ry="105.07738" />
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss" />
   </g>
 </svg>
