@@ -56,10 +56,10 @@ export let items = [];
 export let trees = [];
 export let stumps = [];
 export let decorations = [];
-export let tutorials = [{
-    position: vec2.fromValues(-2, -1),
+export let tutorial = {
+    enabled: true,
     type: 0
-}];
+};
 export let quarry;
 
 export const ANIMAL_ANIMATION = {
