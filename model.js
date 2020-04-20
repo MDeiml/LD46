@@ -437,7 +437,7 @@ export function fishFish(test) {
 	if (player.currentTool != TOOLS.FISHING_ROD) {
 		return false;
 	}
-	if (vec2.distance(lake.position, player.position) > 1) {
+	if (vec2.distance(lake.position, player.position) > 1.5) {
 		return false;
 	}
     if (!test) {

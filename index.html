@@ -48,6 +48,8 @@
                     color.rgb = (1.0 - t) * grayColor + t * color.rgb * vec3(235.0/255.0, 178.0/255.0, 145.0/255.0);
                     if (special == 1) {
                         color.g = clamp(color.g + 0.1 * color.a, 0.0, 1.0);
+                    } else if (special == 2) {
+                        color.b = clamp(color.b + 0.8 * color.a, 0.0, 1.0);
                     }
                     gl_FragColor = color;
                 }

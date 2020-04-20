@@ -196,7 +196,7 @@ function drawObjects() {
     // draw items
     for (let item of items) {
 		mat4.fromTranslation(transform, vec2ToVec3(item.pos));
-        drawTexture(itemTextures[item.id], transform, item.highlight ? 3 : 0);
+        drawTexture(itemTextures[item.id], transform, item.highlight == 1 ? 3 : (item.highlight == 2 ? 4 : 0));
     }
 
     // draw trees
@@ -250,7 +250,7 @@ function drawTexture(id, transform, lighting, reallyDraw, isGUI) {
         let mvp = mat4.create();
         mat4.mul(mvp, isGUI ? projectionMatrix : pvMatrix, transform);
         gl.uniformMatrix4fv(matrixUniform, false, mvp);
-        gl.uniform1i(specialUniform, lighting == 3 ? 1 : 0);
+        gl.uniform1i(specialUniform, lighting == 3 ? 1 : (lighting == 4 ? 2 : 0));
         gl.uniform2f(canvasSizeUniform, canvas.width, canvas.height);
         let intensity = fire.fuel * 2 + flicker * 0.2;
         intensity = intensity * intensity;

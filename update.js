@@ -1,6 +1,6 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
-	initQuarry, mineStone, quarry, hitAnimal, gui, GAME_STATUS, spawnAnimal,
+	initQuarry, mineStone, quarry, hitAnimal, gui, GAME_STATUS, spawnAnimal, inReachOfFire,
 	ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial, initStartingItems, initLake,
 	fishFish, TOOLS, canCraft, FOOD, lake, timeToHarvest, canvas, reset, nonoof } from './model.js';
 import { mousePos, doubleClick, clickHandled, mouseOverPos } from './input.js';
@@ -283,12 +283,18 @@ export function update() {
     }
 
     for (let item of items) {
-        item.highlight = vec2.distance(mouseOverPos, item.pos) < PICK_UP_RADIUS;
+        if (vec2.distance(mouseOverPos, item.pos) < PICK_UP_RADIUS) {
+            item.highlight = 1;
+        } else if (player.animationStatus == ANIMATIONS.CRAFTING && inReachOfFire(item.pos)) {
+            item.highlight = 2;
+        } else {
+            item.highlight = 0;
+        }
     }
 
     quarry.highlight = player.currentTool == TOOLS.PICKAXE && vec2.distance(mouseOverPos, quarry.position) < 1;
 
-    lake.highlight = player.currentTool == TOOLS.FISHING_ROD && vec2.distance(mouseOverPos, lake.position) < 1;
+    lake.highlight = player.currentTool == TOOLS.FISHING_ROD && vec2.distance(mouseOverPos, lake.position) < 1.5;
 }
 
 function handleCollision(obj, fireRadius) {
