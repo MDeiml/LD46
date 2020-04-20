@@ -15,7 +15,7 @@
    viewBox="0 0 200 250"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
    sodipodi:docname="winscreen.svg">
   <defs
      id="defs2" />
@@ -27,15 +27,15 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="-86.052803"
+     inkscape:cx="353.03179"
      inkscape:cy="414.31825"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1853"
-     inkscape:window-height="1057"
-     inkscape:window-x="1979"
-     inkscape:window-y="-8"
+     inkscape:window-width="1280"
+     inkscape:window-height="996"
+     inkscape:window-x="1366"
+     inkscape:window-y="0"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
@@ -728,5 +728,28 @@
          style=""
          id="path2575" />
     </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="121.33036"
+       y="279.23511"
+       id="text973"><tspan
+         sodipodi:role="line"
+         id="tspan971"
+         x="121.33036"
+         y="288.59888"
+         style="stroke-width:0.26458332"></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.76529169px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffff00;fill-opacity:1;stroke:none;stroke-width:0.16913229"
+       x="128.2355"
+       y="303.97318"
+       id="text977"
+       transform="scale(1.0393514,0.96213851)"><tspan
+         sodipodi:role="line"
+         id="tspan975"
+         x="128.2355"
+         y="303.97318"
+         style="fill:#ffff00;stroke-width:0.16913229">06/11/2016</tspan></text>
   </g>
 </svg>
