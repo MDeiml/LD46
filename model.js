@@ -15,6 +15,7 @@ export const TUTORIAL_STONE = 1;
 export const TUTORIAL_ITEM_SPAWN_RADIUS = 3;
 export const STARTING_WOOD = 3;
 export const STARTING_STONE = 8;
+export const STARTING_BERRIES = 7;
 export const STARTING_TREES = 40;
 export const STARTING_DECORATIONS = 20;
 export const RESOURCE_SPAWN_RADIUS = 10;
@@ -362,6 +363,14 @@ export function initItems() {
 		if (!createItem(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
 				RESOURCE_SPAWN_RADIUS, Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
 				RESOURCE_SPAWN_RADIUS), ITEMS.STONE)) {
+			i--;
+			continue;
+		}
+	}
+	for (let i = 0; i < STARTING_BERRIES; i++) {
+		if (!createItem(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
+				RESOURCE_SPAWN_RADIUS, Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
+				RESOURCE_SPAWN_RADIUS), ITEMS.BERRIES)) {
 			i--;
 			continue;
 		}
