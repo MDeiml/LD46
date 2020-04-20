@@ -488,7 +488,7 @@ export function reset() {
     FIRES_UPGRADES = {
         CAMPFIRE:  new Recipe(1, 1, FIRES.OPEN_FIRE),
         COOKING_FIRE:  new Recipe(2, 4, FIRES.CAMPFIRE),
-        BEACON:   new Recipe(6, 6, FIRES.COOKING_FIRE)
+        BEACON:   new Recipe(5, 5, FIRES.COOKING_FIRE)
     }
 	RECIPES = {
         AXE: new Recipe(2, 1, FIRES.OPEN_FIRE),
@@ -676,7 +676,7 @@ export let RECIPES = {
 export let FIRES_UPGRADES = {
     CAMPFIRE:  new Recipe(1, 1, FIRES.OPEN_FIRE),
     COOKING_FIRE:  new Recipe(2, 4, FIRES.CAMPFIRE),
-    BEACON:   new Recipe(6, 6, FIRES.COOKING_FIRE)
+    BEACON:   new Recipe(5, 5, FIRES.COOKING_FIRE)
 }
 
 /*
