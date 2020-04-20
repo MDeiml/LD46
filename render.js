@@ -199,7 +199,7 @@ function drawObjects() {
     // draw trees
     for (let tree of trees) {
         mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(tree.position), vec3.fromValues(tree.direction ? 2 : -2, 2, 2));
-        drawTexture(treeTextures[tree.type], transform, player.currentTool == TOOLS.AXE ? 3 : 0);
+        drawTexture(treeTextures[tree.type], transform, tree.highlight ? 3 : 0);
 	}
 
 	// draw quarry

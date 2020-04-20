@@ -81,17 +81,21 @@ export const ANIMAL_ANIMATION = {
 	ATTACKING: 3
 }
 
-export let animals = [{
-    position: vec2.fromValues(-5, 5),
-    health: 2,
-    type: 0,
-    speed: 2,
-    walkingDir: null,
-    animationStatus: 0,
-    animationTimer: 0,
-    damage: 30,
-    facingLeft: false
-}];
+export let animals = [];
+
+export function spawnAnimal() {
+    animals.push({
+        position: vec2.fromValues(-5, 5),
+        health: 2,
+        type: 0,
+        speed: 2,
+        walkingDir: null,
+        animationStatus: 0,
+        animationTimer: 0,
+        damage: 30,
+        facingLeft: false
+    });
+}
 
 export const FIRES = {
 	OPEN_FIRE: 0,
@@ -443,6 +447,7 @@ export function initItems() {
 }
 
 export function initStartingItems() {
+    spawnAnimal();
 	items.push(new Item(vec2.fromValues(-1, -1), ITEMS.WOOD));
 	items.push(new Item(vec2.fromValues(3, 1), ITEMS.STONE));
     items.push(new Item(vec2.fromValues(2, -1), FOOD.MEAT));
