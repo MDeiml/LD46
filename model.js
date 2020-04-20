@@ -24,8 +24,10 @@ export const NO_INIT_ITEMS_AROUND_FIRE_RADIUS = 3;
 export const DISTANCE_BETWEEN_ITEMS_OF_SAME_TYPE = 3;
 export const WOOD_PER_TREE = 2;
 export const QUARRY_RADIUS = 5;
+export const LAKE_RADIUS = 8;
 export const TIME_TO_CHOP_DOWN_TREE = 2;
 export const TIME_TO_MINE_STONE = 3;
+export const TIME_TO_FISH = 4;
 export const ENERGY_DEPLETING_SPEED = 1;
 export const MAX_ENERGY = 120;
 export const ENERGY_PER_FOOD = 40;
@@ -65,6 +67,7 @@ export let tutorial = {
     type: 0
 };
 export let quarry;
+export let lake;
 
 export const ANIMAL_ANIMATION = {
     WALKING: 1,
@@ -317,7 +320,6 @@ export function eatFood() {
 }
 
 export function initItems() {
-	initStartingItems();
 	for (let i = 0; i < STARTING_WOOD; i++) {
 		if (!createItem(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
 				RESOURCE_SPAWN_RADIUS, Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
@@ -348,6 +350,15 @@ export function initStartingItems() {
 		vec = randomVector(TUTORIAL_ITEM_SPAWN_RADIUS);
 		items.push(new Item(vec, ITEMS.STONE));
 	}
+	let position = vec2.fromValues(-0.5, 1);
+	position[0] += Math.random();
+	position[1] += Math.random();
+    trees.push({
+        position: position,
+        type: Math.floor(Math.random() * 4),
+        direction: Math.random() > 0.5
+	});
+	console.log(trees);
 }
 
 export function initTrees() {
@@ -375,6 +386,12 @@ export function initDecorations() {
 export function initQuarry() {
 	quarry = {
 		position: randomVector(QUARRY_RADIUS)
+	};
+}
+
+export function initLake() {
+	lake = {
+		position: randomVector(LAKE_RADIUS)
 	};
 }
 

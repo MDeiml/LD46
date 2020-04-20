@@ -1,13 +1,14 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
 	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE, quarry, hitAnimal, gui, GAME_STATUS,
-    ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial, TOOLS, canCraft } from './model.js';
+    ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial, TOOLS, canCraft, initStartingItems } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 import { playAudio } from './audio.js'
 
 export function init() {
 	initQuarry();
+	initStartingItems();
     initTrees();
 	initItems();
 	initDecorations();
