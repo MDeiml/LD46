@@ -21,8 +21,10 @@ export function update() {
     if (tutorial.type == 8) {
         tutorial.timer += DELTA;
         if (tutorial.timer >= 5) {
+            if (tutorial.enabled) {
+                spawnAnimal();
+            }
             tutorial.enabled = false;
-            spawnAnimal();
         }
     }
     if (fire.fuel <= 0 || player.energy <= 0) {
