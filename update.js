@@ -285,6 +285,8 @@ export function update() {
     }
 
     quarry.highlight = player.currentTool == TOOLS.PICKAXE && vec2.distance(mouseOverPos, quarry.position) < 1;
+
+    lake.highlight = player.currentTool == TOOLS.FISHING_ROD && vec2.distance(mouseOverPos, lake.position) < 1;
 }
 
 function handleCollision(obj, fireRadius) {

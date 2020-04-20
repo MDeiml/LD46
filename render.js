@@ -89,7 +89,7 @@ export function render() {
     lakePosition = vec2ToVec3(lake.position);
     vec3.sub(lakePosition, lakePosition, vec3.fromValues(0, 0.5, 0));
 	mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), lakePosition, vec3.fromValues(1, 1, 1));
-	drawTexture(iceholeTexture, transform, player.currentTool == TOOLS.FISHING_ROD ? 3 : 0, true);
+	drawTexture(iceholeTexture, transform, lake.highlight ? 3 : 0, true);
 
 
     drawObjects();

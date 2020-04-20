@@ -147,7 +147,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: null,
+	currentTool: TOOLS.SPEAR,
 	facingLeft: false,
 	tools: {},
     energy: MAX_ENERGY,
@@ -306,7 +306,7 @@ export function chopDownTree(test) {
 }
 
 export function hitAnimal(test) {
-    if (player.currentTool != TOOLS.KNIFE) {
+    if (player.currentTool != TOOLS.KNIFE && player.currentTool != TOOLS.SPEAR) {
         return false;
     }
     let nearestAnimal = -1;
@@ -322,7 +322,7 @@ export function hitAnimal(test) {
         return false;
     }
     if (!test) {
-        animals[nearestAnimal].health--;
+        animals[nearestAnimal].health -= player.currentTool == TOOLS.KNIFE ? 1 : 2;
         if (animals[nearestAnimal].health <= 0) {
             items.push(new Item(animals[nearestAnimal].position, FOOD.MEAT));
             animals.splice(nearestAnimal, 1);
