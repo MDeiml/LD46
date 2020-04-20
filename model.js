@@ -58,8 +58,6 @@ export let fire = {
     animationTime: 0
 };
 
-export let fireCapacity = 2;
-export let fireFuel = 2;
 export let timeToHarvest;
 
 export let items = [];
