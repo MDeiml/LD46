@@ -240,7 +240,7 @@ export function initGL() {
         tutorialTextures.push(loadTexture('./textures/tutorial/tutorial' + i + '.svg'));
     }
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 3; i++) {
         craftingTextures.push(loadTexture('./textures/crafting' + i + '.svg'));
     }
 
