@@ -94,7 +94,7 @@ export function update() {
                 player.animationTimer = 0;
             } else if (eatFood()) {
 				playAudio('eating');
-                if (tutorial.type == 7) {
+                if (tutorial.type <= 7) {
                     tutorial.type = 8;
                 }
             } else {
