@@ -205,6 +205,9 @@ export function update() {
 				// playAudio('drop_stone');
             }
         } else if (player.animationStatus == ANIMATIONS.FIGHTING) {
+			if (Math.ceil(oldAnimationTimer + 0.5) != Math.ceil(player.animationTimer + 0.5)) {
+                playAudio('knife');
+            }
             if (player.animationTimer >= 0.5) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
