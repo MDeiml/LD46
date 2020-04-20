@@ -93,6 +93,7 @@ export function update() {
                 player.animationStatus = ANIMATIONS.WALKING;
                 player.animationTimer = 0;
             } else if (eatFood()) {
+				playAudio('eating');
                 if (tutorial.type == 7) {
                     tutorial.type = 8;
                 }
@@ -134,6 +135,7 @@ export function update() {
                             tutorial.position = vec2.fromValues(3, 1);
                         }
                     } else if (cookFood()) {
+						playAudio('cooking');
                         if (tutorial.type == 6) {
                             tutorial.type = 7;
                             tutorial.position = null;
