@@ -370,7 +370,7 @@ export function initItems() {
 	for (let i = 0; i < STARTING_BERRIES; i++) {
 		if (!createItem(vec2.fromValues(Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
 				RESOURCE_SPAWN_RADIUS, Math.round(Math.random() * (RESOURCE_SPAWN_RADIUS * 2)) -
-				RESOURCE_SPAWN_RADIUS), ITEMS.BERRIES)) {
+				RESOURCE_SPAWN_RADIUS), FOOD.BERRIES)) {
 			i--;
 			continue;
 		}
