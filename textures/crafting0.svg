@@ -17,7 +17,7 @@
    inkscape:export-filename="/home/matthias/bitmap.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="crafting0.svg">
   <defs
      id="defs64558" />
@@ -28,19 +28,35 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.19477267"
-     inkscape:cx="636.6914"
-     inkscape:cy="657.99983"
+     inkscape:zoom="0.38954534"
+     inkscape:cx="610.51003"
+     inkscape:cy="861.60995"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="960"
-     inkscape:window-height="1052"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
-     showguides="false"
-     inkscape:guide-bbox="true" />
+     inkscape:window-width="1853"
+     inkscape:window-height="1057"
+     inkscape:window-x="1979"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true">
+    <sodipodi:guide
+       position="240.44056,349.79346"
+       orientation="0,1"
+       id="guide1545"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="105.27764,312.77649"
+       orientation="1,0"
+       id="guide1549"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="314.47451,307.3428"
+       orientation="1,0"
+       id="guide1551"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
   <metadata
      id="metadata64561">
     <rdf:RDF>
@@ -49,7 +65,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -68,26 +84,26 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:105.88030243px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808080;fill-opacity:1;stroke:none;stroke-width:2.64700747"
-       x="42.977909"
-       y="39.436012"
+       x="58.86272"
+       y="19.035713"
        id="text309"
        transform="scale(1.1177984,0.89461571)"><tspan
          sodipodi:role="line"
          id="tspan307"
-         x="42.977909"
-         y="39.436012"
+         x="58.86272"
+         y="19.035713"
          style="fill:#808080;stroke-width:2.64700747">1</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:105.88030243px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#c87137;fill-opacity:1;stroke:none;stroke-width:2.64700747"
-       x="260.1348"
-       y="37.382782"
+       x="245.99391"
+       y="18.370663"
        id="text309-9"
        transform="scale(1.1177984,0.89461571)"><tspan
          sodipodi:role="line"
          id="tspan307-8"
-         x="260.1348"
-         y="37.382782"
+         x="245.99391"
+         y="18.370663"
          style="fill:#c87137;stroke-width:2.64700747">1</tspan></text>
   </g>
   <g
