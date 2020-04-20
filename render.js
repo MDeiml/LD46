@@ -196,7 +196,7 @@ function drawObjects() {
     // draw items
     for (let item of items) {
 		mat4.fromTranslation(transform, vec2ToVec3(item.pos));
-        drawTexture(itemTextures[item.id], transform);
+        drawTexture(itemTextures[item.id], transform, item.highlight ? 3 : 0);
     }
 
     // draw trees
