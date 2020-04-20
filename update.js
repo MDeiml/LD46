@@ -70,6 +70,10 @@ export function update() {
             if (vec2.distance(mousePos, point) < 0.75) {
 				if (i == 0) {
 					if(upgradeFire()) {
+                        if (tutorial.enabled) {
+                            spawnAnimal();
+                            tutorial.enabled = false;
+                        }
                         player.animationStatus = 0;
                     }
 				} else {
@@ -94,7 +98,7 @@ export function update() {
                 player.animationTimer = 0;
             } else if (eatFood()) {
 				playAudio('eating');
-                if (tutorial.type <= 7) {
+                if (tutorial.type == 7) {
                     tutorial.type = 8;
                 }
             } else {
