@@ -207,7 +207,7 @@ function drawObjects() {
 
 	// draw quarry
 	mat4.fromTranslation(transform, vec2ToVec3(quarry.position));
-	drawTexture(quarryTexture, transform, player.currentTool == TOOLS.PICKAXE ? 3 : 0);
+	drawTexture(quarryTexture, transform, quarry.highlight ? 3 : 0);
 
     drawOrder.sort(function (a, b) {
         return b.y - a.y;
