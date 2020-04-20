@@ -34,9 +34,9 @@
      inkscape:document-units="mm"
      inkscape:current-layer="layer3"
      showgrid="false"
-     inkscape:window-width="1853"
+     inkscape:window-width="1858"
      inkscape:window-height="1057"
-     inkscape:window-x="1979"
+     inkscape:window-x="54"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
      showguides="false"
@@ -243,35 +243,31 @@
          d="m 176.1369,197.97025 c 0,13.77753 -27.00819,13.60714 -63.12202,13.60714 -36.11384,0 -67.657744,0.17039 -67.657741,-13.60714 1.2e-5,-13.77753 29.276055,-24.94642 65.389881,-24.94642 36.11382,0 65.38987,11.16889 65.38988,24.94642 z"
          style="fill:#666666;fill-opacity:1;stroke:none;stroke-width:0.26458332;stroke-opacity:1;paint-order:fill markers stroke" />
     </g>
-    <g
-       aria-label="x6"
-       transform="matrix(0.26458333,0,0,0.26458333,13.584213,-8.1505275)"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:192px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none"
-       id="flowRoot7043">
-      <path
-         d="m 226.0293,417.50391 -37.96875,51.09375 39.9375,53.90625 H 207.6543 l -30.5625,-41.25 -30.5625,41.25 h -20.34375 l 40.78125,-54.9375 -37.3125,-50.0625 h 20.34375 l 27.84375,37.40625 27.84375,-37.40625 z"
-         style=""
-         id="path7080" />
-      <path
-         d="m 297.6543,444.97266 q -12.75,0 -20.25,8.71875 -7.40625,8.71875 -7.40625,23.90625 0,15.09375 7.40625,23.90625 7.5,8.71875 20.25,8.71875 12.75,0 20.15625,-8.71875 7.5,-8.8125 7.5,-23.90625 0,-15.1875 -7.5,-23.90625 -7.40625,-8.71875 -20.15625,-8.71875 z m 37.59375,-59.34375 v 17.25 q -7.125,-3.375 -14.4375,-5.15625 -7.21875,-1.78125 -14.34375,-1.78125 -18.75,0 -28.6875,12.65625 -9.84375,12.65625 -11.25,38.25 5.53125,-8.15625 13.875,-12.46875 8.34375,-4.40625 18.375,-4.40625 21.09375,0 33.28125,12.84375 12.28125,12.75 12.28125,34.78125 0,21.5625 -12.75,34.59375 -12.75,13.03125 -33.9375,13.03125 -24.28125,0 -37.125,-18.5625 -12.84375,-18.65625 -12.84375,-54 0,-33.1875 15.75,-52.875 15.75,-19.78125 42.28125,-19.78125 7.125,0 14.34375,1.40625 7.3125,1.40625 15.1875,4.21875 z"
-         style=""
-         id="path7082" />
-    </g>
-    <g
-       aria-label="x6"
-       transform="matrix(0.26458333,0,0,0.26458333,268.52873,-8.7947647)"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:192px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;display:inline;fill:#000000;fill-opacity:1;stroke:none"
-       id="flowRoot7043-0">
-      <path
-         d="m 226.0293,417.50391 -37.96875,51.09375 39.9375,53.90625 H 207.6543 l -30.5625,-41.25 -30.5625,41.25 h -20.34375 l 40.78125,-54.9375 -37.3125,-50.0625 h 20.34375 l 27.84375,37.40625 27.84375,-37.40625 z"
-         style=""
-         id="path7075" />
-      <path
-         d="m 297.6543,444.97266 q -12.75,0 -20.25,8.71875 -7.40625,8.71875 -7.40625,23.90625 0,15.09375 7.40625,23.90625 7.5,8.71875 20.25,8.71875 12.75,0 20.15625,-8.71875 7.5,-8.8125 7.5,-23.90625 0,-15.1875 -7.5,-23.90625 -7.40625,-8.71875 -20.15625,-8.71875 z m 37.59375,-59.34375 v 17.25 q -7.125,-3.375 -14.4375,-5.15625 -7.21875,-1.78125 -14.34375,-1.78125 -18.75,0 -28.6875,12.65625 -9.84375,12.65625 -11.25,38.25 5.53125,-8.15625 13.875,-12.46875 8.34375,-4.40625 18.375,-4.40625 21.09375,0 33.28125,12.84375 12.28125,12.75 12.28125,34.78125 0,21.5625 -12.75,34.59375 -12.75,13.03125 -33.9375,13.03125 -24.28125,0 -37.125,-18.5625 -12.84375,-18.65625 -12.84375,-54 0,-33.1875 15.75,-52.875 15.75,-19.78125 42.28125,-19.78125 7.125,0 14.34375,1.40625 7.3125,1.40625 15.1875,4.21875 z"
-         style=""
-         id="path7077" />
-    </g>
-  </g>
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot860"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,6.7921062,-71.996326)"><flowRegion
+         id="flowRegion862"><rect
+           id="rect864"
+           width="354.25916"
+           height="343.99075"
+           x="151.45862"
+           y="583.6673" /></flowRegion><flowPara
+         id="flowPara866"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:192px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start">x5</flowPara></flowRoot>    <flowRoot
+       xml:space="preserve"
+       id="flowRoot860-4"
+       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;display:inline;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,252.84791,-72.975553)"><flowRegion
+         id="flowRegion862-2"><rect
+           id="rect864-7"
+           width="354.25916"
+           height="343.99075"
+           x="151.45862"
+           y="583.6673" /></flowRegion><flowPara
+         id="flowPara866-4"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:192px;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:start;writing-mode:lr-tb;text-anchor:start">x5</flowPara></flowRoot>  </g>
   <g
      inkscape:groupmode="layer"
      id="layer4"
