@@ -136,7 +136,7 @@ export function render() {
         mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -5, 0), vec3.fromValues(10, 10, 10));
         drawTexture(loosescreenTexture, transform, 2, true, true);
     } else {
-        mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -4.5, 0), vec3.fromValues(player.energy / MAX_ENERGY * 2, 0.2, 0.2));
+        mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -4.5, 0), vec3.fromValues(player.energy / MAX_ENERGY * 6, 0.4, 0.4));
         drawTexture(energyTexture, transform, 2, true, true);
     }
 }
