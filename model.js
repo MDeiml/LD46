@@ -27,12 +27,12 @@ export const DISTANCE_BETWEEN_ITEMS_OF_SAME_TYPE = 3;
 export const WOOD_PER_TREE = 2;
 export const QUARRY_RADIUS = 5;
 export const LAKE_RADIUS = 8;
-export const TIME_TO_CHOP_DOWN_TREE = 2;
-export const TIME_TO_MINE_STONE = 3;
-export const TIME_TO_FISH = 4;
-export const TIME_TO_CHOP_DOWN_TREE_MAX = 2;
-export const TIME_TO_MINE_STONE_MAX = 3;
-export const TIME_TO_FISH_MAX = 4;
+export const TIME_TO_CHOP_DOWN_TREE_MIN = 1;
+export const TIME_TO_MINE_STONE_MIN = 2;
+export const TIME_TO_FISH_MIN = 2;
+export const TIME_TO_CHOP_DOWN_TREE_MAX = 3;
+export const TIME_TO_MINE_STONE_MAX = 4;
+export const TIME_TO_FISH_MAX = 6;
 export const ENERGY_DEPLETING_SPEED = 1;
 export const MAX_ENERGY = 120;
 export const ENERGY_PER_FOOD = 40;
@@ -160,6 +160,21 @@ export function facingLeft() {
 export function randomVector(radius) {
 	let angle = Math.random() * Math.PI * 2;
 	return vec2.fromValues(Math.cos(angle) * radius, Math.sin(angle) * radius);
+}
+
+export function timeToHarvest(desired) {
+	switch (desired) {
+		case ITEMS.STONE:
+			return randBetween(TIME_TO_MINE_STONE_MIN, TIME_TO_MINE_STONE_MAX);
+		case ITEMS.WOOD:
+			return randBetween(TIME_TO_CHOP_DOWN_TREE_MIN, TIME_TO_CHOP_DOWN_TREE_MAX);
+		case FOOD.FISH:
+			return randBetween(TIME_TO_FISH_MIN, TIME_TO_FISH_MAX);
+	}
+}
+
+export function randBetween(a, b) {
+	return Math.floor(Math.random() * (b-a+1)) + a;
 }
 
 export const ANIMATIONS = {
