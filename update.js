@@ -39,7 +39,7 @@ export function update() {
             return;
         }
     }
-    if (gui.gameStatus == GAME_STATUS.GAME_OVER) {
+    if (gui.gameStatus == GAME_STATUS.GAME_OVER || gui.gameStatus == GAME_STATUS.WIN) {
         if (mousePos) {
             reset();
             init();
