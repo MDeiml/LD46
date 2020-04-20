@@ -572,8 +572,10 @@ export function initDecorations() {
 }
 
 export function initQuarry() {
+	let pos = vec2.create();
+	vec2.negate(pos, lake.position);
 	quarry = {
-		position: randomVector(QUARRY_RADIUS)
+		position: pos
 	};
 }
 
