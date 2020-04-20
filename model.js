@@ -413,8 +413,6 @@ export function reset() {
     stumps = [];
 	decorations = [];
 	oofonce = true;
-    // TODO: update this
-    spawnAnimal();
     player = {
         speed: 2,
         lastPosition: vec2.fromValues(1, -1),
@@ -481,7 +479,9 @@ export function initItems() {
 }
 
 export function initStartingItems() {
-    spawnAnimal();
+    if (!tutorial.enabled) {
+        spawnAnimal();
+    }
 	items.push(new Item(vec2.fromValues(-1, -1), ITEMS.WOOD));
 	items.push(new Item(vec2.fromValues(3, 1), ITEMS.STONE));
     items.push(new Item(vec2.fromValues(2, -1), FOOD.MEAT));
