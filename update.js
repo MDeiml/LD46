@@ -82,16 +82,18 @@ export function update() {
     }
     if (mousePos) {
 		vec2.sub(player.goal, mousePos, vec2.fromValues(0, 0.3));
-		if (vec2.distance(player.goal, player.position) > 0.5) {
-        	player.animationStatus = ANIMATIONS.WALKING;
-			player.animationTimer = 0;
-		} else if (eatFood()) {
-            if (tutorial.type == 7) {
-                tutorial.type = 8;
+        if (player.animationStatus != ANIMATIONS.FIGHTING) {
+            if (vec2.distance(player.goal, player.position) > 0.5) {
+                player.animationStatus = ANIMATIONS.WALKING;
+                player.animationTimer = 0;
+            } else if (eatFood()) {
+                if (tutorial.type == 7) {
+                    tutorial.type = 8;
+                }
+            } else {
+                player.animationStatus = ANIMATIONS.WALKING;
+                player.animationTimer = 0;
             }
-        } else {
-        	player.animationStatus = ANIMATIONS.WALKING;
-			player.animationTimer = 0;
         }
     }
     if (tutorial.type == 2 && canCraft(TOOLS.AXE)) {
@@ -101,6 +103,13 @@ export function update() {
     if (player.animationStatus) {
         let oldAnimationTimer = player.animationTimer;
         player.animationTimer += DELTA;
+
+        if (player.animationStatus == ANIMATIONS.WALKING) {
+            if (hitAnimal(true)) {
+                player.animationStatus = ANIMATIONS.FIGHTING;
+            }
+        }
+
         if (player.animationStatus == ANIMATIONS.WALKING) {
             let dir = vec2.sub(vec2.create(), player.goal, player.position);
             let dist = vec2.length(dir);
