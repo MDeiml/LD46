@@ -60,6 +60,7 @@ export let trees = [];
 export let stumps = [];
 export let decorations = [];
 export let tutorial = {
+    position: vec2.fromValues(2, 1),
     enabled: true,
     type: 0
 };
