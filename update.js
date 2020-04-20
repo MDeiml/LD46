@@ -3,7 +3,7 @@ import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pi
 	initQuarry, mineStone, quarry, hitAnimal, gui, GAME_STATUS,
 	ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial, initStartingItems, initLake,
 	fishFish, TOOLS, canCraft, FOOD, lake, timeToHarvest, canvas, reset } from './model.js';
-import { mousePos, doubleClick, clickHandled } from './input.js';
+import { mousePos, doubleClick, clickHandled, mouseOverPos } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 import { playAudio } from './audio.js'
 
@@ -247,6 +247,14 @@ export function update() {
             }
         }
         handleCollision(animal, fire.fuel * 2);
+    }
+
+    for (let tree of trees) {
+        if (player.currentTool == TOOLS.AXE && vec2.distance(mouseOverPos, tree.position) < 1) {
+            tree.highlight = true;
+        } else {
+            tree.highlight = false;
+        }
     }
 }
 

@@ -8,6 +8,7 @@ let nextKeys = {};
 let nextMousePos = null;
 export let mousePos = null;
 export let doubleClick = false;
+export let mouseOverPos = vec2.create();
 
 let lastClick = 0;
 
@@ -22,12 +23,18 @@ export function initInput() {
         let v = vec3.fromValues(event.offsetX / canvas.width * 2 - 1, 1 - event.offsetY / canvas.height * 2, 0);
         vec3.transformMat4(v, v, invPvMatrix);
         nextMousePos = vec2.fromValues(v[0], v[1]);
+        mouseOverPos = nextMousePos;
         if (lastClick < 0.5) {
             doubleClick = true;
         } else {
             doubleClick = false;
         }
         lastClick = 0;
+    });
+    canvas.addEventListener('mousemove', function (event) {
+        let v = vec3.fromValues(event.offsetX / canvas.width * 2 - 1, 1 - event.offsetY / canvas.height * 2, 0);
+        vec3.transformMat4(v, v, invPvMatrix);
+        mouseOverPos = vec2.fromValues(v[0], v[1]);
     });
 }
 
