@@ -18,6 +18,7 @@ let fireTextures = [];
 let toolTextures = [];
 let playerTexture;
 let circleTexture;
+let greenCircleTexture;
 let animalTextures = [];
 let decorationTextures = [];
 let stumpTextures = [];
@@ -118,7 +119,7 @@ export function render() {
             } else {
                 // if (canCraft(i-1)) {
                 if (player.tools[i - 1]) {
-                    drawTexture(circleTexture, transform, 2, true);
+                    drawTexture(greenCircleTexture, transform, 2, true);
 					drawTexture(toolTextures[i - 1], transform, 2, true);
                 } else if (craftingTextures[i] != null && getRecipe(i - 1).neededFire <= fire.size) {
                     drawTexture(circleTexture, transform, 2, true);
@@ -334,6 +335,7 @@ export function initGL() {
     backgroundTexture = colorTexture([255, 255, 255, 255]);
     playerTexture = loadTexture('./textures/character.svg');
     circleTexture = loadTexture('./textures/circle.svg');
+    greenCircleTexture = loadTexture('./textures/greencircle.svg');
     quarryTexture = loadTexture('./textures/quarry.svg');
     lakeTexture = loadTexture('./textures/lake.svg');
     iceholeTexture = loadTexture('./textures/icehole.svg');
