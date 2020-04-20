@@ -109,7 +109,7 @@ export function update() {
         player.animationTimer += DELTA;
 
         if (player.animationStatus == ANIMATIONS.WALKING) {
-            if (hitAnimal(true)) {
+            if (player.carrying === null && hitAnimal(true)) {
                 player.animationStatus = ANIMATIONS.FIGHTING;
             }
         }
@@ -211,7 +211,7 @@ export function update() {
 			if (Math.ceil(oldAnimationTimer + 0.5) != Math.ceil(player.animationTimer + 0.5)) {
                 playAudio('knife');
             }
-            if (player.animationTimer >= 0.5) {
+            if (player.animationTimer >= 1) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 hitAnimal(false);
@@ -262,7 +262,7 @@ export function update() {
                 animal.animationTimer = -Math.random() - 1;
                 animal.walkingDir = vec2.random(vec2.create());
                 animal.animationStatus = ANIMAL_ANIMATION.WALKING;
-                let dirToQuarry = vec2.sub(vec2.create(), quarry.position, animal.position);
+                let dirToQuarry = vec2.sub(vec2.create(), animal.objective == 'quarry' ? quarry.position : lake.position, animal.position);
                 vec2.scale(dirToQuarry, dirToQuarry, 1/3);
                 vec2.add(animal.walkingDir, animal.walkingDir, dirToQuarry);
                 vec2.normalize(animal.walkingDir, animal.walkingDir);

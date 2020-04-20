@@ -92,7 +92,20 @@ export function spawnAnimal() {
         animationStatus: 0,
         animationTimer: 0,
         damage: 30,
-        facingLeft: false
+        facingLeft: false,
+        objective: 'quarry'
+    });
+    animals.push({
+        position: vec2.fromValues(0, -7),
+        health: 4,
+        type: 1,
+        speed: 1,
+        walkingDir: null,
+        animationStatus: 0,
+        animationTimer: 0,
+        damage: 35,
+        facingLeft: false,
+        objective: 'lake'
     });
 }
 
@@ -147,7 +160,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: TOOLS.SPEAR,
+	currentTool: null,
 	facingLeft: false,
 	tools: {},
     energy: MAX_ENERGY,
