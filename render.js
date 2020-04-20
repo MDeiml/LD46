@@ -79,7 +79,6 @@ export function render() {
 
 	// draw lake
 	mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec2ToVec3(lake.position), vec3.fromValues(4, 4, 4));
-    console.log(lake.position);
 	drawTexture(lakeTexture, transform, 0, true);
 
     drawObjects();
