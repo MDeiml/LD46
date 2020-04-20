@@ -70,6 +70,10 @@ export function update() {
             if (vec2.distance(mousePos, point) < 0.75) {
 				if (i == 0) {
 					if(upgradeFire()) {
+                        if (tutorial.enabled) {
+                            spawnAnimal();
+                            tutorial.enabled = false;
+                        }
                         player.animationStatus = 0;
                     }
 				} else {
