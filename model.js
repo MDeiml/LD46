@@ -258,6 +258,7 @@ export function hitAnimal(test) {
     if (!test) {
         animals[nearestAnimal].health--;
         if (animals[nearestAnimal].health <= 0) {
+            items.push(new Item(animals[nearestAnimal].position, FOOD.MEAT));
             animals.splice(nearestAnimal, 1);
         }
     }
