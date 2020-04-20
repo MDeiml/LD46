@@ -1,5 +1,5 @@
 import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft,
-		decorations, quarry, stumps, gui, GAME_STATUS } from './model.js'
+		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -21,6 +21,7 @@ let animalTextures = [];
 let decorationTextures = [];
 let stumpTextures = [];
 let quarryTexture;
+let energyTexture;
 
 let winscreenTexture;
 let menuTexture;
@@ -89,11 +90,14 @@ export function render() {
     }
 
     if (gui.gameStatus == GAME_STATUS.MENU) {
-        mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -6, 0), vec3.fromValues(10, 10, 10));
-        drawTexture(menuTexture, transform, 2, true);
+        mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -5, 0), vec3.fromValues(10, 10, 10));
+        drawTexture(menuTexture, transform, 2, true, true);
     } else if (gui.gameStatus != GAME_STATUS.PLAYING) {
-        mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -6, 0), vec3.fromValues(10, 10, 10));
-        drawTexture(winscreenTexture, transform, 2, true);
+        mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -5, 0), vec3.fromValues(10, 10, 10));
+        drawTexture(winscreenTexture, transform, 2, true, true);
+    } else {
+        mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -4.5, 0), vec3.fromValues(player.energy / MAX_ENERGY * 2, 0.2, 0.2));
+        drawTexture(energyTexture, transform, 2, true, true);
     }
 }
 
@@ -164,7 +168,7 @@ function drawObjects() {
     }
 }
 
-function drawTexture(id, transform, lighting, reallyDraw) {
+function drawTexture(id, transform, lighting, reallyDraw, isGUI) {
     if (!reallyDraw) {
         drawOrder.push({
             id,
@@ -195,7 +199,7 @@ function drawTexture(id, transform, lighting, reallyDraw) {
         gl.uniform1i(shadowTextureUniform, 1);
         gl.uniformMatrix4fv(modelUniform, false, transform)
         let mvp = mat4.create();
-        mat4.mul(mvp, pvMatrix, transform);
+        mat4.mul(mvp, isGUI ? projectionMatrix : pvMatrix, transform);
         gl.uniformMatrix4fv(matrixUniform, false, mvp);
         gl.uniform2f(canvasSizeUniform, canvas.width, canvas.height);
         let intensity = fire.fuel * 2 + flicker * 0.2;
@@ -265,12 +269,13 @@ export function initGL() {
     itemTextures[ITEMS.STONE] = loadTexture('./textures/stone.svg');
     animalTextures[0] = loadTexture('./textures/wolf.svg');
     animalTextures[1] = loadTexture('./textures/bear.svg');
-    backgroundTexture = whiteTexture();
+    backgroundTexture = colorTexture([255, 255, 255, 255]);
     playerTexture = loadTexture('./textures/character.svg');
     circleTexture = loadTexture('./textures/circle.svg');
     quarryTexture = loadTexture('./textures/quarry.svg');
     winscreenTexture = loadTexture('./textures/winscreen.png');
     menuTexture = loadTexture('./textures/menu.svg');
+    energyTexture = colorTexture([255, 255, 0, 255]);
 
     updateProjection();
 }
@@ -403,10 +408,10 @@ function initSquare() {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(texCoords), gl.STATIC_DRAW);
 }
 
-function whiteTexture() {
+function colorTexture(color) {
     const texture = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]));
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(color));
     return texture;
 }
 

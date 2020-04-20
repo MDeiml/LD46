@@ -1,6 +1,7 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
-	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE, quarry, hitAnimal, gui, GAME_STATUS } from './model.js';
+	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE, quarry, hitAnimal, gui, GAME_STATUS,
+    ENERGY_DEPLETING_SPEED } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 
@@ -30,6 +31,11 @@ export function update() {
     }
     fire.fuel -= fire.burningSpeed * DELTA;
     fire.animationTime += DELTA;
+
+    if (vec2.length(player.position) > fire.fuel * 2) {
+        player.energy -= DELTA * ENERGY_DEPLETING_SPEED;
+    }
+
     if (player.animationStatus == ANIMATIONS.CRAFTING && mousePos) {
         for (let i = 0; i < 9; i++) {
             let angle = Math.PI * i / 5;

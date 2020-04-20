@@ -23,6 +23,8 @@ export const WOOD_PER_TREE = 2;
 export const QUARRY_RADIUS = 5;
 export const TIME_TO_CHOP_DOWN_TREE = 2;
 export const TIME_TO_MINE_STONE = 3;
+export const ENERGY_DEPLETING_SPEED = 1;
+export const MAX_ENERGY = 120;
 
 export const GAME_STATUS = {
     MENU: 0,
@@ -113,7 +115,8 @@ export let player = {
 	carrying: null,
 	currentTool: TOOLS.AXE,
 	facingLeft: false,
-	tools: {}
+	tools: {},
+    energy: MAX_ENERGY,
 };
 
 export function facingLeft() {
