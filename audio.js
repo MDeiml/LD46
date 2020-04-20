@@ -20,8 +20,6 @@ export function initAudio() {
     sounds['knife'] = new Audio('./sounds/knife0.ogg');
     sounds['oof'] = new Audio('./sounds/Villager_hurt1.ogg');
     sounds['mining'] = new Audio('./sounds/stoneChipping0.ogg');
-	sounds['water'] = new Audio('./sounds/water0.ogg');
-	sounds['water'].loop = true;
     sounds['willhelm'] = new Audio('./sounds/wilhelmscream.ogg');
 }
 
