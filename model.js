@@ -121,7 +121,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: TOOLS.AXE,
+	currentTool: TOOLS.KNIFE,
 	facingLeft: false,
 	tools: {},
     energy: MAX_ENERGY,
@@ -258,6 +258,7 @@ export function hitAnimal(test) {
     if (!test) {
         animals[nearestAnimal].health--;
         if (animals[nearestAnimal].health <= 0) {
+            items.push(new Item(animals[nearestAnimal].position, FOOD.MEAT));
             animals.splice(nearestAnimal, 1);
         }
     }

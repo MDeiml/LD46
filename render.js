@@ -1,5 +1,5 @@
 import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft,
-		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY, ANIMAL_ANIMATION } from './model.js'
+		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY, ANIMAL_ANIMATION, FOOD } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -272,6 +272,7 @@ export function initGL() {
     toolTextures[TOOLS.TORCH] = loadTexture('./textures/torch.svg');
     itemTextures[ITEMS.WOOD] = loadTexture('./textures/wood_trunk.svg');
     itemTextures[ITEMS.STONE] = loadTexture('./textures/stone.svg');
+    itemTextures[FOOD.MEAT] = loadTexture('./textures/meat.svg');
     animalTextures[0] = loadTexture('./textures/wolf.svg');
     animalTextures[1] = loadTexture('./textures/bear.svg');
     backgroundTexture = colorTexture([255, 255, 255, 255]);
