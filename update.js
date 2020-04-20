@@ -2,7 +2,7 @@ import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pi
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
 	initQuarry, mineStone, TIME_TO_CHOP_DOWN_TREE, TIME_TO_MINE_STONE, quarry, hitAnimal, gui, GAME_STATUS,
 	ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial, initStartingItems, initLake,
-	TIME_TO_FISH, fishFish, TOOLS, canCraft } from './model.js';
+	TIME_TO_FISH, fishFish, TOOLS, canCraft, FOOD } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 import { playAudio } from './audio.js'
@@ -18,6 +18,12 @@ export function init() {
 
 // main update function (called every DELTA seconds)
 export function update() {
+    if (tutorial.type == 8) {
+        tutorial.timer += DELTA;
+        if (tutorial.timer >= 5) {
+            tutorial.enabled = false;
+        }
+    }
     if (fire.fuel <= 0 || player.energy <= 0) {
         gui.gameStatus = GAME_STATUS.GAME_OVER;
     }
@@ -53,6 +59,7 @@ export function update() {
 				}
                 if (tutorial.type == 4) {
                     tutorial.type = 5;
+                    tutorial.position = vec2.fromValues(-0.5, 2);
                 }
                 clickHandled();
                 break;
@@ -119,6 +126,9 @@ export function update() {
                         if (tutorial.type == 2 && player.carrying == ITEMS.STONE) {
                             tutorial.position = null;
                         }
+                        if (tutorial.type == 6 && player.carrying == FOOD.MEAT) {
+                            tutorial.position = vec2.fromValues(0, 0);
+                        }
                     } else if (chopDownTree(true)) {
                         player.animationStatus = ANIMATIONS.CHOPPING;
                     } else if (mineStone(true)) {
@@ -139,7 +149,7 @@ export function update() {
                 chopDownTree(false);
                 if (tutorial.type == 5) {
                     tutorial.type = 6;
-                    tutorial.position = vec2.fromValues(0, 0);
+                    tutorial.position = vec2.fromValues(2, -1);
                 }
                 playAudio('tree_down');
             }

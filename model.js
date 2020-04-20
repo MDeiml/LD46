@@ -66,7 +66,8 @@ export let decorations = [];
 export let tutorial = {
     position: vec2.fromValues(-1, -1),
     enabled: true,
-    type: 0
+    type: 0,
+    timer: 0
 };
 export let quarry;
 export let lake;
@@ -380,6 +381,7 @@ export function initItems() {
 export function initStartingItems() {
 	items.push(new Item(vec2.fromValues(-1, -1), ITEMS.WOOD));
 	items.push(new Item(vec2.fromValues(3, 1), ITEMS.STONE));
+    items.push(new Item(vec2.fromValues(2, -1), FOOD.MEAT));
 	let vec;
 	for (let i = 0; i < TUTORIAL_WOOD-1; i++) {
 		vec = randomVector(TUTORIAL_ITEM_SPAWN_RADIUS);
