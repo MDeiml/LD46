@@ -236,7 +236,7 @@ export function update() {
             animal.animationTimer = 0;
         }
 
-        if (animal.animationStatus != ANIMAL_ANIMATION.ATTACKING && dist < 3 && vec2.length(player.position) > fire.fuel * 2) {
+        if (animal.objective !== null && animal.animationStatus != ANIMAL_ANIMATION.ATTACKING && dist < 3 && vec2.length(player.position) > fire.fuel * 2) {
             animal.animationStatus = ANIMAL_ANIMATION.HUNTING;
         } else if (animal.animationStatus == ANIMAL_ANIMATION.HUNTING) {
             animal.animationStatus = 0;
@@ -264,7 +264,7 @@ export function update() {
                 animal.animationTimer = -Math.random() - 1;
                 animal.walkingDir = vec2.random(vec2.create());
                 animal.animationStatus = ANIMAL_ANIMATION.WALKING;
-                let dirToQuarry = vec2.sub(vec2.create(), animal.objective == 'quarry' ? quarry.position : lake.position, animal.position);
+                let dirToQuarry = vec2.sub(vec2.create(), animal.objective == 'quarry' ? quarry.position : (animal.objective == 'lake' ? lake.position : animal.position), animal.position);
                 vec2.scale(dirToQuarry, dirToQuarry, 1/3);
                 vec2.add(animal.walkingDir, animal.walkingDir, dirToQuarry);
                 vec2.normalize(animal.walkingDir, animal.walkingDir);
