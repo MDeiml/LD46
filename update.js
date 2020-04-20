@@ -26,7 +26,8 @@ export function update() {
         }
     }
     if (fire.fuel <= 0 || player.energy <= 0) {
-        gui.gameStatus = GAME_STATUS.GAME_OVER;
+		gui.gameStatus = GAME_STATUS.GAME_OVER;
+		playAudio('oof');
     }
     if (fire.size == 3) {
         gui.gameStatus = GAME_STATUS.WIN;
