@@ -279,6 +279,7 @@ export function initGL() {
     itemTextures[ITEMS.WOOD] = loadTexture('./textures/wood_trunk.svg');
     itemTextures[ITEMS.STONE] = loadTexture('./textures/stone.svg');
     itemTextures[FOOD.MEAT] = loadTexture('./textures/meat.svg');
+    itemTextures[FOOD.COOKED_MEAT] = loadTexture('./textures/cooked_meat.svg');
     animalTextures[0] = loadTexture('./textures/wolf.svg');
     animalTextures[1] = loadTexture('./textures/bear.svg');
     backgroundTexture = colorTexture([255, 255, 255, 255]);
