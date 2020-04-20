@@ -96,8 +96,8 @@ export const FIRE_CAPACITY = {
 export const TOOLS = {
 	AXE: 0,
 	KNIFE: 1,
-	SPEAR: 2,
-	PICKAXE: 3,
+	PICKAXE: 2,
+	SPEAR: 3,
 	FISHING_ROD: 4,
 	BOW: 5,
 	ARROW: 6
