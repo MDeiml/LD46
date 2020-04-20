@@ -59,6 +59,7 @@ export let fire = {
 };
 
 export let timeToHarvest;
+export let oofonce = true;
 
 export let items = [];
 export let trees = [];
@@ -179,6 +180,14 @@ export function timeToHarvestItem(desired) {
 		case FOOD.FISH:
 			return randBetween(TIME_TO_FISH_MIN, TIME_TO_FISH_MAX);
 	}
+}
+
+export function nonoof() {
+	if (oofonce) {
+		oofonce = false;
+		return true;
+	}
+	return false;
 }
 
 export function randBetween(a, b) {
@@ -389,7 +398,8 @@ export function reset() {
     items = [];
     animals = [];
     stumps = [];
-    decorations = [];
+	decorations = [];
+	oofonce = true;
     // TODO: update this
     spawnAnimal();
     player = {
