@@ -130,7 +130,7 @@ export function update() {
             if (dist < 0.01 || (player.animationTimer > DELTA && player.actualSpeed < 0.5 * player.speed)) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
-                if (vec2.distance(player.position, player.goal) < 0.5 && !doubleClick) {
+                if (vec2.distance(player.position, player.goal) < 0.5) {
                     if (hitAnimal(true)) {
                         player.animationStatus = ANIMATIONS.FIGHTING;
                     } else if (refuelFire()) {
@@ -144,7 +144,7 @@ export function update() {
                             tutorial.type = 7;
                             tutorial.position = null;
                         }
-					} else if (layDown()) {
+					} else if (doubleClick && layDown()) {
                         if (oldCarrying == ITEMS.STONE) {
                             playAudio('drop_stone');
                         } else if (oldCarrying == ITEMS.WOOD) {
