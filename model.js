@@ -35,7 +35,6 @@ export const TIME_TO_MINE_STONE_MAX = 4;
 export const TIME_TO_FISH_MAX = 6;
 export const ENERGY_DEPLETING_SPEED = 1;
 export const MAX_ENERGY = 120;
-export const ENERGY_PER_FOOD = 40;
 
 export const GAME_STATUS = {
     MENU: 0,
@@ -130,6 +129,11 @@ export const FOOD = {
 	BERRIES: 2004
 }
 
+export const FOOD_VALUE = {}
+FOOD_VALUE[FOOD.COOKED_FISH] = 30;
+FOOD_VALUE[FOOD.COOKED_MEAT] = 40;
+FOOD_VALUE[FOOD.BERRIES] = 20;
+
 export let player = {
     speed: 2,
     lastPosition: vec2.fromValues(1, -1),
@@ -139,7 +143,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: TOOLS.AXE,
+	currentTool: TOOLS.FISHING_ROD,
 	facingLeft: false,
 	tools: {},
     energy: MAX_ENERGY,
@@ -348,8 +352,9 @@ export function cookFood() {
 
 export function eatFood() {
 	if (player.carrying == FOOD.COOKED_FISH || player.carrying == FOOD.COOKED_MEAT || player.carrying == FOOD.BERRIES) {
+		player.energy = player.energy+FOOD_VALUE[player.carrying]<
+				MAX_ENERGY?player.energy+FOOD_VALUE[player.carrying]:MAX_ENERGY;
 		player.carrying = null;
-		player.energy = player.energy+ENERGY_PER_FOOD<MAX_ENERGY?player.energy+ENERGY_PER_FOOD:MAX_ENERGY;
 		return true;
 	}
 	return false;
