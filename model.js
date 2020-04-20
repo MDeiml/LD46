@@ -61,6 +61,7 @@ export let fire = {
 
 export let fireCapacity = 2;
 export let fireFuel = 2;
+export let timeToHarvest;
 
 export let items = [];
 export let trees = [];
@@ -138,7 +139,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: TOOLS.FISHING_ROD,
+	currentTool: TOOLS.AXE,
 	facingLeft: false,
 	tools: {},
     energy: MAX_ENERGY,
@@ -162,7 +163,7 @@ export function randomVector(radius) {
 	return vec2.fromValues(Math.cos(angle) * radius, Math.sin(angle) * radius);
 }
 
-export function timeToHarvest(desired) {
+export function timeToHarvestItem(desired) {
 	switch (desired) {
 		case ITEMS.STONE:
 			return randBetween(TIME_TO_MINE_STONE_MIN, TIME_TO_MINE_STONE_MAX);
@@ -282,7 +283,9 @@ export function chopDownTree(test) {
             itemPos[1] += j * 0.5;
             items.push(new Item(itemPos, ITEMS.WOOD));
         }
-    }
+    } else {
+		timeToHarvest = timeToHarvestItem(ITEMS.WOOD);
+	}
 	return true;
 }
 
@@ -323,7 +326,9 @@ export function mineStone(test) {
 		let itemPos = vec2.clone(player.position);
 		itemPos[1] -= 1;
         items.push(new Item(itemPos, ITEMS.STONE));
-    }
+    } else {
+		timeToHarvest = timeToHarvestItem(ITEMS.STONE);
+	}
 	return true;
 }
 
@@ -365,7 +370,9 @@ export function fishFish(test) {
 		// vec2.add(itemPos, itemPos, player.position);
 		// items.push(new Item(itemPos, FOOD.FISH));
 		player.carrying = FOOD.FISH;
-    }
+    } else {
+		timeToHarvest = timeToHarvestItem(FOOD.FISH);
+	}
 	return true;
 }
 
