@@ -324,7 +324,7 @@ export function cookFood() {
 }
 
 export function eatFood() {
-	if (player.carrying == FOOD.COOKED_FISH || player.carrying == FOOD.COOKED_MEAT) {
+	if (player.carrying == FOOD.COOKED_FISH || player.carrying == FOOD.COOKED_MEAT || player.carrying == FOOD.BERRIES) {
 		player.carrying = null;
 		player.energy = player.energy+ENERGY_PER_FOOD<MAX_ENERGY?player.energy+ENERGY_PER_FOOD:MAX_ENERGY;
 		return true;
