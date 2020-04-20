@@ -391,6 +391,7 @@ export function reset() {
     stumps = [];
     decorations = [];
     // TODO: update this
+    spawnAnimal();
     player = {
         speed: 2,
         lastPosition: vec2.fromValues(1, -1),

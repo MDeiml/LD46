@@ -1,6 +1,6 @@
 import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pickUp, fire, chopDownTree,
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
-	initQuarry, mineStone, quarry, hitAnimal, gui, GAME_STATUS,
+	initQuarry, mineStone, quarry, hitAnimal, gui, GAME_STATUS, spawnAnimal,
 	ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial, initStartingItems, initLake,
 	fishFish, TOOLS, canCraft, FOOD, lake, timeToHarvest, canvas, reset } from './model.js';
 import { mousePos, doubleClick, clickHandled, mouseOverPos } from './input.js';
@@ -22,6 +22,7 @@ export function update() {
         tutorial.timer += DELTA;
         if (tutorial.timer >= 5) {
             tutorial.enabled = false;
+            spawnAnimal();
         }
     }
     if (fire.fuel <= 0 || player.energy <= 0) {
