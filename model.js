@@ -131,7 +131,7 @@ export const FOOD = {
 
 export const FOOD_VALUE = {}
 FOOD_VALUE[FOOD.COOKED_FISH] = 30;
-FOOD_VALUE[FOOD.COOKED_MEAT] = 40;
+FOOD_VALUE[FOOD.COOKED_MEAT] = 60;
 FOOD_VALUE[FOOD.BERRIES] = 20;
 
 export let player = {
@@ -143,7 +143,7 @@ export let player = {
     animationStatus: 0,
     animationTimer: 0,
 	carrying: null,
-	currentTool: TOOLS.FISHING_ROD,
+	currentTool: TOOLS.KNIFE,
 	facingLeft: false,
 	tools: {},
     energy: MAX_ENERGY,
@@ -387,6 +387,7 @@ export function reset() {
     animals = [];
     stumps = [];
     decorations = [];
+    // TODO: update this
     player = {
         speed: 2,
         lastPosition: vec2.fromValues(1, -1),
@@ -676,6 +677,7 @@ export function upgradeFire() {
 		if (removeItemsInReachOfFire(recipe)) {
 			fire.size++;
 			fire.capacity = FIRE_CAPACITY[getFireName()];
+            fire.fuel += 1;
 			return true;
 		} else {
 			console.log("Something went wrong when removing the ingredients");

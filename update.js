@@ -58,15 +58,18 @@ export function update() {
     }
 
     if (player.animationStatus == ANIMATIONS.CRAFTING && mousePos) {
-        for (let i = 0; i < 9; i++) {
+        for (let i = 0; i < 8; i++) {
             let angle = Math.PI * i / 5;
             let point = vec2.fromValues(2 * Math.sin(angle), 2 * Math.cos(angle));
             if (vec2.distance(mousePos, point) < 0.5) {
 				if (i == 0) {
-					console.log(upgradeFire());
+					if(upgradeFire()) {
+                        player.animationStatus = 0;
+                    }
 				} else {
-					console.log(craft(i-1));
-					console.log(player.tools);
+					if (craft(i-1) !== null) {
+                        player.animationStatus = 0;
+                    }
 				}
                 if (tutorial.type == 4) {
                     tutorial.type = 5;
@@ -86,6 +89,9 @@ export function update() {
             if (tutorial.type == 7) {
                 tutorial.type = 8;
             }
+        } else {
+        	player.animationStatus = ANIMATIONS.WALKING;
+			player.animationTimer = 0;
         }
     }
     if (tutorial.type == 2 && canCraft(TOOLS.AXE)) {
