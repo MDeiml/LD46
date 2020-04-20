@@ -36,6 +36,8 @@ let defaultShader;
 let shadowShader;
 let shadowShaderActive = true;
 
+let tutorialTextures = [];
+
 let drawOrder;
 
 function vec2ToVec3(v) {
@@ -227,6 +229,10 @@ export function initGL() {
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
     initShaders();
     initSquare();
+
+    for (let i = 0; i < 1; i++) {
+        tutorialTextures.push(loadTexture('./textures/tutorial' + i + '.svg'));
+    }
 
     for (let i = 0; i < 4; i++) {
         treeTextures.push(loadTexture('./textures/tree' + i + '.svg'));
