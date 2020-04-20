@@ -29,6 +29,7 @@ let firecircleTexture;
 let markerTexture;
 
 let winscreenTexture;
+let loosescreenTexture;
 let menuTexture;
 
 let flicker = 0;
@@ -128,9 +129,12 @@ export function render() {
     if (gui.gameStatus == GAME_STATUS.MENU) {
         mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -5, 0), vec3.fromValues(10, 10, 10));
         drawTexture(menuTexture, transform, 2, true, true);
-    } else if (gui.gameStatus != GAME_STATUS.PLAYING) {
+    } else if (gui.gameStatus == GAME_STATUS.WIN) {
         mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -5, 0), vec3.fromValues(10, 10, 10));
         drawTexture(winscreenTexture, transform, 2, true, true);
+    } else if (gui.gameStatus == GAME_STATUS.GAME_OVER) {
+        mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -5, 0), vec3.fromValues(10, 10, 10));
+        drawTexture(loosescreenTexture, transform, 2, true, true);
     } else {
         mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -4.5, 0), vec3.fromValues(player.energy / MAX_ENERGY * 2, 0.2, 0.2));
         drawTexture(energyTexture, transform, 2, true, true);
@@ -330,7 +334,8 @@ export function initGL() {
     quarryTexture = loadTexture('./textures/quarry.svg');
     lakeTexture = loadTexture('./textures/lake.svg');
     iceholeTexture = loadTexture('./textures/icehole.svg');
-    winscreenTexture = loadTexture('./textures/winscreen.png');
+    winscreenTexture = loadTexture('./textures/winscreen.svg');
+    loosescreenTexture = loadTexture('./textures/loosescreen.svg');
     menuTexture = loadTexture('./textures/menu.svg');
     energyTexture = colorTexture([255, 255, 0, 255]);
     firecircleTexture = loadTexture('./textures/fireCircle.svg');
