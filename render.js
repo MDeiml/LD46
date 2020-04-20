@@ -23,6 +23,7 @@ let decorationTextures = [];
 let stumpTextures = [];
 let quarryTexture;
 let lakeTexture;
+let iceholeTexture;
 let energyTexture;
 let firecircleTexture;
 let markerTexture;
@@ -78,8 +79,16 @@ export function render() {
     drawTexture(firecircleTexture, transform, 0, true);
 
 	// draw lake
-	mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec2ToVec3(lake.position), vec3.fromValues(4, 4, 4));
+    let lakePosition = vec2ToVec3(lake.position);
+    vec3.sub(lakePosition, lakePosition, vec3.fromValues(0, 2, 0));
+	mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), lakePosition, vec3.fromValues(4, 4, 4));
 	drawTexture(lakeTexture, transform, 0, true);
+
+    lakePosition = vec2ToVec3(lake.position);
+    vec3.sub(lakePosition, lakePosition, vec3.fromValues(0, 0.5, 0));
+	mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), lakePosition, vec3.fromValues(1, 1, 1));
+	drawTexture(iceholeTexture, transform, 0, true);
+
 
     drawObjects();
 
@@ -319,6 +328,7 @@ export function initGL() {
     circleTexture = loadTexture('./textures/circle.svg');
     quarryTexture = loadTexture('./textures/quarry.svg');
     lakeTexture = loadTexture('./textures/lake.svg');
+    iceholeTexture = loadTexture('./textures/icehole.svg');
     winscreenTexture = loadTexture('./textures/winscreen.png');
     menuTexture = loadTexture('./textures/menu.svg');
     energyTexture = colorTexture([255, 255, 0, 255]);
