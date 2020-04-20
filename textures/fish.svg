@@ -14,7 +14,7 @@
    viewBox="0 0 210 297"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
    sodipodi:docname="fish.svg">
   <defs
      id="defs2">
@@ -33,17 +33,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.35"
-     inkscape:cx="400"
-     inkscape:cy="560"
+     inkscape:zoom="1.4"
+     inkscape:cx="460.12218"
+     inkscape:cy="-2.0066545"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:snap-global="false"
-     inkscape:window-width="1366"
-     inkscape:window-height="700"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-width="1853"
+     inkscape:window-height="1057"
+     inkscape:window-x="1979"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
@@ -63,15 +63,16 @@
      id="layer1">
     <path
        style="fill:#000080;stroke:#000000;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 42.333333,114.05952 v 41.57738 l 33.261905,-26.45833 c 0,0 6.80357,-21.92262 40.065472,-21.92262 33.26191,0 42.33334,15.11905 42.33334,15.11905 0,0 -13.60715,20.41071 -40.06548,18.89881 C 91.470238,139.7619 86.934523,133.71428 75.595238,126.91071 64.255951,120.10714 42.333333,114.05952 42.333333,114.05952 Z"
+       d="m 49.32655,255.90982 -7.004552,40.9831 37.243925,-20.47651 c 0,0 10.399634,-20.46307 43.186117,-14.85943 32.78648,5.60364 39.18115,22.03486 39.18115,22.03486 0,0 -16.85126,17.82657 -42.6767,11.87883 C 93.431042,289.52293 89.979001,282.79763 79.94799,274.18096 69.916978,265.56431 49.32655,255.90982 49.32655,255.90982 Z"
        id="path3739"
        inkscape:connector-curvature="0" />
     <ellipse
        style="fill:#241f1c;stroke-width:0.26458332"
        id="path3745"
-       cx="137.20537"
-       cy="120.8631"
+       cx="186.60674"
+       cy="250.74556"
        rx="5.6696429"
-       ry="6.0476193" />
+       ry="6.0476193"
+       transform="rotate(9.6988878)" />
   </g>
 </svg>
