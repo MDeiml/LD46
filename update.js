@@ -48,6 +48,9 @@ export function update() {
 					console.log(craft(i-1));
 					console.log(player.tools);
 				}
+                if (tutorial.type == 4) {
+                    tutorial.type = 5;
+                }
                 clickHandled();
                 break;
             }
@@ -55,13 +58,18 @@ export function update() {
     }
     if (mousePos) {
 		vec2.sub(player.goal, mousePos, vec2.fromValues(0, 0.3));
-		if (vec2.distance(player.goal, player.position) > 0.5 || !eatFood()) {
+        let eaten = eatFood();
+        if (eaten && tutorial.type == 7) {
+            tutorial.type = 8;
+        }
+		if (vec2.distance(player.goal, player.position) > 0.5 || !eaten) {
         	player.animationStatus = ANIMATIONS.WALKING;
 			player.animationTimer = 0;
 		}
     }
     if (tutorial.type == 2 && canCraft(TOOLS.AXE)) {
         tutorial.type = 3;
+        tutorial.position = vec2.fromValues(0, 0);
     }
     if (player.animationStatus) {
         let oldAnimationTimer = player.animationTimer;
@@ -84,6 +92,10 @@ export function update() {
                             tutorial.position = vec2.fromValues(3, 1);
                         }
                     } else if (cookFood()) {
+                        if (tutorial.type == 6) {
+                            tutorial.type = 7;
+                            tutorial.position = null;
+                        }
 					} else if (layDown()) {
                         if (oldCarrying == ITEMS.STONE) {
                             playAudio('drop_stone');
@@ -92,10 +104,17 @@ export function update() {
                         }
                     } else if (vec2.length(player.position) < PICK_UP_RADIUS) {
                         player.animationStatus = ANIMATIONS.CRAFTING;
+                        if (tutorial.type == 3) {
+                            tutorial.type = 4;
+                            tutorial.position = null;
+                        }
                     } else if (pickUp()) {
                         if (tutorial.type == 0) {
                             tutorial.type = 1;
                             tutorial.position = vec2.fromValues(0, 0);
+                        }
+                        if (tutorial.type == 2 && player.carrying == ITEMS.STONE) {
+                            tutorial.position = null;
                         }
                     } else if (chopDownTree(true)) {
                         player.animationStatus = ANIMATIONS.CHOPPING;
@@ -113,6 +132,10 @@ export function update() {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 chopDownTree(false);
+                if (tutorial.type == 5) {
+                    tutorial.type = 6;
+                    tutorial.position = vec2.fromValues(0, 0);
+                }
                 playAudio('tree_down');
             }
         } else if (player.animationStatus == ANIMATIONS.MINING) {
