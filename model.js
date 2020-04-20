@@ -89,7 +89,8 @@ export let animals = [{
     walkingDir: null,
     animationStatus: 0,
     animationTimer: 0,
-    damage: 30
+    damage: 30,
+    facingLeft: false
 }];
 
 export const FIRES = {

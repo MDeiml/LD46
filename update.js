@@ -161,6 +161,7 @@ export function update() {
                 playAudio('hack');
             }
             if (player.animationTimer >= timeToHarvest) {
+                player.energy -= 10;
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 chopDownTree(false);
@@ -171,6 +172,7 @@ export function update() {
                 playAudio('tree_down');
             }
         } else if (player.animationStatus == ANIMATIONS.MINING) {
+            player.energy -= 20;
             if (player.animationTimer >= timeToHarvest) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
@@ -178,6 +180,7 @@ export function update() {
                 playAudio('drop_stone');
             }
         } else if (player.animationStatus == ANIMATIONS.FISHING) {
+            player.energy -= 10;
             if (player.animationTimer >= timeToHarvest) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
@@ -224,6 +227,7 @@ export function update() {
         if (animal.animationStatus == ANIMAL_ANIMATION.HUNTING) {
             vec2.scale(dir, dir, animal.speed * DELTA / dist);
             vec2.add(animal.position, animal.position, dir);
+            animal.facingLeft = dir[0] < 0;
         } else if (animal.animationStatus == ANIMAL_ANIMATION.WALKING) {
             vec2.add(animal.position, animal.position, vec2.scale(dir, animal.walkingDir, DELTA * animal.speed));
             if (animal.animationTimer >= 0) {
@@ -239,6 +243,7 @@ export function update() {
                 vec2.scale(dirToQuarry, dirToQuarry, 1/3);
                 vec2.add(animal.walkingDir, animal.walkingDir, dirToQuarry);
                 vec2.normalize(animal.walkingDir, animal.walkingDir);
+                animal.facingLeft = animal.walkingDir[0] < 0;
             }
         }
         handleCollision(animal, fire.fuel * 2);
@@ -258,7 +263,7 @@ function handleCollision(obj, fireRadius) {
     let dir = vec2.clone(obj.position);
     let dist = vec2.len(dir);
     if (dist < fireRadius) {
-        vec2.scale(dir, dir, (fireRadius - dist)/dist);
+        vec2.scale(dir, dir, Math.min(DELTA * 2, fireRadius - dist)/dist);
         vec2.add(obj.position, obj.position, dir);
     }
 

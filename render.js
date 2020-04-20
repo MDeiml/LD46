@@ -186,7 +186,7 @@ function drawObjects() {
         } else if (animal.animationStatus == ANIMAL_ANIMATION.ATTACKING) {
             angle = -Math.max(0, Math.sin(animal.animationTimer * Math.PI * 2)) * 10;
         }
-		mat4.fromRotationTranslation(transform, quat.fromEuler(quat.create(), 0, angle, 0), vec2ToVec3(animal.position));
+		mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), 0, angle, 0), vec2ToVec3(animal.position), vec3.fromValues(animal.facingLeft ? -1 : 1, 1, 1));
         drawTexture(animalTextures[animal.type], transform);
     }
 
