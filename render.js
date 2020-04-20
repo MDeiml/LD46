@@ -1,5 +1,5 @@
 import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, getRecipe,
-		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY, ANIMAL_ANIMATION, FOOD, tutorial } from './model.js'
+		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY, ANIMAL_ANIMATION, FOOD, tutorial, FIRE_RADIUS } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -22,6 +22,7 @@ let decorationTextures = [];
 let stumpTextures = [];
 let quarryTexture;
 let energyTexture;
+let firecircleTexture;
 
 let winscreenTexture;
 let menuTexture;
@@ -70,6 +71,8 @@ export function render() {
     let transform = mat4.create();
     mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -50, 0), vec3.fromValues(100, 100, 100));
     drawTexture(backgroundTexture, transform, 0, true);
+    mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -FIRE_RADIUS, 0), vec3.fromValues(FIRE_RADIUS * 2, FIRE_RADIUS * 2, FIRE_RADIUS * 2));
+    drawTexture(firecircleTexture, transform, 0, true);
 
     drawObjects();
 
@@ -90,7 +93,9 @@ export function render() {
 				}
             } else {
                 // if (canCraft(i-1)) {
-                if (craftingTextures[i] != null && getRecipe(i - 1).neededFire <= fire.size) {
+                if (player.tools[i - 1]) {
+					drawTexture(toolTextures[i - 1], transform, 2, true);
+                } else if (craftingTextures[i] != null && getRecipe(i - 1).neededFire <= fire.size) {
 					drawTexture(craftingTextures[i], transform, 2, true);
 				}
             }
@@ -299,6 +304,7 @@ export function initGL() {
     winscreenTexture = loadTexture('./textures/winscreen.png');
     menuTexture = loadTexture('./textures/menu.svg');
     energyTexture = colorTexture([255, 255, 0, 255]);
+    firecircleTexture = loadTexture('./textures/fireCircle.svg');
 
     updateProjection();
 }
