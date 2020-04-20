@@ -26,6 +26,7 @@ let quarryTexture;
 let lakeTexture;
 let iceholeTexture;
 let energyTexture;
+let energyLowTexture;
 let firecircleTexture;
 let markerTexture;
 
@@ -140,7 +141,7 @@ export function render() {
         drawTexture(loosescreenTexture, transform, 2, true, true);
     } else {
         mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -4.5, 0), vec3.fromValues(player.energy / MAX_ENERGY * 6, 0.4, 0.4));
-        drawTexture(energyTexture, transform, 2, true, true);
+        drawTexture(player.energy < 30 ? energyLowTexture : energyTexture, transform, 2, true, true);
     }
 }
 
@@ -344,6 +345,7 @@ export function initGL() {
     loosescreenTexture = loadTexture('./textures/loosescreen.svg', [1024, 1024]);
     menuTexture = loadTexture('./textures/menu.svg', [1024, 1024]);
     energyTexture = colorTexture([255, 255, 0, 255]);
+    energyLowTexture = colorTexture([255, 0, 0, 255]);
     firecircleTexture = loadTexture('./textures/fireCircle.svg');
     markerTexture = loadTexture('./textures/marker.svg');
 
