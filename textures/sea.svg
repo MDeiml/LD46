@@ -9,15 +9,15 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="210mm"
-   viewBox="0 0 210 210"
+   width="200mm"
+   height="200mm"
+   viewBox="0 0 200 200"
    version="1.1"
-   id="svg109"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="tutorial0.svg">
+   id="svg8"
+   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
+   sodipodi:docname="sea.svg">
   <defs
-     id="defs103" />
+     id="defs2" />
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -25,19 +25,19 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="141.25252"
-     inkscape:cy="446.86889"
+     inkscape:zoom="0.35"
+     inkscape:cx="-64.285714"
+     inkscape:cy="560"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1052"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-width="1853"
+     inkscape:window-height="1057"
+     inkscape:window-x="1979"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
-     id="metadata106">
+     id="metadata5">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
@@ -52,24 +52,12 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,-87)">
-    <rect
-       style="fill:#deaa87;stroke-width:0.32065719"
-       id="rect115"
-       width="169.7113"
-       height="43.467258"
-       x="22.67857"
-       y="101.5863" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.58333302px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
-       x="33.639881"
-       y="126.53275"
-       id="text113"><tspan
-         sodipodi:role="line"
-         id="tspan111"
-         x="33.639881"
-         y="126.53275"
-         style="fill:#000000;stroke-width:0.26458332">Click on an item to pick it up</tspan></text>
+     transform="translate(0,-97)">
+    <path
+       style="opacity:1;fill:#0000ff;fill-opacity:1;stroke:none;stroke-width:1.66499996;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:fill markers stroke"
+       d="M 185.96429,202.50595 C 221.1773,233.4217 161.5082,314.26468 96.761909,287.17262 51.314988,268.15608 18.408302,247.99015 7.5595322,202.50595 -6.6815051,142.79944 30.101487,59.724669 96.761909,117.83929 c 20.194621,17.60569 57.556831,56.88301 89.202381,84.66666 z"
+       id="path815"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss" />
   </g>
 </svg>
