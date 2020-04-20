@@ -1,4 +1,4 @@
-import { player, ANIMATIONS } from './model.js';
+import { player, ANIMATIONS, gui, GAME_STATUS } from './model.js';
 import { vec2 } from './gl-matrix-min.js'
 let stepAudio;
 let fireAudio;
@@ -12,8 +12,7 @@ export function initAudio() {
 
 export function updateAudio() {
     fireAudio.volume = 1 / Math.max(1, vec2.length(player.position));
-    // TODO: remove this (after creating menu)
-    if (player.animationStatus == ANIMATIONS.WALKING && fireAudio.paused) {
+    if (gui.gameStatus == GAME_STATUS.PLAYING && fireAudio.paused) {
         fireAudio.play();
     }
     if (player.animationStatus == ANIMATIONS.WALKING && stepAudio.paused) {

@@ -13,14 +13,22 @@ export function init() {
 
 // main update function (called every DELTA seconds)
 export function update() {
+    if (fire.fuel <= 0) {
+        gui.gameStatus = GAME_STATUS.GAME_OVER;
+    }
+    if (fire.size == 3) {
+        gui.gameStatus = GAME_STATUS.WIN;
+    }
+    if (gui.gameStatus == GAME_STATUS.MENU) {
+        if (mousePos) {
+            gui.gameStatus = GAME_STATUS.PLAYING;
+            return;
+        }
+    }
     if (gui.gameStatus != GAME_STATUS.PLAYING) {
         return;
     }
     fire.fuel -= fire.burningSpeed * DELTA;
-    if (fire.fuel <= 0) {
-        gui.gameStatus = GAME_STATUS.GAME_OVER;
-        return;
-    }
     fire.animationTime += DELTA;
     if (player.animationStatus == ANIMATIONS.CRAFTING && mousePos) {
         for (let i = 0; i < 9; i++) {

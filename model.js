@@ -32,7 +32,7 @@ export const GAME_STATUS = {
 }
 
 export let gui = {
-    gameStatus: GAME_STATUS.PLAYING
+    gameStatus: GAME_STATUS.MENU
 };
 
 export let fire = {
