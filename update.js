@@ -78,6 +78,7 @@ export function update() {
                     } else if (refuelFire()) {
                         if (tutorial.type == 1) {
                             tutorial.type = 2;
+                            tutorial.position = null;
                         }
                     } else if (cookFood()) {
 					} else if (layDown()) {
@@ -91,6 +92,7 @@ export function update() {
                     } else if (pickUp()) {
                         if (tutorial.type == 0) {
                             tutorial.type = 1;
+                            tutorial.position = vec2.fromValues(0, 0);
                         }
                     } else if (chopDownTree(true)) {
                         player.animationStatus = ANIMATIONS.CHOPPING;
