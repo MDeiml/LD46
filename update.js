@@ -4,6 +4,7 @@ import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pi
     ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood } from './model.js';
 import { mousePos, doubleClick, clickHandled } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
+import { playAudio } from './audio.js'
 
 export function init() {
 	initQuarry();
@@ -60,12 +61,14 @@ export function update() {
 		}
     }
     if (player.animationStatus) {
+        let oldAnimationTimer = player.animationTimer;
         player.animationTimer += DELTA;
         if (player.animationStatus == ANIMATIONS.WALKING) {
             let dir = vec2.sub(vec2.create(), player.goal, player.position);
             let dist = vec2.length(dir);
             vec2.scale(dir, dir, Math.min(player.speed * DELTA / dist, 1));
             vec2.add(player.position, player.position, dir)
+            let oldCarrying = player.carrying;
             if (dist < 0.01 || (player.animationTimer > DELTA && player.actualSpeed < 0.5 * player.speed)) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
@@ -75,6 +78,11 @@ export function update() {
                     } else if (refuelFire()) {
                     } else if (cookFood()) {
 					} else if (layDown()) {
+                        if (oldCarrying == ITEMS.STONE) {
+                            playAudio('drop_stone');
+                        } else if (oldCarrying == ITEMS.WOOD) {
+                            playAudio('drop_wood');
+                        }
                     } else if (vec2.length(player.position) < PICK_UP_RADIUS) {
                         player.animationStatus = ANIMATIONS.CRAFTING;
                     } else if (pickUp()) {
@@ -87,16 +95,21 @@ export function update() {
             } else {
             }
         } else if (player.animationStatus == ANIMATIONS.CHOPPING) {
+            if (Math.ceil(oldAnimationTimer + 0.5) != Math.ceil(player.animationTimer + 0.5)) {
+                playAudio('hack');
+            }
             if (player.animationTimer >= TIME_TO_CHOP_DOWN_TREE) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 chopDownTree(false);
+                playAudio('tree_down');
             }
         } else if (player.animationStatus == ANIMATIONS.MINING) {
             if (player.animationTimer >= TIME_TO_MINE_STONE) {
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 mineStone(false);
+                playAudio('drop_stone');
             }
         } else if (player.animationStatus == ANIMATIONS.FIGHTING) {
             if (player.animationTimer >= 0.5) {

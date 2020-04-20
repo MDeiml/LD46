@@ -1,5 +1,5 @@
-import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, canCraft,
-		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY, ANIMAL_ANIMATION, FOOD, tutorial } from './model.js'
+import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facingLeft, animals, getRecipe,
+		decorations, quarry, stumps, gui, GAME_STATUS, MAX_ENERGY, ANIMAL_ANIMATION, FOOD, tutorial, FIRE_RADIUS } from './model.js'
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
@@ -22,6 +22,7 @@ let decorationTextures = [];
 let stumpTextures = [];
 let quarryTexture;
 let energyTexture;
+let firecircleTexture;
 
 let winscreenTexture;
 let menuTexture;
@@ -70,31 +71,35 @@ export function render() {
     let transform = mat4.create();
     mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -50, 0), vec3.fromValues(100, 100, 100));
     drawTexture(backgroundTexture, transform, 0, true);
+    mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -FIRE_RADIUS, 0), vec3.fromValues(FIRE_RADIUS * 2, FIRE_RADIUS * 2, FIRE_RADIUS * 2));
+    drawTexture(firecircleTexture, transform, 0, true);
 
     drawObjects();
+
+    if (tutorial.enabled && gui.gameStatus == GAME_STATUS.PLAYING) {
+        mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -5, 0), vec3.fromValues(10, 10, 10));
+        drawTexture(tutorialTextures[tutorial.type], transform, 2, true, true);
+    }
 
     if (player.animationStatus == ANIMATIONS.CRAFTING) {
         for (let i = 0; i < 9; i++) {
             let angle = Math.PI * i / 5;
             mat4.fromTranslation(transform, vec3.fromValues(Math.sin(angle) * 2, Math.cos(angle) * 2 - 0.5, 0));
             drawTexture(circleTexture, transform, 2, true);
-            mat4.translate(transform, transform, vec3.fromValues(0, 0.2, 0));
             if (i == 0) {
 				// TODO: watch out fire.size + 1 isn't out of bounds
 				if (craftingTextures[0] != null) {
 					drawTexture(craftingTextures[0], transform, 2, true);
 				}
             } else {
-                if (canCraft(i-1)) {
+                // if (canCraft(i-1)) {
+                if (player.tools[i - 1]) {
 					drawTexture(toolTextures[i - 1], transform, 2, true);
+                } else if (craftingTextures[i] != null && getRecipe(i - 1).neededFire <= fire.size) {
+					drawTexture(craftingTextures[i], transform, 2, true);
 				}
             }
         }
-    }
-
-    if (tutorial.enabled) {
-        mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), vec3.fromValues(0, -5, 0), vec3.fromValues(10, 10, 10));
-        drawTexture(tutorialTextures[tutorial.type], transform, 2, true, true);
     }
 
     if (gui.gameStatus == GAME_STATUS.MENU) {
@@ -240,7 +245,7 @@ export function initGL() {
         tutorialTextures.push(loadTexture('./textures/tutorial/tutorial' + i + '.svg'));
     }
 
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 4; i++) {
         craftingTextures.push(loadTexture('./textures/crafting' + i + '.svg'));
     }
 
@@ -299,6 +304,7 @@ export function initGL() {
     winscreenTexture = loadTexture('./textures/winscreen.png');
     menuTexture = loadTexture('./textures/menu.svg');
     energyTexture = colorTexture([255, 255, 0, 255]);
+    firecircleTexture = loadTexture('./textures/fireCircle.svg');
 
     updateProjection();
 }

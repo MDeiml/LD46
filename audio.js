@@ -8,6 +8,14 @@ export function initAudio() {
     sounds['step'].loop = true;
     sounds['fire'] = new Audio('./sounds/fire.ogg');
     sounds['fire'].loop = true;
+    sounds['drop_wood'] = new Audio('./sounds/drop_wood0.wav');
+    sounds['drop_stone'] = new Audio('./sounds/drop_stone0.wav');
+    sounds['hack'] = new Audio('./sounds/hack0.wav');
+    sounds['tree_down'] = new Audio('./sounds/tree_down0.wav');
+}
+
+export function playAudio(name) {
+    sounds[name].play();
 }
 
 export function updateAudio() {
