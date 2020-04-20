@@ -338,12 +338,13 @@ export function initItems() {
 
 export function initStartingItems() {
 	items.push(new Item(vec2.fromValues(-1, -1), ITEMS.WOOD));
+	items.push(new Item(vec2.fromValues(3, 1), ITEMS.STONE));
 	let vec;
 	for (let i = 0; i < TUTORIAL_WOOD-1; i++) {
 		vec = randomVector(TUTORIAL_ITEM_SPAWN_RADIUS);
 		items.push(new Item(vec, ITEMS.WOOD));
 	}
-	for (let i = 0; i < TUTORIAL_STONE; i++) {
+	for (let i = 0; i < TUTORIAL_STONE-1; i++) {
 		vec = randomVector(TUTORIAL_ITEM_SPAWN_RADIUS);
 		items.push(new Item(vec, ITEMS.STONE));
 	}
