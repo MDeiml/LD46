@@ -2,7 +2,7 @@ import { DELTA, player, createTree, initTrees, items, initItems, Item, ITEMS, pi
 	layDown, refuelFire, ANIMATIONS, PICK_UP_RADIUS, upgradeFire, craft, trees, animals, initDecorations,
 	initQuarry, mineStone, quarry, hitAnimal, gui, GAME_STATUS, spawnAnimal,
 	ENERGY_DEPLETING_SPEED, ANIMAL_ANIMATION, cookFood, eatFood, tutorial, initStartingItems, initLake,
-	fishFish, TOOLS, canCraft, FOOD, lake, timeToHarvest, canvas, reset } from './model.js';
+	fishFish, TOOLS, canCraft, FOOD, lake, timeToHarvest, canvas, reset, nonoof } from './model.js';
 import { mousePos, doubleClick, clickHandled, mouseOverPos } from './input.js';
 import { vec2 } from './gl-matrix-min.js'
 import { playAudio } from './audio.js'
@@ -26,8 +26,10 @@ export function update() {
         }
     }
     if (fire.fuel <= 0 || player.energy <= 0) {
+		if (gui.gameStatus != GAME_STATUS.GAME_OVER) {
+			playAudio('oof');
+		}
 		gui.gameStatus = GAME_STATUS.GAME_OVER;
-		playAudio('oof');
     }
     if (fire.size == 3) {
         gui.gameStatus = GAME_STATUS.WIN;
@@ -241,7 +243,8 @@ export function update() {
         if (animal.animationStatus == ANIMAL_ANIMATION.HUNTING && dist < 0.5) {
             animal.animationStatus = ANIMAL_ANIMATION.ATTACKING;
             animal.animationTimer = 0;
-            player.energy -= animal.damage;
+			player.energy -= animal.damage;
+			playAudio('oof');
         }
 
         if (animal.animationStatus == ANIMAL_ANIMATION.HUNTING) {
