@@ -4,7 +4,7 @@ import { gl, canvas, items, ITEMS, player, trees, fire, TOOLS, ANIMATIONS, facin
 import { mat4, vec3, vec2, quat } from './gl-matrix-min.js'
 
 let positionAttribute, texCoordAttribute;
-let matrixUniform, textureUniform, modelUniform, fireIntesityUniform, shadowTextureUniform, canvasSizeUniform;
+let matrixUniform, textureUniform, modelUniform, fireIntesityUniform, shadowTextureUniform, canvasSizeUniform, specialUniform;
 let matrixUniformShadow, textureUniformShadow, modelUniformShadow;
 let squareBuffer, squareTexCoordBuffer;
 let projectionMatrix;
@@ -88,7 +88,7 @@ export function render() {
     lakePosition = vec2ToVec3(lake.position);
     vec3.sub(lakePosition, lakePosition, vec3.fromValues(0, 0.5, 0));
 	mat4.fromRotationTranslationScale(transform, quat.fromEuler(quat.create(), -90, 0, 0), lakePosition, vec3.fromValues(1, 1, 1));
-	drawTexture(iceholeTexture, transform, 0, true);
+	drawTexture(iceholeTexture, transform, player.currentTool == TOOLS.FISHING_ROD ? 3 : 0, true);
 
 
     drawObjects();
@@ -199,12 +199,12 @@ function drawObjects() {
     // draw trees
     for (let tree of trees) {
         mat4.fromRotationTranslationScale(transform, quat.create(), vec2ToVec3(tree.position), vec3.fromValues(tree.direction ? 2 : -2, 2, 2));
-        drawTexture(treeTextures[tree.type], transform);
+        drawTexture(treeTextures[tree.type], transform, player.currentTool == TOOLS.AXE ? 3 : 0);
 	}
 
 	// draw quarry
 	mat4.fromTranslation(transform, vec2ToVec3(quarry.position));
-	drawTexture(quarryTexture, transform);
+	drawTexture(quarryTexture, transform, player.currentTool == TOOLS.PICKAXE ? 3 : 0);
 
     drawOrder.sort(function (a, b) {
         return b.y - a.y;
@@ -247,6 +247,7 @@ function drawTexture(id, transform, lighting, reallyDraw, isGUI) {
         let mvp = mat4.create();
         mat4.mul(mvp, isGUI ? projectionMatrix : pvMatrix, transform);
         gl.uniformMatrix4fv(matrixUniform, false, mvp);
+        gl.uniform1i(specialUniform, lighting == 3 ? 1 : 0);
         gl.uniform2f(canvasSizeUniform, canvas.width, canvas.height);
         let intensity = fire.fuel * 2 + flicker * 0.2;
         intensity = intensity * intensity;
@@ -401,6 +402,7 @@ function initShaders(name) {
     fireIntesityUniform = gl.getUniformLocation(defaultShader, 'fireIntensity');
     shadowTextureUniform = gl.getUniformLocation(defaultShader, 'shadowTexture');
     canvasSizeUniform = gl.getUniformLocation(defaultShader, 'canvasSize');
+    specialUniform = gl.getUniformLocation(defaultShader, 'special');
 
     vs = getShader('shadow-vs');
     fs = getShader('shadow-fs');

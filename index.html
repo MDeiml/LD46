@@ -30,6 +30,7 @@
             uniform sampler2D texture;
             uniform sampler2D shadowTexture;
             uniform float fireIntensity;
+            uniform int special;
             uniform vec2 canvasSize;
 
             void main(void) {
@@ -45,6 +46,9 @@
                     float gray = color.r * 0.3 + color.g * 0.59 + color.b * 0.11;
                     vec3 grayColor = gray * vec3(42.0/255.0, 51.0/255.0, 81.0/255.0);
                     color.rgb = (1.0 - t) * grayColor + t * color.rgb * vec3(235.0/255.0, 178.0/255.0, 145.0/255.0);
+                    if (special == 1) {
+                        color.g = clamp(color.g + 0.05 * color.a, 0.0, 1.0);
+                    }
                     gl_FragColor = color;
                 }
             }
