@@ -181,19 +181,23 @@ export function update() {
                 playAudio('tree_down');
             }
         } else if (player.animationStatus == ANIMATIONS.MINING) {
+<<<<<<< HEAD
 			if (Math.ceil(oldAnimationTimer + 0.5) != Math.ceil(player.animationTimer + 0.5)) {
                 playAudio('mining');
             }
             player.energy -= 20;
+=======
+>>>>>>> dd52ae89568fda76247969adc3abaccf8dea169e
             if (player.animationTimer >= timeToHarvest) {
+                player.energy -= 20;
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 mineStone(false);
                 playAudio('drop_stone');
             }
         } else if (player.animationStatus == ANIMATIONS.FISHING) {
-            player.energy -= 10;
             if (player.animationTimer >= timeToHarvest) {
+                player.energy -= 10;
                 player.animationTimer = 0;
                 player.animationStatus = 0;
                 fishFish(false);
@@ -268,6 +272,12 @@ export function update() {
             tree.highlight = false;
         }
     }
+
+    for (let item of items) {
+        item.highlight = vec2.distance(mouseOverPos, item.pos) < PICK_UP_RADIUS;
+    }
+
+    quarry.highlight = player.currentTool == TOOLS.PICKAXE && vec2.distance(mouseOverPos, quarry.position) < 1;
 }
 
 function handleCollision(obj, fireRadius) {
