@@ -107,19 +107,21 @@ export function render() {
     if (player.animationStatus == ANIMATIONS.CRAFTING) {
         for (let i = 0; i < 8; i++) {
             let angle = Math.PI * i / 5;
-            mat4.fromTranslation(transform, vec3.fromValues(Math.sin(angle) * 2, Math.cos(angle) * 2 - 0.5, 0));
-            drawTexture(circleTexture, transform, 2, true);
+            mat4.fromRotationTranslationScale(transform, quat.create(), vec3.fromValues(Math.sin(angle) * 3, Math.cos(angle) * 3 - 0.75, 0), vec3.fromValues(1.5, 1.5, 1.5));
             if (i == 0) {
 				// TODO: watch out fire.size + 1 isn't out of bounds
                 let j = fire.size == 0 ? 0 : fire.size + 7;
 				if (craftingTextures[j] != null) {
+                    drawTexture(circleTexture, transform, 2, true);
 					drawTexture(craftingTextures[j], transform, 2, true);
 				}
             } else {
                 // if (canCraft(i-1)) {
                 if (player.tools[i - 1]) {
+                    drawTexture(circleTexture, transform, 2, true);
 					drawTexture(toolTextures[i - 1], transform, 2, true);
                 } else if (craftingTextures[i] != null && getRecipe(i - 1).neededFire <= fire.size) {
+                    drawTexture(circleTexture, transform, 2, true);
 					drawTexture(craftingTextures[i], transform, 2, true);
 				}
             }
